@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsMessage">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="message">
+	    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="msg_id"></selectKey>
+	    INSERT INTO ec_message (msgTitle, msgContent, sendTime, msgStaus, msgBox, siteId, msgSendUserId, msgReceiverUserId) VALUES (#{msgTitle}, #{msgContent}, #{sendTime}, #{msgStaus}, #{msgBox}, #{siteId}, #{msgSendUserId}, #{msgReceiverUserId})
+    </insert>
+	
+	<resultMap type="message" id="messageMap">
+	   <id property="msgId" column="msgId"/>
+	   <result property="msgTitle" column="msgTitle"/>
+	   <result property="msgContent" column="msgContent"/>
+	   <result property="sendTime" column="sendTime"/>
+	   <result property="msgStaus" column="msgStaus"/>
+	   <association property="msgReceiverUser" resultMap="com.easycms.entity.CmsUser.msgUserMap"></association>
+	</resultMap>
+	<!-- 分页查询 -->
+	<select id="findByPage" resultMap="messageMap" parameterType="map">
+		 SELECT 
+			m.msgID,m.msgTitle,m.msgContent,m.sendTime,m.msgStaus,u.username 
+		 FROM 
+			ec_message m,ec_user u 
+		 WHERE 
+			m.msgReceiverUserId=u.id AND msgSendUserId=#{msgSendUserId} AND msgBox=#{msgBox} LIMIT #{showPages},#{pageSize}
+	</select>
+	<!-- 总页数 -->
+	<select id="findByPageTotal" resultType="int" parameterType="int">
+		select count(*) from ec_message_receiver where msgBox=#{msgBox} and msgReceiverUserId=#{msgReceiverUserId}
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="int">
+	  
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteIn" parameterType="java.util.List">
+
+	</delete>
+</mapper>    
