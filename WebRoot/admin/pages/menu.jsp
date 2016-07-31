@@ -70,43 +70,45 @@
                     </ul>  
                   </li>
                   <li class="hasSub">
-                    <a href="javascript:;" data-nbid="2" title="栏目" class="notExpand">
+                    <a href="javascript:;" data-nbid="2" title="基本情况" class="notExpand">
                       <i class="icon icon-sitemap"></i>
-                      <span class="txt">栏目</span>
+                      <span class="txt">基本情况</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
                         <a href="javascript:;" data-url="栏目管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">栏目管理</span>
+                          <span class="txt">中心概况</span>
                         </a>
                       </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="栏目管理.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">组织架构</span>
+                        </a>
+                      </li>
+                      
                     </ul>
                   </li>
                   <li class="hasSub">
-                    <a href="javascript:;" data-nbid="3" title="内容" class="notExpand">
+                    <a href="javascript:;" data-nbid="3" title="信息发布" class="notExpand">
                       <i class="icon icon-list-alt"></i>
-                      <span class="txt">内容</span>
+                      <span class="txt">信息服务</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
                         <a href="javascript:;" data-url="内容管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">内容管理</span>
+                          <span class="txt">信息管理</span>
                         </a>
                       </li>
                       <li>
                         <a href="javascript:;" data-url="内容类型.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">内容类型</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="专题管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">专题管理</span>
+                          <span class="txt">信息发布</span>
                         </a>
                       </li>
                     </ul>
