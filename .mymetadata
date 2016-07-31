@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="easycms"
+  name="web_admin_side"
   id="myeclipse.1465951616943"
   context-root="/easycms"
   j2ee-spec="6.0"
-  archive="easycms.war">
+  archive="web_admin_side.war">
   <attributes>
     <attribute name="webrootdir" value="WebRoot" />
   </attributes>
