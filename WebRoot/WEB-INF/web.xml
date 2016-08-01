@@ -33,15 +33,39 @@
     <servlet-class>com.easycms.common.CaptchaServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>VerifyCodeServlet</servlet-name>
-    <url-pattern>/captcha</url-pattern>
-  </servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.jpg</url-pattern>
+ </servlet-mapping>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.js</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.css</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.html</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.gif</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.png</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+    <servlet-name>VerifyCodeServlet</servlet-name>
+    <url-pattern>/captcha</url-pattern>
+  </servlet-mapping>
+ <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
