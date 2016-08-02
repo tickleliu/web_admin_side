@@ -56,7 +56,7 @@
 			<input type="text" name="title" />
 			<br />
 
-			<textarea name="content" id="content">这里写你的初始化内容</textarea>
+			<textarea name="content" id="content"></textarea>
 
 			<input type="submit" value="提交" onclick="return sub();"/>
 
@@ -65,7 +65,7 @@
 		<!-- 实例化编辑器 -->
 		<script type="text/javascript">
 			var ue = UE.getEditor("content");
-			ue.ready(function() {ue.setContent();});
+			ue.ready(function() {ue.setContent("${content}");});
 		</script>
 	</body>
 </html>

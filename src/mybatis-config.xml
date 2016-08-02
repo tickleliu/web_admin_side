@@ -12,5 +12,6 @@
 	   <typeAlias type="com.easycms.entity.CmsLog" alias="log"></typeAlias>
 	   <typeAlias type="com.easycms.entity.CmsMessage" alias="message"></typeAlias>
 	   <typeAlias type="com.easycms.entity.CmsReceiverMessage" alias="reMessage"></typeAlias>
+	   <typeAlias type="com.easycms.entity.CmsArticle" alias="article"></typeAlias>
 	</typeAliases>
 </configuration>

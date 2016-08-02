@@ -25,14 +25,13 @@ response.setCharacterEncoding("utf-8");
   </head>
   
   <body>
-  		类别：<%=request.getParameter("category") %>
+  		类别：${category}
     	<br/>
-  		标题：<%=request.getParameter("title") %>
+  		标题：${title}
+  		<br/>
+  		作者：${author}
     	<br/>
-    	<%
-    		System.out.println(request.getParameter("content"));
-    	%>
-    	<%=request.getParameter("content")%>
+    	${content}
     	<br>
     	<a href="info/intro_e.do">返回</a>
   </body>
