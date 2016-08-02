@@ -65,6 +65,7 @@
 		<!-- 实例化编辑器 -->
 		<script type="text/javascript">
 			var ue = UE.getEditor("content");
+			ue.ready(function() {ue.setContent();});
 		</script>
 	</body>
 </html>

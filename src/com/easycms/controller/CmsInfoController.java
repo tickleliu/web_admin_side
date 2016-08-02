@@ -18,6 +18,7 @@ public class CmsInfoController {
 
 	@RequestMapping("/show")
 	public String show(HttpServletRequest request, HttpServletResponse response, Model model) {
+		System.out.println(request.getParameter("content"));
 		System.out.println("show called");
 		return "show";
 	}
