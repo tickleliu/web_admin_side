@@ -24,4 +24,7 @@
 	  where 
 	  	aid=#{id}
 	</select>
+	<update id="update" parameterType="article">
+	  update ac_content set create_time=#{create_time},update_time=#{update_time},cate=#{cate},author=#{author},title=#{title},content=#{content} where aid=#{aid}
+	</update>
 </mapper>    

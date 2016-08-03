@@ -25,4 +25,10 @@ public class CmsArticleServiceImpl extends AbstractBaseDao<CmsArticle, Long> imp
 		return cArticle;
 	}
 
+	@Override
+	public void updateArticle(CmsArticle article) {
+		// TODO Auto-generated method stub
+		update(article);
+	}
+
 }

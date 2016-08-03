@@ -47,25 +47,17 @@
 
 	<body>
 		
+<h1>${category}</h1>
 
-		<form action="info/show" method="post" id="myform">
-			类别：
-			<input type="text" name="category" />
-			<br />
-			标题：
-			<input type="text" name="title" />
-			<br />
-
+		<form action="info/intro_modify?aid=${aid}" method="post" id="myform">
 			<textarea name="content" id="content"></textarea>
-
 			<input type="submit" value="提交" onclick="return sub();"/>
-
 		</form>
 		
 		<!-- 实例化编辑器 -->
 		<script type="text/javascript">
 			var ue = UE.getEditor("content");
-			ue.ready(function() {ue.setContent("${content}");});
+			ue.ready(function() {ue.setContent('${content}');});
 		</script>
 	</body>
 </html>

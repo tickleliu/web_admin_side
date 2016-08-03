@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.border.TitledBorder;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
@@ -28,37 +29,181 @@ public class CmsInfoController {
 	@Resource(name = "cmsArticleServiceImpl")
 	private CmsArticleService as;
 
+	private static final Long CENTERINTRO_ID = 100L;
+	private static final Long ORGINTRO_ID = 200L;
+	private static String[] categoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
+			"认证信息" };
+
+	/**
+	 * 基本情况
+	 */
 	@RequestMapping("/intro_e.do")
 	public String centerInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		model.addAttribute("content", "这里写你的初始內容");
-		return "editor";
+		String category = request.getParameter("cate");
+		String aid = CENTERINTRO_ID.toString();
+		String content = "这里写你的初始內容";// 缺省编辑器文本区内容
+
+		CmsArticle article = null;// 当前基本情况的信息，如果已经有了，那么使用它初始化文本编辑器
+
+		if (category == null || category.equals("") || category.equals("info")) {
+			category = "中心概况";
+			aid = CENTERINTRO_ID.toString();
+			article = as.findArticleById(CENTERINTRO_ID);
+		} else if (category.equals("org")) {
+			category = "组织架构";
+			aid = ORGINTRO_ID.toString();
+			article = as.findArticleById(ORGINTRO_ID);
+		}
+
+		if (article != null) {
+			content = article.getContent();
+		}
+
+		model.addAttribute("content", content);
+		model.addAttribute("aid", aid);
+		model.addAttribute("category", category);
+
+		return "info/center_intro";
 	}
 
-	@RequestMapping("/show")
-	public String show(HttpServletRequest request,
+	@RequestMapping("/info_e.do")
+	public String editInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		CmsArticle cmsArticle = new CmsArticle();
-		cmsArticle.setAid(new Long(System.currentTimeMillis()));
-		cmsArticle.setAuthor("lml");
-		cmsArticle.setCate(request.getParameter("category"));
-		cmsArticle.setContent(request.getParameter("content"));
-		cmsArticle.setCreate_time(new Date());
-		cmsArticle.setTitle(request.getParameter("title"));
-		cmsArticle.setUpdate_time(new Date());
-		as.save(cmsArticle);
-		CmsArticle cArticle = as.findById(cmsArticle.getAid());
-		System.out.println(cArticle.getTitle());
-		model.addAttribute("author", cmsArticle.getAuthor());
-		model.addAttribute("content", cmsArticle.getContent());
-		model.addAttribute("title", cmsArticle.getTitle());
-		model.addAttribute("category", cmsArticle.getCate());
-		return "show";
+		String content = "这里写你的初始內容";// 缺省编辑器文本区内容
+		String category = "1";
+		String title = "请输入标题";
+		String author = "匿名";
+		String aidString = request.getParameter("aid");
+		Long aid = null;
+
+		if (aidString == null || aidString.equals("")) {
+			aid = System.currentTimeMillis();
+		} else {
+			try {
+				aid = new Long(aidString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				aid = System.currentTimeMillis();
+			}
+			CmsArticle article = null;// 当前基本情况的信息，如果已经有了，那么使用它初始化文本编辑器
+			article = as.findArticleById(aid);
+			if (article != null) {
+				content = article.getContent();
+				category = article.getCate();
+				author = article.getAuthor();
+			}
+		}
+		model.addAttribute("content", content);
+		model.addAttribute("aid", aid);
+		model.addAttribute("title", title);
+		model.addAttribute("author", author);
+		model.addAttribute("category", category);
+		model.addAttribute("categories", categoryStrings);
+
+		return "info/info_editor";
 	}
-	
+
+	@RequestMapping("/intro_modify")
+	public String introModify(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String aidString = request.getParameter("aid");
+		String cate = "";
+		if (aidString == null || aidString.equals("")) {
+			return "exception";
+		} else {
+			Long aid = new Long(aidString);
+			if (aid.equals(CENTERINTRO_ID) || aid.equals(ORGINTRO_ID)) {
+
+				cate = "中心概况";
+				if (aid.equals(ORGINTRO_ID)) {
+					cate = "组织架构";
+				}
+				CmsArticle cmsArticle = null;
+				cmsArticle = as.findArticleById(aid);
+				if (cmsArticle == null) {
+					cmsArticle = new CmsArticle();
+					cmsArticle.setAid(aid);
+					cmsArticle.setCate(cate);
+					cmsArticle.setTitle(cate);
+					cmsArticle.setCreate_time(new Date());
+					cmsArticle.setUpdate_time(new Date());
+					cmsArticle.setContent("");
+					as.save(cmsArticle);
+				}
+				cmsArticle.setAuthor("admin");
+				cmsArticle.setContent(request.getParameter("content"));
+				cmsArticle.setUpdate_time(new Date());
+				as.update(cmsArticle);
+				String backurl = "info/intro_e.do?cate=";
+				if (aidString.equals(CENTERINTRO_ID.toString())) {
+					backurl += "info";
+				} else {
+					backurl += "org";
+				}
+				model.addAttribute("backurl", backurl);
+				model.addAttribute("cate", cate);
+				return "info/modify_result";
+			}
+			return "exception";
+		}
+	}
+
+	@RequestMapping("/info_modify")
+	public String infoModify(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String aidString = request.getParameter("aid");
+
+		if (aidString == null || aidString.equals("")) {
+			return "exception";
+		}
+
+		Long aid = 0L;
+		try {
+			aid = new Long(aidString);
+		} catch (NumberFormatException e) {
+			return "exception";
+		}
+		
+		//验证是否提供了正确的分类
+		String category = request.getParameter("category");
+		int categorIndex = 0;
+		if (category == null || category.equals("")) {
+			return "exception";
+		}
+		try {
+			categorIndex = new Integer(category);
+			if (categorIndex > categoryStrings.length || categorIndex <= 0) {
+				return "exception";
+			}
+		} catch (NumberFormatException e) {
+			return "exception";
+		}
+		
+		CmsArticle cmsArticle = null;
+		cmsArticle = as.findArticleById(aid);
+
+		if (cmsArticle == null) {
+			cmsArticle = new CmsArticle();
+			cmsArticle.setAid(aid);
+			as.save(cmsArticle);
+		}
+
+		cmsArticle.setCate(categoryStrings[categorIndex - 1]);
+		cmsArticle.setAuthor(request.getParameter("author"));
+		cmsArticle.setTitle(request.getParameter("title"));
+		cmsArticle.setContent(request.getParameter("content"));
+		cmsArticle.setUpdate_time(new Date());
+		as.update(cmsArticle);
+		String backurl = "info/info_e.do";
+		model.addAttribute("backurl", backurl);
+		model.addAttribute("cate", category);
+		return "info/modify_result";
+	}
+
 	private Logger logger = Logger.getLogger(this.getClass());
-	
-	@RequestMapping(value="/ajax")
+
+	@RequestMapping(value = "/ajax")
 	@ResponseBody
 	public String ajax(HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
@@ -67,7 +212,7 @@ public class CmsInfoController {
 		JSONArray jsonArray = new JSONArray();
 		Random random = new Random(System.currentTimeMillis());
 		String string = "abcdefghijklmnopqrstuvwxyz";
-		String[] categories = {"news", "info", "center"};
+		String[] categories = { "news", "info", "center" };
 		for (int i = 0; i < 10; i++) {
 			HashedMap map = new HashedMap();
 			map.put("aid", System.currentTimeMillis());
@@ -77,20 +222,20 @@ public class CmsInfoController {
 			}
 			map.put("autor", author);
 			String category = categories[random.nextInt(categories.length)];
-			map.put("category",category);
-			String title= "";
+			map.put("category", category);
+			String title = "";
 			for (int j = 0; j < 14; j++) {
 				title += string.charAt(random.nextInt(string.length()));
 			}
 			map.put("title", title);
 			jsonArray.put(map);
-			
+
 		}
 		jsonObject.put("rows", jsonArray);
 		return jsonObject.toString();
 	}
-	
-	@RequestMapping(value="/ajax/resp")
+
+	@RequestMapping(value = "/ajax/resp")
 	@ResponseBody
 	public String responose(HttpServletRequest request) {
 		logger.info("get ajax resp");

@@ -77,14 +77,14 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do">
+                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do?cate=info">
                           <i class="icon icon-circle"></i>
                           <span class="txt">中心概况</span>
                         </a>
                       </li>
                       
                       <li>
-                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do">
+                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do?cate=org">
                           <i class="icon icon-circle"></i>
                           <span class="txt">组织架构</span>
                         </a>
@@ -100,15 +100,9 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do">
+                        <a href="javascript:;" data-url="<%=basePath%>info/info_e.do">
                           <i class="icon icon-circle"></i>
                           <span class="txt">信息管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">信息发布</span>
                         </a>
                       </li>
                     </ul>
