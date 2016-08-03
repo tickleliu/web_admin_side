@@ -1,0 +1,58 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="jquery,ui,easy,easyui,web">
+	<meta name="description" content="easyui help you build your web page easily!">
+	<title>文章列表模板</title>
+	<link rel="stylesheet" type="text/css" href="jeasyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jeasyui/themes/icon.css">
+	<script type="text/javascript" src="admin/assets/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="jeasyui/jquery.easyui.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#testb").click(function(){
+			var df = $('#dfrom').datebox('getValue');
+			var dt = $('#dto').datebox('getValue');
+			var keyw = $('#searchkw').val();
+			alert("From: " + df + " To: " + dt + " keyword: " + keyw);
+	  	});
+	});
+	</script>
+</head>
+<body>
+	<h2>文章列表</h2>
+	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:800px"
+			url="data/datagrid_data.json" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="itemid" width="60">Item ID</th>
+				<th field="productid" width="80">Product ID</th>
+				<th field="listprice" align="right" width="70">List Price</th>
+				<th field="unitcost" align="right" width="70">Unit Cost</th>
+				<th field="attr1" width="200">Address</th>
+				<th field="status" width="50">Status</th>
+			</tr>
+		</thead>
+	</table>
+	
+	<div id="tb" style="padding:5px;height:auto">
+		<div style="margin-bottom:5px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
+		</div>
+		<div>
+			日期 从: <input id="dfrom" class="easyui-datebox" style="width:120px">
+			到: <input id="dto" class="easyui-datebox" style="width:120px">
+			关键词: 
+			<input id="searchkw" textField="text">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+		</div>
+	</div>
+	<button id="testb">test</button>
+</body>
+</html>
