@@ -4,9 +4,9 @@ use cms;
 
 DROP TABLE IF EXISTS `cms`.`ac_content`;
 CREATE TABLE  `cms`.`ac_content` (
-  `id` bigint(20) unsigned DEFAULT NULL,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
+  `aid` bigint(20) unsigned DEFAULT NULL,
+  `create_time` date DEFAULT NULL,
+  `update_time` date DEFAULT NULL,
   `cate` varchar(45) NOT NULL,
   `author` varchar(45) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
@@ -15,7 +15,6 @@ CREATE TABLE  `cms`.`ac_content` (
   KEY `time_index` (`create_time`) USING BTREE,
   KEY `author_index` (`author`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 create table ec_group(
   id int primary key auto_increment,
