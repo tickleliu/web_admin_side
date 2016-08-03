@@ -1,12 +1,18 @@
 package com.easycms.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,8 +59,35 @@ public class CmsInfoController {
 	private Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping(value="/ajax")
+	@ResponseBody
 	public String ajax(HttpServletRequest request) {
-		return "ajax";
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("total", 100);
+		List<HashedMap> articles = new ArrayList<HashedMap>();
+		JSONArray jsonArray = new JSONArray();
+		Random random = new Random(System.currentTimeMillis());
+		String string = "abcdefghijklmnopqrstuvwxyz";
+		String[] categories = {"news", "info", "center"};
+		for (int i = 0; i < 10; i++) {
+			HashedMap map = new HashedMap();
+			map.put("aid", System.currentTimeMillis());
+			String author = "";
+			for (int j = 0; j < 4; j++) {
+				author += string.charAt(random.nextInt(string.length()));
+			}
+			map.put("autor", author);
+			String category = categories[random.nextInt(categories.length)];
+			map.put("category",category);
+			String title= "";
+			for (int j = 0; j < 14; j++) {
+				title += string.charAt(random.nextInt(string.length()));
+			}
+			map.put("title", title);
+			jsonArray.put(map);
+			
+		}
+		jsonObject.put("rows", jsonArray);
+		return jsonObject.toString();
 	}
 	
 	@RequestMapping(value="/ajax/resp")
