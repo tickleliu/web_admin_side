@@ -18,6 +18,54 @@
 			alert("From: " + df + " To: " + dt + " keyword: " + keyw + " category: " + ct);
 	  	});
 	});
+	
+	function doSearch(){
+		$('#tt').datagrid('load',{
+			datefrom: $('#dfrom').datebox('getValue'),
+			dateto: $('#dto').datebox('getValue'),
+			keyw: $('#searchkw').val(),
+			ct: $('#searchct').val()
+		});
+	};
+	
+	function doAdd(){
+		alert("新建文章！");
+	};
+	
+	function doEdit(){
+		var rows = $('#tt').datagrid('getSelections');
+		if(rows.length == 0){
+			alert("错误：未选择要编辑的数据！");
+		}
+		else if(rows.length == 1){
+			var dataid = rows[0].aid;
+			alert("编辑文章, id: " + dataid);
+		}
+		else{
+			alert("错误： 选择的数据项数目大于1！");
+		}
+	};
+	
+	function doDelete(){
+		var rows = $('#tt').datagrid('getSelections');
+		if(rows.length == 0){
+			alert("错误：未选择要删除的数据！");
+		}
+		else{
+			$.messager.confirm("操作提示", "确定要删除这些数据吗？", function (data) {  
+            	if (data) {  
+                	var ids = [];
+					for(var i=0; i<rows.length; i++){
+						ids.push(rows[i].aid);
+					} 
+					alert("删除以下文章:\n" + ids.join("\n"));
+           		}  
+            	else {  
+                	alert("取消");  
+            	} 
+            });
+		}
+	};
 	</script>
 </head>
 <body>
@@ -40,9 +88,9 @@
 	
 	<div id="tb" style="padding:5px;height:auto">
 		<div style="margin-bottom:5px">
-			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="doAdd()"></a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="doEdit()"></a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="doDelete()"></a>
 		</div>
 		<div>
 			日期 从: <input id="dfrom" class="easyui-datebox" style="width:120px">
@@ -51,7 +99,7 @@
 			<input id="searchkw" textField="text" style="width:180px">
 			类别: 
 			<input id="searchct" textField="text" style="width:50px">
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">Search</a>
 		</div>
 	</div>
 	<button id="testb">test</button>
