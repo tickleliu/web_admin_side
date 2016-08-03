@@ -4,6 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CmsArticle implements Serializable {
+	public CmsArticle() {
+		// TODO Auto-generated constructor stub
+		aid = 0L;
+		author = "";
+		content = "";
+		title = "";
+		create_time = new Date();
+		update_time = new Date();
+		cate = "";
+	}
+
 	private Long aid;
 	private String author;
 	private Date create_time;
@@ -22,6 +33,9 @@ public class CmsArticle implements Serializable {
 	}
 
 	public void setAuthor(String author) {
+		if(author == null) {
+			author = "匿名";
+		}
 		this.author = author;
 	}
 
@@ -54,6 +68,9 @@ public class CmsArticle implements Serializable {
 	}
 
 	public void setTitle(String title) {
+		if(title == null) {
+			title = "无标题";
+		}
 		this.title = title;
 	}
 
@@ -62,6 +79,9 @@ public class CmsArticle implements Serializable {
 	}
 
 	public void setContent(String content) {
+		if(content == null) {
+			this.content = "无内容";
+		}
 		this.content = content;
 	}
 

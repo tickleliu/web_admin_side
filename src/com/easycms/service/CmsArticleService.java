@@ -6,5 +6,6 @@ import com.easycms.entity.CmsArticle;
 public interface CmsArticleService extends BaseDao<CmsArticle, Long>{
 	public void saveArticle(CmsArticle article);
 	public CmsArticle findArticleById(long id);
+	public void updateArticle(CmsArticle article);
 
 }
