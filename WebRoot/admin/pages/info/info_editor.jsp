@@ -71,7 +71,7 @@
 		<input type="submit" value="提交" onclick="return sub();" />
 
 	</form>
-
+  	<a href="/info/info_e.do">返回</a>
 	<!-- 实例化编辑器 -->
 	<script type="text/javascript">
 			var ue = UE.getEditor("content");

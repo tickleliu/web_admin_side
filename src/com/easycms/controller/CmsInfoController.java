@@ -1,11 +1,15 @@
 package com.easycms.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.border.TitledBorder;
@@ -19,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.easycms.common.FreeMarkerUtils;
 import com.easycms.entity.CmsArticle;
 import com.easycms.service.CmsArticleService;
 
@@ -33,6 +38,7 @@ public class CmsInfoController {
 	private static final Long ORGINTRO_ID = 200L;
 	private static String[] categoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
 			"认证信息" };
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 基本情况
@@ -67,43 +73,9 @@ public class CmsInfoController {
 		return "info/center_intro";
 	}
 
-	@RequestMapping("/info_e.do")
-	public String editInfo(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		String content = "这里写你的初始內容";// 缺省编辑器文本区内容
-		String category = "1";
-		String title = "请输入标题";
-		String author = "匿名";
-		String aidString = request.getParameter("aid");
-		Long aid = null;
-
-		if (aidString == null || aidString.equals("")) {
-			aid = System.currentTimeMillis();
-		} else {
-			try {
-				aid = new Long(aidString);
-			} catch (NumberFormatException e) {
-				// TODO: handle exception
-				aid = System.currentTimeMillis();
-			}
-			CmsArticle article = null;// 当前基本情况的信息，如果已经有了，那么使用它初始化文本编辑器
-			article = as.findArticleById(aid);
-			if (article != null) {
-				content = article.getContent();
-				category = article.getCate();
-				author = article.getAuthor();
-			}
-		}
-		model.addAttribute("content", content);
-		model.addAttribute("aid", aid);
-		model.addAttribute("title", title);
-		model.addAttribute("author", author);
-		model.addAttribute("category", category);
-		model.addAttribute("categories", categoryStrings);
-
-		return "info/info_editor";
-	}
-
+	/**
+	 * 基本情况修改展示
+	 */
 	@RequestMapping("/intro_modify")
 	public String introModify(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
@@ -149,6 +121,49 @@ public class CmsInfoController {
 		}
 	}
 
+	/**
+	 * 信息发布，编辑
+	 * */
+	@RequestMapping("/info_e.do")
+	public String editInfo(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String content = "这里写你的初始內容";// 缺省编辑器文本区内容
+		String category = "1";
+		String title = "请输入标题";
+		String author = "匿名";
+		String aidString = request.getParameter("aid");
+		Long aid = null;
+
+		if (aidString == null || aidString.equals("")) {
+			aid = System.currentTimeMillis();
+		} else {
+			try {
+				aid = new Long(aidString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				aid = System.currentTimeMillis();
+			}
+			CmsArticle article = null;// 当前基本情况的信息，如果已经有了，那么使用它初始化文本编辑器
+			article = as.findArticleById(aid);
+			if (article != null) {
+				content = article.getContent();
+				category = article.getCate();
+				author = article.getAuthor();
+			}
+		}
+		model.addAttribute("content", content);
+		model.addAttribute("aid", aid);
+		model.addAttribute("title", title);
+		model.addAttribute("author", author);
+		model.addAttribute("category", category);
+		model.addAttribute("categories", categoryStrings);
+
+		return "info/info_editor";
+	}
+
+	/**
+	 * 信息处理结果
+	 */
 	@RequestMapping("/info_modify")
 	public String infoModify(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
@@ -164,8 +179,8 @@ public class CmsInfoController {
 		} catch (NumberFormatException e) {
 			return "exception";
 		}
-		
-		//验证是否提供了正确的分类
+
+		// 验证是否提供了正确的分类
 		String category = request.getParameter("category");
 		int categorIndex = 0;
 		if (category == null || category.equals("")) {
@@ -179,7 +194,7 @@ public class CmsInfoController {
 		} catch (NumberFormatException e) {
 			return "exception";
 		}
-		
+
 		CmsArticle cmsArticle = null;
 		cmsArticle = as.findArticleById(aid);
 
@@ -197,11 +212,10 @@ public class CmsInfoController {
 		as.update(cmsArticle);
 		String backurl = "info/info_e.do";
 		model.addAttribute("backurl", backurl);
-		model.addAttribute("cate", category);
+		model.addAttribute("cate", categoryStrings[categorIndex - 1]);
+		model.addAttribute("title", cmsArticle.getTitle());
 		return "info/modify_result";
 	}
-
-	private Logger logger = Logger.getLogger(this.getClass());
 
 	@RequestMapping(value = "/ajax")
 	@ResponseBody
@@ -240,6 +254,21 @@ public class CmsInfoController {
 	public String responose(HttpServletRequest request) {
 		logger.info("get ajax resp");
 		return "ajax result";
+	}
+
+	@RequestMapping(value = "static")
+	@ResponseBody
+	public String staticText(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		ServletContext context = request.getServletContext();
+		String template = "admin/pages/template";
+		FreeMarkerUtils.initConfig(context, template);
+		Map<String, String> dataMap = new HashMap<String, String>();
+		dataMap.put("content", "this is the content");
+		dataMap.put("basePath", "http://localhost:8000/");
+		FreeMarkerUtils.processTemplate("center_intro.ftl", dataMap, "F://test.html");
+		return "success";
 	}
 
 }

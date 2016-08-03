@@ -1,7 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -9,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'modify_result.jsp' starting page</title>
+    <title>My JSP 'show.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -23,9 +24,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <p>修改成功！</p>
-  <p>${cate}</p>
-  <p>${title}</p>
-  <a href="${backurl}">返回</a>
+  		类别：${category}
+    	<br/>
+  		标题：${title}
+  		<br/>
+  		作者：${author}
+    	<br/>
+    	${content}
+    	<br>
+    	<a href="info/intro_e.do">返回</a>
   </body>
 </html>
