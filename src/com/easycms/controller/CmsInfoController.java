@@ -217,9 +217,21 @@ public class CmsInfoController {
 		return "info/modify_result";
 	}
 
-	@RequestMapping(value = "/ajax")
+	@RequestMapping(value = "/s_info")
+	public String showInfo(HttpServletRequest rquest, HttpServletResponse response, Model model) {
+		model.addAttribute("categories", categoryStrings);
+		return "info/info_show";
+	}
+	
+	@RequestMapping(value="/di_result")
 	@ResponseBody
-	public String ajax(HttpServletRequest request) {
+	public String deleteInfoResult(HttpServletRequest request, HttpServletResponse response, Model model) {
+		return "success!";
+	}
+
+	@RequestMapping(value = "/s_getdata")
+	@ResponseBody
+	public String getInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("total", 100);
 		List<HashedMap> articles = new ArrayList<HashedMap>();
@@ -258,7 +270,8 @@ public class CmsInfoController {
 
 	@RequestMapping(value = "static")
 	@ResponseBody
-	public String staticText(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	public String staticText(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		ServletContext context = request.getServletContext();
@@ -267,7 +280,8 @@ public class CmsInfoController {
 		Map<String, String> dataMap = new HashMap<String, String>();
 		dataMap.put("content", "this is the content");
 		dataMap.put("basePath", "http://localhost:8000/");
-		FreeMarkerUtils.processTemplate("center_intro.ftl", dataMap, "F://test.html");
+		FreeMarkerUtils.processTemplate("center_intro.ftl", dataMap,
+				"F://test.html");
 		return "success";
 	}
 
