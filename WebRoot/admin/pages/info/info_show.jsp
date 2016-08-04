@@ -26,65 +26,87 @@
 	<script type="text/javascript" src="admin/assets/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="jeasyui/jquery.easyui.min.js"></script>
 	<script>
-	$(document).ready(function(){
-		$("#testb").click(function(){
-			var df = $('#dfrom').datebox('getValue');
-			var dt = $('#dto').datebox('getValue');
-			var keyw = $('#searchkw').val();
-			var ct = $('#category').val();
-			alert("From: " + df + " To: " + dt + " keyword: " + keyw + " category: " + ct);
-	  	});
-	});
-	
 	function doSearch(){
-		$('#tt').datagrid('load',{
-			datefrom: $('#dfrom').datebox('getValue'),
-			dateto: $('#dto').datebox('getValue'),
-			keyw: $('#searchkw').val(),
-			ct: $('#category').val(),
-			author:$('#author').val(),
-		});
+		var vf = $('#dfrom').datebox('getValue');
+		var vt = $('#dto').datebox('getValue');
+		var valid = true;
+		if(vf.length > 0 && vt.length > 0){
+			var df = $.fn.datebox.defaults.parser(vf);
+			var dt = $.fn.datebox.defaults.parser(vt);
+			valid = dt > df;
+		}
+		if(!valid){
+			alert("错误：结束时间早于开始时间。\n");
+		}
+		else{
+			$('#tt').datagrid('load',{
+				datefrom: $('#dfrom').datebox('getValue'),
+				dateto: $('#dto').datebox('getValue'),
+				keyw: $('#searchkw').val(),
+				ct: $('#category').val(),
+				author:$('#author').val(),
+			});
+		}
 	};
 	
 	function doAdd(){
-		alert("增添文章");
+		location.href = "info/info_e.do"; 
 	};
 	
 	function doEdit(){
 		var rows = $('#tt').datagrid('getSelections');
 		if(rows.length == 0){
-			alert("没有选中");
+			alert("错误：没有选择需要编辑的文章.\n");
 		}
 		else if(rows.length == 1){
 			var dataid = rows[0].aid;
-			
-			alert("编辑, id: " + dataid);
+			var url = "info/info_e.do?aid=" + dataid;
+			location.href = url; 
 		}
 		else{
-			alert("超过一个被选中");
+			alert("错误：无法编辑多个文章.\n");
 		}
 	};
 	
 	function doDelete(){
 		var rows = $('#tt').datagrid('getSelections');
 		if(rows.length == 0){
-			alert("");
+			alert("错误：没有选择需要删除的文章.\n");
 		}
 		else{
-			$.messager.confirm("", function (data) {  
+			$.messager.confirm("提示：", "确定要删除选定的文章吗？删除之后无法恢复.\n", function (data) {  
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
 						ids.push(rows[i].aid);
-					} 
-					alert(":\n" + ids.join("\n"));
+					}
+					var json_data = {
+						"deleteIds":ids
+					};
+					$.ajax({
+						type:"POST",
+						url:"info/info_d",
+						contentType: "application/json; charset=utf-8", 
+						data: JSON.stringify(json_data),
+						dataType: "json",
+						success: function(message){
+							if(message > 0){
+								alert("删除数据成功.\n");
+								doSearch();
+							}
+						},
+						error: function(message){
+							alert("删除数据失败!\n");
+						}	
+					});
            		}  
             	else {  
-                	alert("");  
+                	/*alert("")*/;  
             	} 
             });
 		}
 	};
+	
 	</script>
 </head>
 <body>
@@ -111,13 +133,14 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:90px">
-			到: <input id="dto" class="easyui-datebox" style="width:90px">
+			日期 从: <input id="dfrom" class="easyui-datebox" style="width:100px">
+			到: <input id="dto" class="easyui-datebox" style="width:100px">
 			关键词: 
 			<input id="searchkw" textField="text" style="width:130px">
 			作者: 
 			<input id="author" textField="text" style="width:80px">
 			类别: <select name="category" id="category">
+				<option value="0"></option>
 			<c:forEach var="item" items="${categories}" varStatus="s">
 				<option value="${s.count}">${item}</option>
 			</c:forEach>
@@ -127,6 +150,5 @@
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">Search</a>
 		</div>
 	</div>
-	<button id="testb">test</button>
 </body>
 </html>
