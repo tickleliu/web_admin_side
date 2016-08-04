@@ -338,7 +338,7 @@ public class CmsInfoController {
 			jsonMap.put("aid", article.getAid());
 			jsonMap.put("category", article.getCate());
 			jsonMap.put("author", article.getAuthor());
-			String create_time= DateFormatUtils.format(article.getCreate_time(), "MM/dd/yyyy");
+			String create_time= DateFormatUtils.format(article.getCreate_time(), "yyyy-MM-dd");
 			jsonMap.put("create_time", create_time);
 //			jsonMap.put("update_time", article.getAid());
 			jsonMap.put("title", article.getTitle());
