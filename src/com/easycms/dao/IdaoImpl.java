@@ -116,5 +116,5 @@ public class IdaoImpl<T,PK extends Serializable> extends SqlSessionDaoSupport im
 		count = getSqlSession().selectOne(entityClass.getName() + operate, maps);
 		return count;
 	}
-	
+
 }

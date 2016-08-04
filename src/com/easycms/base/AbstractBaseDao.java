@@ -66,4 +66,5 @@ public abstract class AbstractBaseDao<T,PK extends Serializable> implements Base
 	public T login(T entity) {
 		return idao.login(entity);
 	}
+	
 }

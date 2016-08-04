@@ -120,7 +120,7 @@
 			<tr>
 				<th field="ck" checkbox="true"></th>
 				<th field="title" width="80">标题</th>
-				<th field="autor" width="70">作者</th>
+				<th field="author" width="70">作者</th>
 				<th field="category" width="70">类别</th>
 			</tr>
 		</thead>
@@ -140,7 +140,7 @@
 			作者: 
 			<input id="author" textField="text" style="width:80px">
 			类别: <select name="category" id="category">
-				<option value="0"></option>
+				<option value="0">全部分类</option>
 			<c:forEach var="item" items="${categories}" varStatus="s">
 				<option value="${s.count}">${item}</option>
 			</c:forEach>

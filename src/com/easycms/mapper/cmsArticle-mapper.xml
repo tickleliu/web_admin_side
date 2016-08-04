@@ -16,6 +16,7 @@
 	<result property="content" column="content"></result>
 	<result property="cate" column="cate"></result>
 	</resultMap>
+	
 	<select id="findById" resultMap="articleMap" parameterType="long">
 	  select 
 	  	*
@@ -27,4 +28,41 @@
 	<update id="update" parameterType="article">
 	  update ac_content set create_time=#{create_time},update_time=#{update_time},cate=#{cate},author=#{author},title=#{title},content=#{content} where aid=#{aid}
 	</update>
+	
+	<select id="findByKey" resultType="article" parameterType="map">
+	  select * from ac_content 
+	  <where>
+	    <if test="category !=null and category != ''">
+	         cate = #{category}
+	    </if>
+	    <if test="datefrom != null and datefrom != ''">
+	         and create_time &gt;= Date(#{datefrom}) 
+	    </if>
+	    <if test="dateto != null and dateto != ''">
+	         and create_time &lt;= Date(#{dateto}) 
+	    </if>
+	    <if test="author !=null and author!= ''">
+	        and author = #{author}
+	    </if>
+	  </where>
+	  order by aid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from ac_content 
+	  <where>
+	    <if test="category !=null and category != ''">
+	         cate = #{category}
+	    </if>
+	    <if test="datefrom != null and datefrom != ''">
+	         and create_time &gt;= Date(#{datefrom}) 
+	    </if>
+	    <if test="dateto!= null and dateto!= ''">
+	         and create_time &lt;= Date(#{dateto}) 
+	    </if>
+	    <if test="author !=null and author != ''">
+	         and author = #{author}
+	    </if>
+	  </where>
+	</select>
 </mapper>    

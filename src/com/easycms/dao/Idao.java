@@ -109,4 +109,6 @@ public interface Idao<T, PK extends Serializable> {
 	 * @return
 	 */
 	public T login(T entity);
+	
+	
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easycms.common.FreeMarkerUtils;
+import com.easycms.common.Pager;
 import com.easycms.entity.CmsArticle;
 import com.easycms.service.CmsArticleService;
 
@@ -38,7 +39,7 @@ public class CmsInfoController {
 
 	private static final Long CENTERINTRO_ID = 100L;
 	private static final Long ORGINTRO_ID = 200L;
-	private static String[] categoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
+	private static String[] CategoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
 			"认证信息" };
 	private Logger logger = Logger.getLogger(this.getClass());
 
@@ -158,7 +159,7 @@ public class CmsInfoController {
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);
 		model.addAttribute("category", category);
-		model.addAttribute("categories", categoryStrings);
+		model.addAttribute("categories", CategoryStrings);
 
 		return "info/info_editor";
 	}
@@ -190,7 +191,7 @@ public class CmsInfoController {
 		}
 		try {
 			categorIndex = new Integer(category);
-			if (categorIndex > categoryStrings.length || categorIndex <= 0) {
+			if (categorIndex > CategoryStrings.length || categorIndex <= 0) {
 				return "exception";
 			}
 		} catch (NumberFormatException e) {
@@ -206,7 +207,7 @@ public class CmsInfoController {
 			as.save(cmsArticle);
 		}
 
-		cmsArticle.setCate(categoryStrings[categorIndex - 1]);
+		cmsArticle.setCate(CategoryStrings[categorIndex - 1]);
 		cmsArticle.setAuthor(request.getParameter("author"));
 		cmsArticle.setTitle(request.getParameter("title"));
 		cmsArticle.setContent(request.getParameter("content"));
@@ -214,61 +215,115 @@ public class CmsInfoController {
 		as.update(cmsArticle);
 		String backurl = "info/info_e.do";
 		model.addAttribute("backurl", backurl);
-		model.addAttribute("cate", categoryStrings[categorIndex - 1]);
+		model.addAttribute("cate", CategoryStrings[categorIndex - 1]);
 		model.addAttribute("title", cmsArticle.getTitle());
 		return "info/modify_result";
 	}
 
 	@RequestMapping(value = "/info_s")
-	public String showInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute("categories", categoryStrings);
-		
+	public String showInfo(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		model.addAttribute("categories", CategoryStrings);
+
 		return "info/info_show";
 	}
-	
-	@RequestMapping(value="/info_d")
-	public String deleteInfoResult(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+	@RequestMapping(value = "/info_d")
+	public String deleteInfoResult(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 		String idString = request.getParameter("ids");
 		System.out.println(idString);
 		model.addAttribute("result", "成功");
-		
+
 		return "info/info_delete";
 	}
 
-	@RequestMapping(value = "/info_g")
+	private String reformatDateString(String dateString) {
+		if (dateString != null && dateString.split("/").length == 3) {
+			String[] dateStrings = dateString.split("/");
+			return dateStrings[2] + "-" + dateStrings[0] + "-" + dateStrings[1];
+		}
+		return null;
+	}
+
+	/**
+	 * 新闻管理列表生成
+	 * */
+	@RequestMapping(value = "/info_g",produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String getInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
-		String datafrom = request.getParameter("datefrom");
-		String datato= request.getParameter("dateto");
-		String keyword= request.getParameter("keyw");
-		String categoryR= request.getParameter("ct");
-		String authorR= request.getParameter("author");
+	public String getInfo(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		String datefrom = reformatDateString(request.getParameter("datefrom"));
+		if (datefrom != null) {
+			map.put("datefrom", datefrom);
+		}
+		String dateto = reformatDateString(request.getParameter("dateto"));
+		if (dateto != null) {
+			map.put("dateto", dateto);
+		}
+
+		String categoryString = request.getParameter("ct");
+		int category = 0;
+		try {
+			category = Integer.parseInt(categoryString);
+			if (category > 0 && category <= CategoryStrings.length) {
+				map.put("category", CategoryStrings[category - 1]);
+			}
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+		}
+
+		String author = request.getParameter("author");
+		if (author != null) {
+			map.put("author", author);
+		}
+
+		int showPages = 0;
 		String pageString = request.getParameter("page");
-		String rowsString= request.getParameter("rows");
+		if (pageString != null) {
+			try {
+				showPages = Integer.parseInt(pageString) - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				showPages = 0;
+			}
+		}
+
+		int pageSize = 10;
+		String rowsString = request.getParameter("rows");
+		if (rowsString != null) {
+			try {
+				pageSize = Integer.parseInt(rowsString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				pageSize = 10;
+			}
+		}
+
+		String keyword = request.getParameter("keyw");
+
+		Pager<CmsArticle> pager = as
+				.findArticlesByKey(map, showPages, pageSize);
+
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("total", 100);
+		jsonObject.put("total", pager.getTotal());
 		List<HashedMap> articles = new ArrayList<HashedMap>();
 		JSONArray jsonArray = new JSONArray();
-		Random random = new Random(System.currentTimeMillis());
-		String string = "abcdefghijklmnopqrstuvwxyz";
-		String[] categories = { "news", "info", "center" };
-		for (int i = 0; i < 10; i++) {
-			HashedMap map = new HashedMap();
-			map.put("aid", System.currentTimeMillis());
-			String author = "";
-			for (int j = 0; j < 4; j++) {
-				author += string.charAt(random.nextInt(string.length()));
-			}
-			map.put("autor", author);
-			String category = categories[random.nextInt(categories.length)];
-			map.put("category", category);
-			String title = "";
-			for (int j = 0; j < 14; j++) {
-				title += string.charAt(random.nextInt(string.length()));
-			}
-			map.put("title", title);
-			jsonArray.put(map);
 
+		for (CmsArticle article : pager.getPageList()) {
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("aid", article.getAid());
+			jsonMap.put("category", article.getCate());
+			jsonMap.put("author", article.getAuthor());
+			jsonMap.put("create_time", article.getCreate_time());
+			jsonMap.put("update_time", article.getAid());
+			jsonMap.put("title", article.getTitle());
+			jsonArray.put(jsonMap);
 		}
 		jsonObject.put("rows", jsonArray);
 		return jsonObject.toString();
