@@ -31,7 +31,7 @@
 			var df = $('#dfrom').datebox('getValue');
 			var dt = $('#dto').datebox('getValue');
 			var keyw = $('#searchkw').val();
-			var ct = $('#searchct').val();
+			var ct = $('#category').val();
 			alert("From: " + df + " To: " + dt + " keyword: " + keyw + " category: " + ct);
 	  	});
 	});
@@ -41,12 +41,13 @@
 			datefrom: $('#dfrom').datebox('getValue'),
 			dateto: $('#dto').datebox('getValue'),
 			keyw: $('#searchkw').val(),
-			ct: $('#searchct').val()
+			ct: $('#category').val(),
+			author:$('#author').val(),
 		});
 	};
 	
 	function doAdd(){
-		alert("增添");
+		alert("增添文章");
 	};
 	
 	function doEdit(){
@@ -56,6 +57,7 @@
 		}
 		else if(rows.length == 1){
 			var dataid = rows[0].aid;
+			
 			alert("编辑, id: " + dataid);
 		}
 		else{
@@ -95,36 +97,34 @@
 		<thead>
 			<tr>
 				<th field="ck" checkbox="true"></th>
-				<th field="aid" width="60">ID</th>
 				<th field="title" width="80">标题</th>
-				<th field="autor" align="right" width="70">作者</th>
-				<th field="category" align="right" width="70">分类</th>
+				<th field="autor" width="70">作者</th>
+				<th field="category" width="70">类别</th>
 			</tr>
 		</thead>
 	</table>
 	
 	<div id="tb" style="padding:5px;height:auto">
 		<div style="margin-bottom:5px">
-			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="doAdd()"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="doEdit()"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="doDelete()"></a>
+			<a href="javascript:doAdd()" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
+			<a href="javascript:doEdit()" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
+			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:120px">
-			到: <input id="dto" class="easyui-datebox" style="width:120px">
+			日期 从: <input id="dfrom" class="easyui-datebox" style="width:90px">
+			到: <input id="dto" class="easyui-datebox" style="width:90px">
 			关键词: 
-			<input id="searchkw" textField="text" style="width:180px">
+			<input id="searchkw" textField="text" style="width:130px">
 			作者: 
-			<input id="author" textField="text" style="width:180px">
-			分类: 
-			类别： <select name="category" id="category">
+			<input id="author" textField="text" style="width:80px">
+			类别: <select name="category" id="category">
 			<c:forEach var="item" items="${categories}" varStatus="s">
 				<option value="${s.count}">${item}</option>
 			</c:forEach>
 		</select>
 			
 			
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">Search</a>
+			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">Search</a>
 		</div>
 	</div>
 	<button id="testb">test</button>
