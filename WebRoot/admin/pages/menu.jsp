@@ -90,6 +90,13 @@
                         </a>
                       </li>
                       
+                      <li>
+                        <a href="javascript:;" data-url="<%=basePath%>info/intro_e.do?cate=contact">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">联系我们</span>
+                        </a>
+                      </li>
+                      
                     </ul>
                   </li>
                   <li class="hasSub">

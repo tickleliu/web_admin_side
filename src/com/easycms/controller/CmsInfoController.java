@@ -42,6 +42,7 @@ public class CmsInfoController {
 
 	private static final Long CENTERINTRO_ID = 100L;
 	private static final Long ORGINTRO_ID = 200L;
+	private static final Long CONTACT_ID = 300L;
 	private static String[] CategoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
 			"认证信息" };
 	private Logger logger = Logger.getLogger(this.getClass());
@@ -66,6 +67,10 @@ public class CmsInfoController {
 			category = "组织架构";
 			aid = ORGINTRO_ID.toString();
 			article = as.findArticleById(ORGINTRO_ID);
+		} else if (category.equals("contact")) {
+			category = "联系我们";
+			aid = CONTACT_ID.toString();
+			article = as.findArticleById(CONTACT_ID);
 		}
 
 		if (article != null) {
@@ -91,11 +96,14 @@ public class CmsInfoController {
 			return "exception";
 		} else {
 			Long aid = new Long(aidString);
-			if (aid.equals(CENTERINTRO_ID) || aid.equals(ORGINTRO_ID)) {
+			if (aid.equals(CENTERINTRO_ID) || aid.equals(ORGINTRO_ID)
+					|| aid.equals(CONTACT_ID)) {
 
 				cate = "中心概况";
 				if (aid.equals(ORGINTRO_ID)) {
 					cate = "组织架构";
+				} else if (aid.equals(CONTACT_ID)) {
+					cate = "联系我们";
 				}
 				CmsArticle cmsArticle = null;
 				cmsArticle = as.findArticleById(aid);
@@ -116,8 +124,10 @@ public class CmsInfoController {
 				String backurl = "info/intro_e.do?cate=";
 				if (aidString.equals(CENTERINTRO_ID.toString())) {
 					backurl += "info";
-				} else {
+				} else if (aidString.equals(ORGINTRO_ID.toString())) {
 					backurl += "org";
+				} else {
+					backurl += "contact";
 				}
 				model.addAttribute("backurl", backurl);
 				model.addAttribute("cate", cate);
