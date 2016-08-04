@@ -44,6 +44,14 @@
 	    <if test="author !=null and author!= ''">
 	        and author = #{author}
 	    </if>
+	    
+	    <if test="keyw != null">
+	        <foreach collection="keyw" item="key"
+	        open="" separator="" close="">
+	        and concat(`title`,`content`) like concat("%",#{key},"%")
+	        </foreach>
+	    </if>
+	    
 	  </where>
 	  order by aid desc limit #{showPages},#{pageSize} 
 	</select>
@@ -63,6 +71,16 @@
 	    <if test="author !=null and author != ''">
 	         and author = #{author}
 	    </if>
+	    <if test="keyw != null">
+	        <foreach collection="keyw" item="key"
+	        open="" separator="" close="">
+	        and concat(`title`,`content`) like concat("%",#{key},"%")
+	        </foreach>
+	    </if>
 	  </where>
 	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from ac_content where aid=#{id}
+	</delete>
 </mapper>    

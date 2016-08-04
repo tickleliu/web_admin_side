@@ -89,21 +89,21 @@
 						url:"info/info_d",
 						contentType: "application/json; charset=utf-8", 
 						data: JSON.stringify(json_data),
-						dataType: "json",
-						success: function(message){
-							if(message > 0){
+						dataType: "text",
+						success: function(message, status){
+							message = $.parseJSON(message);
+							if(message.result == "success"){
 								alert("删除数据成功.\n");
 								doSearch();
+							} else {
+								alert("删除数据失败.\n");
 							}
 						},
-						error: function(message){
-							alert("删除数据失败!\n");
-						}	
+						error: function() {
+								alert("删除数据失败.\n");
+                    }
 					});
            		}  
-            	else {  
-                	/*alert("")*/;  
-            	} 
             });
 		}
 	};

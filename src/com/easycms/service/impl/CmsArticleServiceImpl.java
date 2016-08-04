@@ -46,4 +46,10 @@ public class CmsArticleServiceImpl extends AbstractBaseDao<CmsArticle, Long> imp
 		map.put("pageSize", pageSize);
 		return findByKey(map, ".findByKey");
 	}
+
+	@Override
+	public void deleteArticleById(long id) {
+		// TODO Auto-generated method stub
+		delete(id);
+	}
 }

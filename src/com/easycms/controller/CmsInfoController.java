@@ -154,7 +154,15 @@ public class CmsInfoController {
 			if (article != null) {
 				content = article.getContent();
 				category = article.getCate();
+				int index = 1;
+				for (int i = 0; i < CategoryStrings.length; i++) {
+					if (CategoryStrings[i].equals(category)) {
+						index += i;
+					}
+				}
 				author = article.getAuthor();
+				category = new Integer(index).toString();
+				title = article.getTitle();
 			}
 		}
 		model.addAttribute("content", content);
@@ -216,7 +224,7 @@ public class CmsInfoController {
 		cmsArticle.setContent(request.getParameter("content"));
 		cmsArticle.setUpdate_time(new Date());
 		as.update(cmsArticle);
-		String backurl = "info/info_e.do";
+		String backurl = "info/info_s";
 		model.addAttribute("backurl", backurl);
 		model.addAttribute("cate", CategoryStrings[categorIndex - 1]);
 		model.addAttribute("title", cmsArticle.getTitle());
@@ -232,42 +240,52 @@ public class CmsInfoController {
 	}
 
 	@RequestMapping(value = "/info_d")
-	public String deleteInfoResult(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		String idString = request.getParameter("ids");
-		System.out.println(idString);
-		model.addAttribute("result", "成功");
-
-		return "info/info_delete";
+	@ResponseBody
+	public String deleteInfoResult(@RequestBody String deleteIds,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		JSONObject jsonObject = new JSONObject(deleteIds);
+		JSONArray jsonArray = jsonObject.getJSONArray("deleteIds");
+		int length = jsonArray.length();
+		for (int i = 0; i < length; i++) {
+			Long aid = jsonArray.getLong(i);
+			System.out.println(aid);
+			as.deleteArticleById(aid);
+		}
+		JSONObject jsonObject2 = new JSONObject();
+		jsonObject2.put("result", "success");
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		return jsonObject2.toString();
 	}
 
 	private String reformatDateString(String dateString) {
-		if (dateString != null && dateString.split("/").length == 3) {
-			String[] dateStrings = dateString.split("/");
-			return dateStrings[2] + "-" + dateStrings[0] + "-" + dateStrings[1];
+		if (dateString != null && dateString.split("-").length == 3) {
+			String[] dateStrings = dateString.split("-");
+			return dateStrings[0] + "-" + dateStrings[1] + "-" + dateStrings[2];
 		}
 		return null;
 	}
 
 	private String removeIllegalChar(String old) {
-//		String set = "\"'";
+		// String set = "\"'";
 		String newString = "";
 		newString = old.replace("'", " ");
 		newString = newString.replace("\"", " ");
 		return newString;
 	}
+
 	/**
-	 * 新闻管理列表生成
-	 * 增加了中文数据处理
+	 * 新闻管理列表生成 增加了中文数据处理
 	 * */
-	@RequestMapping(value = "/info_g",produces="text/html;charset=UTF-8")
+	@RequestMapping(value = "/info_g", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String getInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 
 		response.setContentType("text/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-	
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		String datefrom = reformatDateString(request.getParameter("datefrom"));
 		if (datefrom != null) {
@@ -317,12 +335,20 @@ public class CmsInfoController {
 		}
 
 		String keyword = request.getParameter("keyw");
+
 		List<String> keywords = new LinkedList<String>();
-		if(keyword != null) {
-			StringTokenizer stringTokenizer = new StringTokenizer(keyword, " ,\t");
-			while(stringTokenizer.hasMoreTokens()) {
-				keywords.add(stringTokenizer.nextToken());
+		if (keyword != null) {
+			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
+					" ,\t");
+			while (stringTokenizer.hasMoreTokens()) {
+				String tokenString = stringTokenizer.nextToken();
+				if (tokenString.trim().length() > 0) {
+					keywords.add(tokenString.trim());
+				}
 			}
+		}
+		if (keywords.size() > 0) {
+			map.put("keyw", keywords);
 		}
 
 		Pager<CmsArticle> pager = as
@@ -338,9 +364,10 @@ public class CmsInfoController {
 			jsonMap.put("aid", article.getAid());
 			jsonMap.put("category", article.getCate());
 			jsonMap.put("author", article.getAuthor());
-			String create_time= DateFormatUtils.format(article.getCreate_time(), "yyyy-MM-dd");
+			String create_time = DateFormatUtils.format(
+					article.getCreate_time(), "yyyy-MM-dd");
 			jsonMap.put("create_time", create_time);
-//			jsonMap.put("update_time", article.getAid());
+			// jsonMap.put("update_time", article.getAid());
 			jsonMap.put("title", article.getTitle());
 			jsonArray.put(jsonMap);
 		}
