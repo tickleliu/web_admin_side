@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -227,13 +228,23 @@ public class CmsInfoController {
 	
 	@RequestMapping(value="/info_d")
 	public String deleteInfoResult(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String idString = request.getParameter("ids");
+		System.out.println(idString);
 		model.addAttribute("result", "成功");
+		
 		return "info/info_delete";
 	}
 
 	@RequestMapping(value = "/info_g")
 	@ResponseBody
 	public String getInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String datafrom = request.getParameter("datefrom");
+		String datato= request.getParameter("dateto");
+		String keyword= request.getParameter("keyw");
+		String categoryR= request.getParameter("ct");
+		String authorR= request.getParameter("author");
+		String pageString = request.getParameter("page");
+		String rowsString= request.getParameter("rows");
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("total", 100);
 		List<HashedMap> articles = new ArrayList<HashedMap>();
@@ -270,6 +281,7 @@ public class CmsInfoController {
 		return "ajax result";
 	}
 
+	//
 	@RequestMapping(value = "static")
 	@ResponseBody
 	public String staticText(HttpServletRequest request,
