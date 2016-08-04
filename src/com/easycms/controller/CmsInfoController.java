@@ -5,9 +5,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.border.TitledBorder;
 
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -246,8 +249,16 @@ public class CmsInfoController {
 		return null;
 	}
 
+	private String removeIllegalChar(String old) {
+//		String set = "\"'";
+		String newString = "";
+		newString = old.replace("'", " ");
+		newString = newString.replace("\"", " ");
+		return newString;
+	}
 	/**
 	 * 新闻管理列表生成
+	 * 增加了中文数据处理
 	 * */
 	@RequestMapping(value = "/info_g",produces="text/html;charset=UTF-8")
 	@ResponseBody
@@ -306,6 +317,13 @@ public class CmsInfoController {
 		}
 
 		String keyword = request.getParameter("keyw");
+		List<String> keywords = new LinkedList<String>();
+		if(keyword != null) {
+			StringTokenizer stringTokenizer = new StringTokenizer(keyword, " ,\t");
+			while(stringTokenizer.hasMoreTokens()) {
+				keywords.add(stringTokenizer.nextToken());
+			}
+		}
 
 		Pager<CmsArticle> pager = as
 				.findArticlesByKey(map, showPages, pageSize);
@@ -320,8 +338,9 @@ public class CmsInfoController {
 			jsonMap.put("aid", article.getAid());
 			jsonMap.put("category", article.getCate());
 			jsonMap.put("author", article.getAuthor());
-			jsonMap.put("create_time", article.getCreate_time());
-			jsonMap.put("update_time", article.getAid());
+			String create_time= DateFormatUtils.format(article.getCreate_time(), "MM/dd/yyyy");
+			jsonMap.put("create_time", create_time);
+//			jsonMap.put("update_time", article.getAid());
 			jsonMap.put("title", article.getTitle());
 			jsonArray.put(jsonMap);
 		}
