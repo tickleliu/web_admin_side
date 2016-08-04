@@ -1,5 +1,6 @@
 package com.easycms.controller;
 
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -217,19 +218,20 @@ public class CmsInfoController {
 		return "info/modify_result";
 	}
 
-	@RequestMapping(value = "/s_info")
-	public String showInfo(HttpServletRequest rquest, HttpServletResponse response, Model model) {
+	@RequestMapping(value = "/info_s")
+	public String showInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
 		model.addAttribute("categories", categoryStrings);
+		
 		return "info/info_show";
 	}
 	
-	@RequestMapping(value="/di_result")
-	@ResponseBody
+	@RequestMapping(value="/info_d")
 	public String deleteInfoResult(HttpServletRequest request, HttpServletResponse response, Model model) {
-		return "success!";
+		model.addAttribute("result", "成功");
+		return "info/info_delete";
 	}
 
-	@RequestMapping(value = "/s_getdata")
+	@RequestMapping(value = "/info_g")
 	@ResponseBody
 	public String getInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
 		JSONObject jsonObject = new JSONObject();

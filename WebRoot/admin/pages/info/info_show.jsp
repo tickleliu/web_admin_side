@@ -88,7 +88,7 @@
 <body>
 	<h2>文章列表</h2>
 	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:800px"
-			url="info/info_list" 
+			url="info/info_g" 
 			toolbar="#tb"
 			pagination="true" rownumbers="true"
 			fitColumns="true">

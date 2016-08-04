@@ -100,7 +100,7 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a href="javascript:;" data-url="<%=basePath%>info/info_e.do">
+                        <a href="javascript:;" data-url="<%=basePath%>info/info_s">
                           <i class="icon icon-circle"></i>
                           <span class="txt">信息管理</span>
                         </a>
