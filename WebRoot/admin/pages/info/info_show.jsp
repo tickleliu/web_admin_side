@@ -25,6 +25,7 @@
 	<link rel="stylesheet" type="text/css" href="jeasyui/themes/icon.css">
 	<script type="text/javascript" src="admin/assets/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="jeasyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="jeasyui/locale/easyui-lang-zh_CN.js"></script>
 	<script>
 	function doSearch(){
 		var vf = $('#dfrom').datebox('getValue');
@@ -120,8 +121,9 @@
 			<tr>
 				<th field="ck" checkbox="true"></th>
 				<th field="title" width="80">标题</th>
-				<th field="author" width="70">作者</th>
-				<th field="category" width="70">类别</th>
+				<th field="author" width="30">作者</th>
+				<th field="category" width="50">类别</th>
+				<th field="create_time" width="50">创建时间</th>
 			</tr>
 		</thead>
 	</table>
@@ -147,7 +149,7 @@
 		</select>
 			
 			
-			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>
 	</div>
 </body>
