@@ -112,7 +112,7 @@
 </head>
 <body>
 	<h2>文章列表</h2>
-	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:1100px"
+	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:1120px"
 			url="info/info_g" 
 			toolbar="#tb"
 			pagination="true" rownumbers="true"
@@ -135,10 +135,10 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:220px">
-			到: <input id="dto" class="easyui-datebox" style="width:220px">
+			日期 从: <input id="dfrom" class="easyui-datebox" style="width:150px">
+			到: <input id="dto" class="easyui-datebox" style="width:150px">
 			关键词: 
-			<input id="searchkw" textField="text" style="width:150px">
+			<input id="searchkw" textField="text" style="width:300px">
 			作者: 
 			<input id="author" textField="text" style="width:130px">
 			类别: <select name="category" id="category">
