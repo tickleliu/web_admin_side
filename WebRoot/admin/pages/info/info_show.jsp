@@ -112,7 +112,7 @@
 </head>
 <body>
 	<h2>文章列表</h2>
-	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:800px"
+	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:1100px"
 			url="info/info_g" 
 			toolbar="#tb"
 			pagination="true" rownumbers="true"
@@ -120,9 +120,9 @@
 		<thead>
 			<tr>
 				<th field="ck" checkbox="true"></th>
-				<th field="title" width="80">标题</th>
-				<th field="author" width="30">作者</th>
-				<th field="category" width="50">类别</th>
+				<th field="title" width="100">标题</th>
+				<th field="author" width="20">作者</th>
+				<th field="category" width="40">类别</th>
 				<th field="create_time" width="50">创建时间</th>
 			</tr>
 		</thead>
@@ -135,12 +135,12 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:100px">
-			到: <input id="dto" class="easyui-datebox" style="width:100px">
+			日期 从: <input id="dfrom" class="easyui-datebox" style="width:220px">
+			到: <input id="dto" class="easyui-datebox" style="width:220px">
 			关键词: 
-			<input id="searchkw" textField="text" style="width:130px">
+			<input id="searchkw" textField="text" style="width:150px">
 			作者: 
-			<input id="author" textField="text" style="width:80px">
+			<input id="author" textField="text" style="width:130px">
 			类别: <select name="category" id="category">
 				<option value="0">全部分类</option>
 			<c:forEach var="item" items="${categories}" varStatus="s">

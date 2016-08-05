@@ -50,7 +50,12 @@
 
 
 	<form action="info/info_modify" method="post" id="myform">
-		类别： <select name="category" id="category">
+		<input type="hidden" id="aid" name="aid" value="${aid}">
+		 标题： <input type="text" name="title" id="title"
+			value='${title}' style="width:500px" /> <br /> 
+		作者： <input type="text" name="author"
+			id="author" value='${author}' style="width:200px" /> <br /> 
+		类别： <select name="category" id="category" style="width:200px"> 
 			<c:forEach var="item" items="${categories}" varStatus="s">
 				<option value="${s.count}" 
 				<c:if
@@ -59,23 +64,18 @@
 				</c:if>
 				>${item}</option>
 			</c:forEach>
-		</select> <br />
-		<input type="hidden" id="aid" name="aid" value="${aid}">
-		 标题： <input type="text" name="title" id="title"
-			value='${title}' /> <br /> 
-		作者： <input type="text" name="author"
-			id="author" value='${author}' />
+		</select>
 
 		<textarea name="content" id="content"></textarea>
-
-		<input type="submit" value="提交" onclick="return sub();" />
-
+		<br />
+		<input type="submit" value="提交" onclick="return sub();" style="height:40px;width:60px;" />
 	</form>
-  	<a href="info/info_s">返回</a>
+	<br />
+	<input type = "button" value = "返回" onclick="window.history.back()" style="height:40px;width:60px;" />
 	<!-- 实例化编辑器 -->
 	<script type="text/javascript">
 			var ue = UE.getEditor("content");
-			ue.ready(function() {ue.setContent('${content}');});
+			ue.ready(function() {ue.setContent("${content}");});
 		</script>
 </body>
 </html>
