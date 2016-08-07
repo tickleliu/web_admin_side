@@ -1,12 +1,16 @@
 package com.easycms.common;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;  
+import java.io.OutputStreamWriter;
 import java.io.Writer;  
 import java.util.Locale;  
 import java.util.Map;  
   
 import javax.servlet.ServletContext;  
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
   
 import freemarker.template.Configuration;  
 import freemarker.template.DefaultObjectWrapper;  
@@ -21,12 +25,12 @@ public class FreeMarkerUtils {
 	     * @param out 输出对象 具体输出到哪里 
 	     */  
 	    public static void processTemplate(String templateName, Map<?,?> root, String resultPath){  
-	    	FileWriter out = null;
+	    	Writer out = null;
 	        try{  
 	            //获得模板  
 	            Template template=config.getTemplate(templateName,"UTF-8");  
 	            //生成文件（这里是我们是生成html）  
-	            out = new FileWriter(new File(resultPath));
+	            out = new OutputStreamWriter(new FileOutputStream(new File(resultPath)), "UTF-8" );
 	            template.process(root, out);     
 	            out.flush();     
 	        } catch (IOException e) {  
