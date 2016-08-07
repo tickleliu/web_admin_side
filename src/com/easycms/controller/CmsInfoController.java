@@ -154,6 +154,9 @@ public class CmsInfoController {
 		String title = "请输入标题";
 		String author = "匿名";
 		String aidString = request.getParameter("aid");
+		String irecom = "";
+		String igraph= "";
+		String gpath = "";
 		Long aid = null;
 
 		if (aidString == null || aidString.equals("")) {
@@ -179,14 +182,25 @@ public class CmsInfoController {
 				author = article.getAuthor();
 				category = new Integer(index).toString();
 				title = article.getTitle();
+				if(article.getIgraph() == 1) {
+					igraph = "checked";
+				}
+				if(article.getIrecom() == 1) {
+					irecom = "checked";
+				}
+				gpath = article.getGpath();
 			}
 		}
+		
 		model.addAttribute("content", content);
 		model.addAttribute("aid", aid);
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);
 		model.addAttribute("category", category);
 		model.addAttribute("categories", CategoryStrings);
+		model.addAttribute("irecom", irecom);
+		model.addAttribute("igraph", igraph);
+		model.addAttribute("gpath", gpath);
 
 		return "info/info_editor";
 	}
@@ -239,6 +253,20 @@ public class CmsInfoController {
 			content = content.replace("'", "\"");
 		} else {
 			content = "";
+		}	
+	
+		String irecomString = request.getParameter("irecom");
+		if (irecomString != null) {
+			if (irecomString.equals("1") || irecomString.equals("on")) {
+				cmsArticle.setIrecom(1);
+			}
+		}
+
+		String igraphString = request.getParameter("igraph");
+		if (igraphString != null) {
+			if (igraphString.equals("1") || igraphString.equals("on")) {
+				cmsArticle.setIgraph(1);
+			}
 		}
 
 		cmsArticle.setContent(content);
@@ -471,7 +499,7 @@ public class CmsInfoController {
 		Pager<CmsArticle> newsPager = as.findArticlesByKey(keyMap, 0, 5);
 		for (int i = 0; i < newsPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "news/" + newsPager.getPageList().get(i).getAid().toString());
+			map.put("href", "i/news/" + newsPager.getPageList().get(i).getAid().toString());
 			map.put("src", newsPager.getPageList().get(i).getGpath());
 			map.put("title", newsPager.getPageList().get(i).getTitle());
 			map.put("content", newsPager.getPageList().get(i).getContent());
@@ -488,7 +516,7 @@ public class CmsInfoController {
 		Pager<CmsArticle> techPager = as.findArticlesByKey(keyMap, 0, 6);
 		for (int i = 0; i < techPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "tech/" + techPager.getPageList().get(i).getAid().toString());
+			map.put("href", "i/tech/" + techPager.getPageList().get(i).getAid().toString());
 			map.put("title", techPager.getPageList().get(i).getTitle());
 			map.put("time", DateFormatUtils.format(techPager.getPageList().get(i).getUpdate_time(), "yyyy-MM-dd"));
 			list_tech.add(map);
