@@ -127,7 +127,7 @@
 				<th field="category" style="width:10%">类别</th>
 				<th field="create_time" style="width:10%">创建时间</th>
 				<th field="irecom" style="width:10%">是推荐页</th>
-				<th field="igraph" style="width:10%;float:right">是标题页</th>
+				<th field="igraph" style="width:10%;float:right">是图片页</th>
 			</tr>
 		</thead>
 	</table>

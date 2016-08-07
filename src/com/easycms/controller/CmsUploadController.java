@@ -30,7 +30,7 @@ public class CmsUploadController {
         System.out.println(file.getSize());
         
         /** 写文件前先读出图片原始高宽 **/
-        file.transferTo(new File("F:\\apache-tomcat-7.0.63\\webapps\\upload\\test.jpg"));
+        file.transferTo(new File("C:\\apache-tomcat-7.0.63\\webapps\\upload\\test.jpg"));
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("url", "http://localhost:8000/upload/test.jpg");
