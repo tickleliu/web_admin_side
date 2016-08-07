@@ -34,23 +34,22 @@
 	src="ueditor/lang/zh-cn/zh-cn.js">
 </script>
 <script>
-		function sub(){
+/*		function sub(){
 			var content = $("content").val();
 			alert(content);
 			return false;
 			
-		}
+		}*/
 	</script>
 <!-- 默认样式 -->
 <link type="text/css" href="ueditor/themes/default/css/ueditor.css"
 	rel="stylesheet" />
 
 <!-- 上传图片 -->
-<base href="http://localhost:8000/easycms"/>
-<script src="http://localhost:8000/easycms/admin/assets/js/jquery-2.1.3.min.js"></script>
-<script src="http://localhost:8000/easycms/js/vendor/jquery.ui.widget.js"></script>
-<script src="http://localhost:8000/easycms/js/jquery.iframe-transport.js"></script>
-<script src="http://localhost:8000/easycms/js/jquery.fileupload.js"></script>
+<script src="admin/assets/js/jquery-2.1.3.min.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
 
 
 </head>
@@ -65,11 +64,11 @@
 				<div style="height:16%">
 					<input type="hidden" id="aid" name="aid" value="${aid}"/>
 				 	<a>标题： </a>
-					<input type="text" name="title" id="title" placeholder='${title}' style="width:500px" />
+					<input type="text" name="title" id="title" value='${title}' style="width:500px" />
 				</div>
 				<div style="height:16%">
 					<a>作者：</a> 
-					<input type="text" name="author" id="author" placeholder='${author}' style="width:200px" />
+					<input type="text" name="author" id="author" value='${author}' style="width:200px" />
 				</div>
 				<div style="height:16%">
 					<a>类别：</a>
@@ -86,11 +85,11 @@
 				</div>
 				<div style="height:16%">
 					<a>是推荐页：</a>
-					<input type="checkbox" id="irecom" value='${irecom}' style="vertical-align:sub;"/>
+					<input type="checkbox" id="irecom" name="irecom" checked='${irecom}' style="vertical-align:sub;"/>
 				</div>
 				<div style="height:16%">
 					<a>是图片页：</a>
-					<input type="checkbox" id="igraph" value='${igraph}' style="vertical-align:sub;"/>
+					<input type="checkbox" id="igraph" name="igraph" checked='${igraph}' style="vertical-align:sub;"/>
 				</div>	
 				<div style="height:16%">
 					<input id="fileupload" type="file" name="file" style="">
@@ -102,17 +101,21 @@
 			
 		</div> 
 		<div style="float:left;width:30%;height:300px">
-			<img src="" id="image" style="max-width:300px;max-height:300px;min-width:50px;min-height:50px;">
+			<img src="${gpath}" id="image" style="max-width:300px;max-height:300px;min-width:50px;min-height:50px;">
 		</div>
         <div style="clear:both"></div>
         
         <script>
         $(function () {	
-        	if($("#igraph").attr("checked") != true) {
+        	if($("#igraph").attr("checked") != "checked") {
 					$("#fileupload").css("display", "none");
 					$("#image").css("display", "none");
 					$("#fileprogress").css("display", "none");
-				}				
+				}	else {
+					$("#fileupload").css("display", "block");
+					$("#image").css("display", "block");
+					$("#fileprogress").css("display", "block");
+				}
 			$("#igraph").click(function(){
 				if($("#igraph").is(":checked")) {
 					$("#fileupload").css("display", "block");
@@ -135,7 +138,7 @@
         $(function () {
             $('#fileupload').fileupload({
                 dataType: 'json',
-				url: "http://localhost:8000/easycms/upload?aid=${aid}",
+				url: "http://localhost:8000/easycms/info/upload?aid=${aid}",
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     $('.progress .bar').css(
@@ -157,15 +160,15 @@
 
 		<textarea name="content" id="content"></textarea>
 		<br />
-		<input type="submit" value="提交" onclick="return sub();" style="height:40px;width:60px;" />
-		<input type = "button" value = "返回" onclick="window.history.back()" style="height:40px;width:60px;" />
+		<input type="submit" value="提交" style="height:40px;width:60px;" />
+		<input type = "button" value ="返回" onclick="window.history.back();" style="height:40px;width:60px;" />
 	</form>
 	<br />
 	
 	<!-- 实例化编辑器 -->
 	<script type="text/javascript">
 			var ue = UE.getEditor("content");
-			ue.ready(function() {ue.setContent("${content}");});
-		</script>
+			ue.ready(function() {ue.setContent('${content}');});
+	</script>
 </body>
 </html>
