@@ -13,6 +13,9 @@ public class CmsArticle implements Serializable {
 		create_time = new Date();
 		update_time = new Date();
 		cate = "";
+		this.igraph = 0;
+		this.irecom = 0;
+		this.gpath = "";
 	}
 
 	private Long aid;
@@ -88,4 +91,31 @@ public class CmsArticle implements Serializable {
 	private String cate;
 	private String title;
 	private String content;
+	public String getGpath() {
+		return gpath;
+	}
+
+	public void setGpath(String gpath) {
+		this.gpath = gpath;
+	}
+
+	public Integer getIrecom() {
+		return irecom;
+	}
+
+	public void setIrecom(Integer irecom) {
+		this.irecom = irecom;
+	}
+
+	public Integer getIgraph() {
+		return igraph;
+	}
+
+	public void setIgraph(Integer igraph) {
+		this.igraph = igraph;
+	}
+
+	private String gpath;
+	private Integer irecom;
+	private Integer igraph;
 }

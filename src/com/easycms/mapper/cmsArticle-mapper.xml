@@ -5,7 +5,7 @@
 <mapper namespace="com.easycms.entity.CmsArticle">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="article">
-	    insert into ac_content(aid,create_time,update_time,cate,author,title,content) values(#{aid},#{create_time, jdbcType=DATE, javaType=java.util.Date},#{update_time, jdbcType=DATE, javaType=java.util.Date},#{cate},#{author},#{title},#{content})
+	    insert into ac_content(aid,create_time,update_time,cate,author,title,content,irecom,igraph,gpath) values(#{aid},#{create_time, jdbcType=DATE, javaType=java.util.Date},#{update_time, jdbcType=DATE, javaType=java.util.Date},#{cate},#{author},#{title},#{content},#{irecom},#{igraph},#{gpath})
 	</insert>
 	<resultMap type="article" id="articleMap">
 	<id property="aid" column="aid" />
@@ -15,6 +15,9 @@
 	<result property="title" column="title"></result>
 	<result property="content" column="content"></result>
 	<result property="cate" column="cate"></result>
+	<result property="igraph" column="igraph"></result>
+	<result property="irecom" column="irecom"></result>
+	<result property="gpath" column="gpath"></result>
 	</resultMap>
 	
 	<select id="findById" resultMap="articleMap" parameterType="long">
@@ -26,7 +29,7 @@
 	  	aid=#{id}
 	</select>
 	<update id="update" parameterType="article">
-	  update ac_content set create_time=#{create_time},update_time=#{update_time},cate=#{cate},author=#{author},title=#{title},content=#{content} where aid=#{aid}
+	  update ac_content set create_time=#{create_time},update_time=#{update_time},cate=#{cate},author=#{author},title=#{title},content=#{content}, igraph=#{igraph}, irecom=#{irecom}, gpath=#{gpath} where aid=#{aid}
 	</update>
 	
 	<select id="findByKey" resultType="article" parameterType="map">
@@ -43,6 +46,14 @@
 	    </if>
 	    <if test="author !=null and author!= ''">
 	        and author = #{author}
+	    </if>
+	    
+	    <if test="igraph !=null and igraph!= ''">
+	        and igraph = #{igraph}
+	    </if>
+	    
+	    <if test="irecom !=null and irecom!= ''">
+	        and irecom = #{irecom}
 	    </if>
 	    
 	    <if test="keyw != null">
@@ -71,6 +82,15 @@
 	    <if test="author !=null and author != ''">
 	         and author = #{author}
 	    </if>
+	    
+	    <if test="igraph !=null and igraph!= ''">
+	        and igraph = #{igraph}
+	    </if>
+	    
+	    <if test="irecom !=null and irecom!= ''">
+	        and irecom = #{irecom}
+	    </if>
+	    
 	    <if test="keyw != null">
 	        <foreach collection="keyw" item="key"
 	        open="" separator="" close="">
