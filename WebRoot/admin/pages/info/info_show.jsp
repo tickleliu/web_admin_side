@@ -46,8 +46,8 @@
 				keyw: $('#searchkw').val(),
 				ct: $('#category').val(),
 				author:$('#author').val(),
-				irecom:$('irecom').val(),
-				igraph:$('igraph').val(),
+				irecom:$('#irecom').val(),
+				igraph:$('#igraph').val(),
 			});
 		}
 	};
