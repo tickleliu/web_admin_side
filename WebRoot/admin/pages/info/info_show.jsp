@@ -46,6 +46,8 @@
 				keyw: $('#searchkw').val(),
 				ct: $('#category').val(),
 				author:$('#author').val(),
+				irecom:$('irecom').val(),
+				igraph:$('igraph').val(),
 			});
 		}
 	};
@@ -112,18 +114,20 @@
 </head>
 <body>
 	<h2>文章列表</h2>
-	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:1120px"
+	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:100%"
 			url="info/info_g" 
 			toolbar="#tb"
 			pagination="true" rownumbers="true"
 			fitColumns="true">
 		<thead>
-			<tr>
-				<th field="ck" checkbox="true"></th>
-				<th field="title" width="100">标题</th>
-				<th field="author" width="20">作者</th>
-				<th field="category" width="40">类别</th>
-				<th field="create_time" width="50">创建时间</th>
+			<tr style="width:100%">
+				<th field="ck" checkbox="true" style="width:10%"></th>
+				<th field="title" style="width:40%">标题</th>
+				<th field="author" style="width:15%">作者</th>
+				<th field="category" style="width:10%">类别</th>
+				<th field="create_time" style="width:10%">创建时间</th>
+				<th field="irecom" style="width:10%">是推荐页</th>
+				<th field="igraph" style="width:10%;float:right">是标题页</th>
 			</tr>
 		</thead>
 	</table>
@@ -137,10 +141,24 @@
 		<div>
 			日期 从: <input id="dfrom" class="easyui-datebox" style="width:150px">
 			到: <input id="dto" class="easyui-datebox" style="width:150px">
+			
+			|	
 			关键词: 
 			<input id="searchkw" textField="text" style="width:300px">
-			作者: 
+			
+			|
+			作者:
 			<input id="author" textField="text" style="width:130px">
+			
+			|
+			是推荐页：
+			<input type="checkbox" id="irecom" style="vertical-align:sub;">
+			
+			|
+			是图片页：  
+			<input type="checkbox" id="igraph" style="vertical-align:sub;">			
+			
+			|
 			类别: <select name="category" id="category">
 				<option value="0">全部分类</option>
 			<c:forEach var="item" items="${categories}" varStatus="s">
