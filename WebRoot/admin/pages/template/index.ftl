@@ -184,7 +184,6 @@ $(function(){
 							</div>
 							<div class="news_content">
 								<a class="title" href="${stu.href}" target="_blank">${stu.title}</a>
-								</br>
 								<a class="content" href="${stu.href}" target="_blank">${stu.content}</a>
 							</div>
 						</li>
