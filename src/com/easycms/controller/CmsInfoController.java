@@ -449,11 +449,71 @@ public class CmsInfoController {
 		ServletContext context = request.getServletContext();
 		String template = "admin/pages/template";
 		FreeMarkerUtils.initConfig(context, template);
-		Map<String, String> dataMap = new HashMap<String, String>();
-		dataMap.put("content", "this is the content");
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		//////////////////////////////////////////////////////////
+		//增加一个列表
+		List<Map<String, String>> aList = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 5; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "/fadfa/faf");
+			map.put("content", "fasdfadf");
+			aList.add(map);
+		}
+		dataMap.put("aList", aList);
+		
+		//增加滚动新闻列表
+		List<Map<String, String>> list_slide_news = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 5; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("src", "images/img"+(i+1)+".jpg");
+			map.put("title", "标题1");
+			map.put("content", "内容11111");
+			list_slide_news.add(map);
+		}
+		dataMap.put("list_slide_news", list_slide_news);
+		
+		//增加技术前沿列表
+		List<Map<String, String>> list_tech = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 6; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_tech.add(map);
+		}
+		dataMap.put("list_tech", list_tech);
+		
+		//增加政策解读列表1
+		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 3; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_policy_1.add(map);
+		}
+		dataMap.put("list_policy_1", list_policy_1);
+		
+		//增加政策解读列表2
+		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 3; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_policy_2.add(map);
+		}
+		dataMap.put("list_policy_2", list_policy_2);
+		
+		//增加一个单标签
+		dataMap.put("title1", "新的标题吧");
+		//////////////////////////////////////////////////////////
+		
 		dataMap.put("basePath", "http://localhost:8000/");
-		FreeMarkerUtils.processTemplate("center_intro.ftl", dataMap,
-				"F://test.html");
+		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
+				"D://Projects//git//web_user_side//WebRoot//test.html");
 		return "success";
 	}
 
