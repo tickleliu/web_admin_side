@@ -464,23 +464,33 @@ public class CmsInfoController {
 		
 		//增加滚动新闻列表
 		List<Map<String, String>> list_slide_news = new LinkedList<Map<String,String>>();
-		for (int i = 0; i < 5; i++) {
+		Map<String, Object> keyMap = new HashMap<String, Object>();
+		keyMap.put("category", "新闻资讯");
+		keyMap.put("igraph", Integer.valueOf(1));
+		keyMap.put("irecom", Integer.valueOf(1));
+		Pager<CmsArticle> newsPager = as.findArticlesByKey(keyMap, 0, 5);
+		for (int i = 0; i < newsPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "#");
-			map.put("src", "images/img"+(i+1)+".jpg");
-			map.put("title", "标题1");
-			map.put("content", "内容11111");
+			map.put("href", "news/" + newsPager.getPageList().get(i).getAid().toString());
+			map.put("src", newsPager.getPageList().get(i).getGpath());
+			map.put("title", newsPager.getPageList().get(i).getTitle());
+			map.put("content", newsPager.getPageList().get(i).getContent());
 			list_slide_news.add(map);
 		}
 		dataMap.put("list_slide_news", list_slide_news);
 		
 		//增加技术前沿列表
 		List<Map<String, String>> list_tech = new LinkedList<Map<String,String>>();
-		for (int i = 0; i < 6; i++) {
+		keyMap = new HashMap<String, Object>();
+		keyMap.put("category", "技术前沿");
+		keyMap.put("igraph", Integer.valueOf(1));
+		keyMap.put("irecom", Integer.valueOf(1));
+		Pager<CmsArticle> techPager = as.findArticlesByKey(keyMap, 0, 6);
+		for (int i = 0; i < techPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "#");
-			map.put("title", "标题1111111111111");
-			map.put("time", "08-12");
+			map.put("href", "tech/" + techPager.getPageList().get(i).getAid().toString());
+			map.put("title", techPager.getPageList().get(i).getTitle());
+			map.put("time", DateFormatUtils.format(techPager.getPageList().get(i).getUpdate_time(), "yyyy-MM-dd"));
 			list_tech.add(map);
 		}
 		dataMap.put("list_tech", list_tech);
@@ -511,7 +521,7 @@ public class CmsInfoController {
 		dataMap.put("title1", "新的标题吧");
 		//////////////////////////////////////////////////////////
 		
-		dataMap.put("basePath", "http://localhost:8000/");
+		dataMap.put("basePath", "http://localhost:8000/easycms/");
 		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
 				"D://Projects//git//web_user_side//WebRoot//test.html");
 		return "success";
