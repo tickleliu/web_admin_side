@@ -118,7 +118,13 @@ public class CmsInfoController {
 					as.save(cmsArticle);
 				}
 				cmsArticle.setAuthor("admin");
-				cmsArticle.setContent(request.getParameter("content"));
+				String content = request.getParameter("content");
+				if (content != null) {
+					content = content.replace("'", "\"");
+				} else {
+					content = "";
+				}
+				cmsArticle.setContent(content);
 				cmsArticle.setUpdate_time(new Date());
 				as.update(cmsArticle);
 				String backurl = "info/intro_e.do?cate=";
@@ -228,10 +234,18 @@ public class CmsInfoController {
 			as.save(cmsArticle);
 		}
 
+		String content = request.getParameter("content");
+		if (content != null) {
+			content = content.replace("'", "\"");
+		} else {
+			content = "";
+		}
+
+		cmsArticle.setContent(content);
 		cmsArticle.setCate(CategoryStrings[categorIndex - 1]);
 		cmsArticle.setAuthor(request.getParameter("author"));
 		cmsArticle.setTitle(request.getParameter("title"));
-		cmsArticle.setContent(request.getParameter("content"));
+		cmsArticle.setContent(content);
 		cmsArticle.setUpdate_time(new Date());
 		as.update(cmsArticle);
 		String backurl = "info/info_s";
@@ -241,6 +255,9 @@ public class CmsInfoController {
 		return "info/modify_result";
 	}
 
+	/**
+	 * 信息列表展示页
+	 * */
 	@RequestMapping(value = "/info_s")
 	public String showInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
@@ -249,6 +266,9 @@ public class CmsInfoController {
 		return "info/info_show";
 	}
 
+	/**
+	 * 信息删除页
+	 * */
 	@RequestMapping(value = "/info_d")
 	@ResponseBody
 	public String deleteInfoResult(@RequestBody String deleteIds,
@@ -322,6 +342,20 @@ public class CmsInfoController {
 			map.put("author", author);
 		}
 
+		String irecomString = request.getParameter("irecom");
+		if (irecomString != null) {
+			if (irecomString.equals("1") || irecomString.equals("on")) {
+				map.put("irecom", 1);
+			}
+		}
+
+		String igraphString = request.getParameter("igraph");
+		if (igraphString != null) {
+			if (igraphString.equals("1") || igraphString.equals("on")) {
+				map.put("igraph", 1);
+			}
+		}
+
 		int showPages = 0;
 		String pageString = request.getParameter("page");
 		if (pageString != null) {
@@ -344,6 +378,7 @@ public class CmsInfoController {
 			}
 		}
 
+		showPages = showPages * pageSize;
 		String keyword = request.getParameter("keyw");
 
 		List<String> keywords = new LinkedList<String>();
@@ -379,6 +414,18 @@ public class CmsInfoController {
 			jsonMap.put("create_time", create_time);
 			// jsonMap.put("update_time", article.getAid());
 			jsonMap.put("title", article.getTitle());
+			
+			if (article.getIrecom() == 1) {
+				jsonMap.put("irecom", "是");
+			} else {
+				jsonMap.put("irecom", "否");
+			}
+
+			if (article.getIgraph() == 1) {
+				jsonMap.put("igraph", "是");
+			} else {
+				jsonMap.put("igraph", "否");
+			}
 			jsonArray.put(jsonMap);
 		}
 		jsonObject.put("rows", jsonArray);
@@ -402,11 +449,71 @@ public class CmsInfoController {
 		ServletContext context = request.getServletContext();
 		String template = "admin/pages/template";
 		FreeMarkerUtils.initConfig(context, template);
-		Map<String, String> dataMap = new HashMap<String, String>();
-		dataMap.put("content", "this is the content");
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		//////////////////////////////////////////////////////////
+		//增加一个列表
+		List<Map<String, String>> aList = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 5; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "/fadfa/faf");
+			map.put("content", "fasdfadf");
+			aList.add(map);
+		}
+		dataMap.put("aList", aList);
+		
+		//增加滚动新闻列表
+		List<Map<String, String>> list_slide_news = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 5; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("src", "images/img"+(i+1)+".jpg");
+			map.put("title", "标题1");
+			map.put("content", "内容11111");
+			list_slide_news.add(map);
+		}
+		dataMap.put("list_slide_news", list_slide_news);
+		
+		//增加技术前沿列表
+		List<Map<String, String>> list_tech = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 6; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_tech.add(map);
+		}
+		dataMap.put("list_tech", list_tech);
+		
+		//增加政策解读列表1
+		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 3; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_policy_1.add(map);
+		}
+		dataMap.put("list_policy_1", list_policy_1);
+		
+		//增加政策解读列表2
+		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String,String>>();
+		for (int i = 0; i < 3; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("href", "#");
+			map.put("title", "标题1111111111111");
+			map.put("time", "08-12");
+			list_policy_2.add(map);
+		}
+		dataMap.put("list_policy_2", list_policy_2);
+		
+		//增加一个单标签
+		dataMap.put("title1", "新的标题吧");
+		//////////////////////////////////////////////////////////
+		
 		dataMap.put("basePath", "http://localhost:8000/");
-		FreeMarkerUtils.processTemplate("center_intro.ftl", dataMap,
-				"F://test.html");
+		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
+				"D://Projects//git//web_user_side//WebRoot//test.html");
 		return "success";
 	}
 

@@ -24,7 +24,7 @@ public class FreeMarkerUtils {
 	    	FileWriter out = null;
 	        try{  
 	            //获得模板  
-	            Template template=config.getTemplate(templateName,"utf-8");  
+	            Template template=config.getTemplate(templateName,"UTF-8");  
 	            //生成文件（这里是我们是生成html）  
 	            out = new FileWriter(new File(resultPath));
 	            template.process(root, out);     
@@ -49,8 +49,8 @@ public class FreeMarkerUtils {
 	     */  
 	    public static void initConfig(ServletContext servletContext,String templateDir){  
 	            config.setLocale(Locale.CHINA);  
-	            config.setDefaultEncoding("utf-8");  
-	            config.setEncoding(Locale.CHINA, "utf-8");  
+	            config.setDefaultEncoding("UTF-8");  
+	            config.setEncoding(Locale.CHINA, "UTF-8");  
 	            config.setServletContextForTemplateLoading(servletContext, templateDir);  
 	            config.setObjectWrapper(new DefaultObjectWrapper());  
 	    }  

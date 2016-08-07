@@ -97,5 +97,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mybatis-spring-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.6-bin.jar"/>
+
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

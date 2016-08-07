@@ -1,11 +1,7 @@
 package com.easycms.service.impl;
 
-import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.Size;
-
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.easycms.base.AbstractBaseDao;
