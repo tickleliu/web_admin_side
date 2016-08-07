@@ -151,11 +151,11 @@
 			<input id="author" textField="text" style="width:130px">
 			
 			|
-			是推荐页：
+			是推荐页:
 			<input type="checkbox" id="irecom" style="vertical-align:sub;">
 			
 			|
-			是图片页：  
+			是图片页:
 			<input type="checkbox" id="igraph" style="vertical-align:sub;">			
 			
 			|
