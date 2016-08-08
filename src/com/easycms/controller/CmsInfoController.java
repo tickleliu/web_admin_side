@@ -44,8 +44,11 @@ public class CmsInfoController {
 	private static final Long CENTERINTRO_ID = 100L;
 	private static final Long ORGINTRO_ID = 200L;
 	private static final Long CONTACT_ID = 300L;
-	private static String[] CategoryStrings = { "新闻资讯", "政策解读", "技术前沿", "试点信息",
-			"认证信息" };
+	
+	private static final String[] CategoryStrings = { "新闻资讯", "政策解读", "技术前沿",
+			"试点信息", "认证信息", "中心简介", "组织架构", "联系我们" };
+	private static final String[] CategoryStringsE = { "news", "policy", "tech",
+			"pilot", "identy", "intro", "org", "contact" };
 	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
@@ -279,8 +282,11 @@ public class CmsInfoController {
 		as.update(cmsArticle);
 		String backurl = "info/info_s";
 		model.addAttribute("backurl", backurl);
+		model.addAttribute("aid", cmsArticle.getAid());
 		model.addAttribute("cate", CategoryStrings[categorIndex - 1]);
+		model.addAttribute("category", CategoryStringsE[categorIndex - 1]);
 		model.addAttribute("title", cmsArticle.getTitle());
+		model.addAttribute("page_url", config.getWebUserSideRootUrl());
 		return "info/modify_result";
 	}
 

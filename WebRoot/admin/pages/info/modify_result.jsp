@@ -24,8 +24,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <p>修改成功！</p>
-  <p>${cate}</p>
-  <p>${title}</p>
-  <a href="${backurl}">返回</a>
+  <div>文章标题：${title}</div> <div>文章分类：${cate}</div>
+  <a href="${backurl}">返回内容管理</a>
+  <hr/>
+  <iframe src="${page_url}g/${category}/${aid}" width="100%" height="100%"></iframe>
   </body>
 </html>
