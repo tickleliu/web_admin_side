@@ -45,6 +45,8 @@
 <link type="text/css" href="ueditor/themes/default/css/ueditor.css"
 	rel="stylesheet" />
 
+<link type="text/css" href="admin/assets/css/base.css"
+	rel="stylesheet" />
 <!-- 上传图片 -->
 <script src="admin/assets/js/jquery-2.1.3.min.js"></script>
 <script src="js/vendor/jquery.ui.widget.js"></script>
@@ -93,15 +95,11 @@
 				</div>	
 				<div style="height:16%">
 					<input id="fileupload" type="file" name="file" style="">
-	        		<div id="fileprogress" class="progress progress-striped active" style="">
-	            		<div class="progress-bar progress-bar-success" role="progressbar" style="width: 0%;"></div>
-	        		</div>
-					
 				</div>			
 			
 		</div> 
-		<div style="float:left;width:30%;height:300px">
-			<img src="${gpath}" id="image" style="max-width:300px;max-height:300px;min-width:50px;min-height:50px;">
+		<div  style="float:left;width:30%;height:300px">
+			<img class="s_img_border" src="${gpath}" id="image" style="max-width:300px;max-height:300px;min-width:50px;min-height:50px;">
 		</div>
         <div style="clear:both"></div>
         
@@ -110,22 +108,22 @@
         	if($("#igraph").attr("checked") != "checked") {
 					$("#fileupload").css("display", "none");
 					$("#image").css("display", "none");
-					$("#fileprogress").css("display", "none");
+					$("#uploadSubmit").css("display", "none");
 				}	else {
 					$("#fileupload").css("display", "block");
 					$("#image").css("display", "block");
-					$("#fileprogress").css("display", "block");
+					$("#uploadSubmit").css("display", "block");
 				}
 			$("#igraph").click(function(){
 				if($("#igraph").is(":checked")) {
 					$("#fileupload").css("display", "block");
 					$("#image").css("display", "block");
-					$("#fileprogress").css("display", "block");
+					$("#uploadSubmit").css("display", "block");
 				}
 				else{
 					$("#fileupload").css("display", "none");
 					$("#image").css("display", "none");
-					$("#fileprogress").css("display", "none");
+					$("#uploadSubmit").css("display", "none");
 				}		
 					
 				
