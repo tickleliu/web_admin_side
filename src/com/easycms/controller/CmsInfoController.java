@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easycms.common.FreeMarkerUtils;
 import com.easycms.common.Pager;
+import com.easycms.common.WebConfig;
 import com.easycms.entity.CmsArticle;
 import com.easycms.service.CmsArticleService;
 
@@ -39,6 +40,9 @@ public class CmsInfoController {
 
 	@Resource(name = "cmsArticleServiceImpl")
 	private CmsArticleService as;
+	
+	@Resource(name = "webConfig")
+	private WebConfig config;
 
 	private static final Long CENTERINTRO_ID = 100L;
 	private static final Long ORGINTRO_ID = 200L;
@@ -484,10 +488,11 @@ public class CmsInfoController {
 		List<Map<String, String>> aList = new LinkedList<Map<String,String>>();
 		for (int i = 0; i < 5; i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "/fadfa/faf");
-			map.put("content", "fasdfadf");
+			map.put("href", "#");
+			map.put("content", "助理人力师证书培训 4年以上工作经验");
 			aList.add(map);
 		}
+		
 		dataMap.put("aList", aList);
 		
 		//增加滚动新闻列表
@@ -524,34 +529,41 @@ public class CmsInfoController {
 		dataMap.put("list_tech", list_tech);
 		
 		//增加政策解读列表1
+		keyMap = new HashMap<String, Object>();
+		keyMap.put("category", "政策解读");
+		keyMap.put("igraph", Integer.valueOf(1));
+		keyMap.put("irecom", Integer.valueOf(1));
+		Pager<CmsArticle> policyPager = as.findArticlesByKey(keyMap, 0, 3);
 		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String,String>>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < policyPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "#");
-			map.put("title", "标题1111111111111");
-			map.put("time", "08-12");
+			map.put("href", "i/policy/" + policyPager.getPageList().get(i).getAid().toString());
+			map.put("title", policyPager.getPageList().get(i).getTitle());
+			map.put("time", DateFormatUtils.format(policyPager.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
 			list_policy_1.add(map);
 		}
 		dataMap.put("list_policy_1", list_policy_1);
 		
 		//增加政策解读列表2
+		keyMap = new HashMap<String, Object>();
+		keyMap.put("category", "政策解读");
+		keyMap.put("igraph", Integer.valueOf(1));
+		keyMap.put("irecom", Integer.valueOf(1));
+		Pager<CmsArticle> policyPager2 = as.findArticlesByKey(keyMap, 1, 3);
 		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String,String>>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < policyPager2.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "#");
-			map.put("title", "标题1111111111111");
-			map.put("time", "08-12");
+			map.put("href", "i/policy/" + policyPager2.getPageList().get(i).getAid().toString());
+			map.put("title", policyPager2.getPageList().get(i).getTitle());
+			map.put("time", DateFormatUtils.format(policyPager2.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
 			list_policy_2.add(map);
 		}
 		dataMap.put("list_policy_2", list_policy_2);
 		
-		//增加一个单标签
-		dataMap.put("title1", "新的标题吧");
-		//////////////////////////////////////////////////////////
-		
-		dataMap.put("basePath", "http://localhost:8000/easycms/");
+		dataMap.put("basePath", config.getWebAdminSideBaseUrl());
 		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
-				"D://Projects//git//web_user_side//WebRoot//test.html");
+				config.getWebUserSideRootPath() + "test.html");
+		
 		return "success";
 	}
 

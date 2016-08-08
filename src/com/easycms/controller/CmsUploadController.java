@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.easycms.common.WebConfig;
 import com.easycms.entity.CmsArticle;
 import com.easycms.service.CmsArticleService;
 import com.google.gson.JsonObject;
@@ -25,6 +26,11 @@ public class CmsUploadController {
 	
 	@Resource(name = "cmsArticleServiceImpl")
 	private CmsArticleService as;
+	
+	@Resource(name = "webConfig")
+	private WebConfig config;
+	
+	private static final String FOLDER_STRING = "main/";
 
 	@RequestMapping(value="upload")
 	@ResponseBody
@@ -44,7 +50,7 @@ public class CmsUploadController {
 		}
 		
 		String uuidFileName = Long.valueOf(System.currentTimeMillis()).toString();
-		String gpath = "http://localhost:8000/upload/" + uuidFileName +"." + suffix;
+		String gpath = config.getUpLoadImageBaseUrl() + FOLDER_STRING  + uuidFileName  + suffix;
 		CmsArticle cmsArticle = null;
 		cmsArticle = as.findArticleById(aid);
 		if (cmsArticle == null) {
@@ -60,8 +66,8 @@ public class CmsUploadController {
 			as.updateArticle(cmsArticle);
 		}
 
-        /** 写文件前先读出图片原始高宽 **/
-        file.transferTo(new File("F:\\apache-tomcat-7.0.63\\webapps\\upload\\" + uuidFileName +"." + suffix));
+        /** 转存图片**/
+        file.transferTo(new File(config.getUpLoadImageBasePath() + FOLDER_STRING + uuidFileName  + suffix));
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("url", gpath);
