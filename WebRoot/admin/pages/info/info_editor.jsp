@@ -47,12 +47,14 @@
 
 <link type="text/css" href="admin/assets/css/base.css"
 	rel="stylesheet" />
+	
+<link rel="stylesheet" type="text/css" href="/css/public.css" />
 <!-- 上传图片 -->
 <script src="admin/assets/js/jquery-2.1.3.min.js"></script>
 <script src="js/vendor/jquery.ui.widget.js"></script>
 <script src="js/jquery.iframe-transport.js"></script>
 <script src="js/jquery.fileupload.js"></script>
-
+<script type="text/javascript" src="js/jquery.uploadify.min.js"></script>
 
 </head>
 
@@ -93,8 +95,11 @@
 					<a>是图片页：</a>
 					<input type="checkbox" id="igraph" name="igraph" checked='${igraph}' style="vertical-align:sub;"/>
 				</div>	
-				<div style="height:16%">
-					<input id="fileupload" type="file" name="file" style="">
+				<div style="height:16%;width:15%">
+					<label id="uploadSubmit" class="upload_button" for="fileupload" style="">上传文件</label>
+						<form>
+							<input id="fileupload" type="file" name="fileupload" style="position:absolute;clip:rect(0 0 0 0);">
+						</form>					
 				</div>			
 			
 		</div> 

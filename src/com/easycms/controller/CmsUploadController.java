@@ -38,7 +38,7 @@ public class CmsUploadController {
             throws Exception {
         Integer userID = 0;
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("file");
+        MultipartFile file = multipartRequest.getFile("fileupload");
         String suffix = file.getOriginalFilename().substring  
         		(file.getOriginalFilename().lastIndexOf(".")); 
         String aidString = request.getParameter("aid");
