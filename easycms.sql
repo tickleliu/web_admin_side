@@ -11,6 +11,9 @@ CREATE TABLE  `cms`.`ac_content` (
   `author` varchar(45) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
+  `irecom` tinyint(1) NOT NULL DEFAULT '0',
+  `igraph` tinyint(1) NOT NULL DEFAULT '0',
+  `gpath` varchar(255) DEFAULT NULL,
   KEY `cate_index` (`cate`) USING HASH,
   KEY `time_index` (`create_time`) USING BTREE,
   KEY `author_index` (`author`) USING HASH
