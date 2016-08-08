@@ -135,11 +135,16 @@ $(function(){
 			</div>
 
 			<div class="rzpx_list_2">
-				<ul>
-					<li><a href="#" target="_blank" id="rzpx_7">讨论区</a></li>
-					<li><a href="#" target="_blank" id="rzpx_8">资质认证</a></li>
-					<li><a href="#" target="_blank" id="rzpx_9">用户认证</a></li>
-				</ul>
+				<div class="icons">
+					<a href="#" target="_blank" id="rzpx_7"></a>
+					<a href="#" target="_blank" id="rzpx_8"></a>
+					<a href="#" target="_blank" id="rzpx_9"></a>
+				</div>
+				<div class="titles">
+					<a href="#" target="_blank">讨论区</a>
+					<a href="#" target="_blank">资质认证</a>
+					<a href="#" target="_blank">用户认证</a>
+				</div>
 			</div>
 			
 			<div class="rzpx_list_3">
@@ -184,7 +189,7 @@ $(function(){
 							</div>
 							<div class="news_content">
 								<a class="title" href="${stu.href}" target="_blank">${stu.title}</a>
-								<a class="content" href="${stu.href}" target="_blank">${stu.content}</a>
+								<a class="content" href="${stu.href}" target="_blank"><p>${stu.content}</p></a>
 							</div>
 						</li>
 						</#list>
@@ -293,8 +298,8 @@ $(function(){
 				<a class="more" href="#">更多>></a>
 			</div>
 			<div class="policy_list">
-				<div class="imgNews">	<!--图片新闻-->
-					<a href="#" target="_blank"><img src="images/icon111.jpg" height="82" width="112"></a>
+				<div class="icons" id="policy_1">	<!--图标-->
+					<a>规范性文件</a>
 				</div>
 				<div class="topNews">	<!--头条新闻-->
 					<ul>
@@ -324,8 +329,8 @@ $(function(){
 			<div style='border-bottom:1px solid #dbdbdb'></div> <!--添加一条横线-->
 			
 			<div class="policy_list">
-				<div class="imgNews">	<!--图片新闻-->
-					<a href="#" target="_blank"><img src="images/icon111.jpg" height="82" width="112"></a>
+				<div class="icons" id="policy_2">	<!--图标-->
+					<a>行政执法信息公开</a>
 				</div>
 				<div class="topNews">	<!--头条新闻-->
 					<ul>
