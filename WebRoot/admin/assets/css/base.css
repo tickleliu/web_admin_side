@@ -56,3 +56,6 @@ a:hover{text-decoration: none;color:#1b4d79;}
 .group:after,.layout:before,.layout:after{ content: "\0020"; display: block; height: 0; overflow: hidden; }
 .group:after,.layout:after{ clear: both; }
 .group,.layout{ zoom: 1; }
+.s_img_border {
+	border： 5px solid black;
+}
