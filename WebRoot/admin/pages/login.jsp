@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <base href="<%=basePath%>"/>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>EasyCMS 登录</title>
+  <title> 管理员登录</title>
   <link type="text/css" rel="stylesheet" href="admin/assets/css/font-awesome.min.css"/>
   <!--[if IE 7]>
   <link type="text/css" rel="stylesheet" href="admin/assets/css/font-awesome-ie7.min.css"/>
@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
     <div id="login" class="group">
         <div id="login-inner" data-active="login">
-            <h1 class="logo-mini"><span>EasyCMS</span> Content Admin System</h1>
+            <h1 class="logo-mini"><span>军民融合评估网站</span> 后台管理员系统</h1>
             <div id="login-box" class="box">
             	<div class="hd">
             		<h2>用户登录</h2>
