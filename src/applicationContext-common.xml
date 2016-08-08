@@ -18,7 +18,7 @@
 			<property name="ftlTemplatePath" value=""/>
 			<property name="UpLoadImageBasePath" value="C:\\apache-tomcat-7.0.63\\webapps\\upload\\"/>
 			<property name="UpLoadImageBaseUrl" value="http://localhost:8000/upload/"/>
-			<property name="webUserSideRootPath" value="C:\\apache-tomcat-7.0.63\\webapps\\o\\"/>
+			<property name="webUserSideRootPath" value="D:\\projects\\git\\web_user_side\\WebRoot\\"/>
 			<property name="webAdminSideBaseUrl" value="http://localhost:8000/easycms/"/>
 	</bean>
     <context:component-scan base-package="com.easycms"></context:component-scan>
