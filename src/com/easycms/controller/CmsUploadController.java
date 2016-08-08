@@ -1,6 +1,7 @@
 package com.easycms.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.CSS;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,6 +69,14 @@ public class CmsUploadController {
 		}
 
         /** 转存图片**/
+		
+		try {
+			FileUtils.forceMkdir(new File(config.getUpLoadImageBasePath() + FOLDER_STRING));
+		} catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
         file.transferTo(new File(config.getUpLoadImageBasePath() + FOLDER_STRING + uuidFileName  + suffix));
 
         JsonObject jsonObject = new JsonObject();

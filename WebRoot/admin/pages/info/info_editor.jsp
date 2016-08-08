@@ -97,9 +97,7 @@
 				</div>	
 				<div style="height:16%;width:15%">
 					<label id="uploadSubmit" class="upload_button" for="fileupload" style="">上传文件</label>
-						<form>
 							<input id="fileupload" type="file" name="fileupload" style="position:absolute;clip:rect(0 0 0 0);">
-						</form>					
 				</div>			
 			
 		</div> 

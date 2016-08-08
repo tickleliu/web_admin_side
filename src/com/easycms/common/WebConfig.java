@@ -1,6 +1,15 @@
 package com.easycms.common;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
+import bsh.This;
+
 public class WebConfig {
+	private Logger logger = Logger.getLogger(This.class);
 	public String getFtlTemplatePath() {
 		return ftlTemplatePath;
 	}
@@ -8,12 +17,29 @@ public class WebConfig {
 		this.ftlTemplatePath = ftlTemplatePath;
 	}
 	public String getUpLoadImageBasePath() {
+			try {
+			FileUtils.forceMkdir(new File(UpLoadImageBasePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 		return UpLoadImageBasePath;
 	}
 	public void setUpLoadImageBasePath(String upLoadImageBasePath) {
+	
 		UpLoadImageBasePath = upLoadImageBasePath;
 	}
 	public String getWebUserSideRootPath() {
+		
+		try {
+			FileUtils.forceMkdir(new File(webUserSideRootPath));
+		} catch (IOException e) {
+			// TODO: handle exception
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		
 		return webUserSideRootPath;
 	}
 	public void setWebUserSideRootPath(String webUserSideRootPath) {
