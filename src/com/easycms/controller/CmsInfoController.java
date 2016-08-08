@@ -1,6 +1,5 @@
 package com.easycms.controller;
 
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,14 +7,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.border.TitledBorder;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -504,7 +501,7 @@ public class CmsInfoController {
 		Pager<CmsArticle> newsPager = as.findArticlesByKey(keyMap, 0, 5);
 		for (int i = 0; i < newsPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "i/news/" + newsPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/news/" + newsPager.getPageList().get(i).getAid().toString());
 			map.put("src", newsPager.getPageList().get(i).getGpath());
 			map.put("title", newsPager.getPageList().get(i).getTitle());
 			map.put("content", newsPager.getPageList().get(i).getContent());
@@ -521,7 +518,7 @@ public class CmsInfoController {
 		Pager<CmsArticle> techPager = as.findArticlesByKey(keyMap, 0, 6);
 		for (int i = 0; i < techPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "i/tech/" + techPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/tech/" + techPager.getPageList().get(i).getAid().toString());
 			map.put("title", techPager.getPageList().get(i).getTitle());
 			map.put("time", DateFormatUtils.format(techPager.getPageList().get(i).getUpdate_time(), "yyyy-MM-dd"));
 			list_tech.add(map);
@@ -537,7 +534,7 @@ public class CmsInfoController {
 		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String,String>>();
 		for (int i = 0; i < policyPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "i/policy/" + policyPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/policy/" + policyPager.getPageList().get(i).getAid().toString());
 			map.put("title", policyPager.getPageList().get(i).getTitle());
 			map.put("time", DateFormatUtils.format(policyPager.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
 			list_policy_1.add(map);
@@ -553,7 +550,7 @@ public class CmsInfoController {
 		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String,String>>();
 		for (int i = 0; i < policyPager2.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "i/policy/" + policyPager2.getPageList().get(i).getAid().toString());
+			map.put("href", "g/policy/" + policyPager2.getPageList().get(i).getAid().toString());
 			map.put("title", policyPager2.getPageList().get(i).getTitle());
 			map.put("time", DateFormatUtils.format(policyPager2.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
 			list_policy_2.add(map);
