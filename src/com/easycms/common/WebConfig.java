@@ -28,7 +28,7 @@ public class WebConfig {
 	public void setUpLoadImageBaseUrl(String upLoadImageBaseUrl) {
 		UpLoadImageBaseUrl = upLoadImageBaseUrl;
 	}
-	private String webUserSideRootPath = "F:\\apache-tomcat-7.0.63\\webapps\\o\\";
+	private String webUserSideRootPath = "D:\\Projects\\apache-tomcat\\webapps\\o\\";
 	private String webAdminSideBaseUrl = "http://localhost:8000/easycms/";
 	public String getWebUploadBaseUrl() {
 		return webUploadBaseUrl;
