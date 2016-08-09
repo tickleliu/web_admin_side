@@ -39,18 +39,18 @@ public class CmsInfoController {
 
 	@Resource(name = "cmsArticleServiceImpl")
 	private CmsArticleService as;
-	
+
 	@Resource(name = "webConfig")
 	private WebConfig config;
 
 	private static final Long CENTERINTRO_ID = 100L;
 	private static final Long ORGINTRO_ID = 200L;
 	private static final Long CONTACT_ID = 300L;
-	
+
 	private static final String[] CategoryStrings = { "新闻资讯", "政策解读", "技术前沿",
 			"试点信息", "认证信息", "中心简介", "组织架构", "联系我们" };
-	private static final String[] CategoryStringsE = { "news", "policy", "tech",
-			"pilot", "identy", "intro", "org", "contact" };
+	private static final String[] CategoryStringsE = { "news", "policy",
+			"tech", "pilot", "identy", "intro", "org", "contact" };
 	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
@@ -161,7 +161,7 @@ public class CmsInfoController {
 		String author = "匿名";
 		String aidString = request.getParameter("aid");
 		String irecom = "";
-		String igraph= "";
+		String igraph = "";
 		String gpath = "";
 		Long aid = null;
 
@@ -188,16 +188,16 @@ public class CmsInfoController {
 				author = article.getAuthor();
 				category = new Integer(index).toString();
 				title = article.getTitle();
-				if(article.getIgraph() == 1) {
+				if (article.getIgraph() == 1) {
 					igraph = "checked";
 				}
-				if(article.getIrecom() == 1) {
+				if (article.getIrecom() == 1) {
 					irecom = "checked";
 				}
 				gpath = article.getGpath();
 			}
 		}
-		
+
 		model.addAttribute("content", content);
 		model.addAttribute("aid", aid);
 		model.addAttribute("title", title);
@@ -259,8 +259,8 @@ public class CmsInfoController {
 			content = content.replace("'", "\"");
 		} else {
 			content = "";
-		}	
-	
+		}
+
 		String irecomString = request.getParameter("irecom");
 		if (irecomString != null) {
 			if (irecomString.equals("1") || irecomString.equals("on")) {
@@ -451,7 +451,7 @@ public class CmsInfoController {
 			jsonMap.put("create_time", create_time);
 			// jsonMap.put("update_time", article.getAid());
 			jsonMap.put("title", article.getTitle());
-			
+
 			if (article.getIrecom() == 1) {
 				jsonMap.put("irecom", "是");
 			} else {
@@ -487,21 +487,21 @@ public class CmsInfoController {
 		String template = "admin/pages/template";
 		FreeMarkerUtils.initConfig(context, template);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		
-		//////////////////////////////////////////////////////////
-		//增加一个列表
-		List<Map<String, String>> aList = new LinkedList<Map<String,String>>();
+
+		// ////////////////////////////////////////////////////////
+		// 增加一个列表
+		List<Map<String, String>> aList = new LinkedList<Map<String, String>>();
 		for (int i = 0; i < 5; i++) {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("href", "#");
 			map.put("content", "助理人力师证书培训 4年以上工作经验");
 			aList.add(map);
 		}
-		
+
 		dataMap.put("aList", aList);
-		
-		//增加滚动新闻列表
-		List<Map<String, String>> list_slide_news = new LinkedList<Map<String,String>>();
+
+		// 增加滚动新闻列表
+		List<Map<String, String>> list_slide_news = new LinkedList<Map<String, String>>();
 		Map<String, Object> keyMap = new HashMap<String, Object>();
 		keyMap.put("category", "新闻资讯");
 		keyMap.put("igraph", Integer.valueOf(1));
@@ -509,18 +509,23 @@ public class CmsInfoController {
 		Pager<CmsArticle> newsPager = as.findArticlesByKey(keyMap, 0, 5);
 		for (int i = 0; i < newsPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "g/news/" + newsPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/news/"
+					+ newsPager.getPageList().get(i).getAid().toString());
 			map.put("src", newsPager.getPageList().get(i).getGpath());
 			map.put("title", newsPager.getPageList().get(i).getTitle());
-			Document document = Jsoup.parse(newsPager.getPageList().get(i).getContent());
+			Document document = Jsoup.parse(newsPager.getPageList().get(i)
+					.getContent());
 			String content = document.text();
+			content = content.replace("　", "");
+			content = content.replace("	", "");
+			content = content.replace("\t", "");
 			map.put("content", content);
 			list_slide_news.add(map);
 		}
 		dataMap.put("list_slide_news", list_slide_news);
-		
-		//增加技术前沿列表
-		List<Map<String, String>> list_tech = new LinkedList<Map<String,String>>();
+
+		// 增加技术前沿列表
+		List<Map<String, String>> list_tech = new LinkedList<Map<String, String>>();
 		keyMap = new HashMap<String, Object>();
 		keyMap.put("category", "技术前沿");
 		keyMap.put("igraph", Integer.valueOf(1));
@@ -528,49 +533,58 @@ public class CmsInfoController {
 		Pager<CmsArticle> techPager = as.findArticlesByKey(keyMap, 0, 6);
 		for (int i = 0; i < techPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "g/tech/" + techPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/tech/"
+					+ techPager.getPageList().get(i).getAid().toString());
 			map.put("title", techPager.getPageList().get(i).getTitle());
-			map.put("time", DateFormatUtils.format(techPager.getPageList().get(i).getUpdate_time(), "yyyy-MM-dd"));
+			map.put("time",
+					DateFormatUtils.format(techPager.getPageList().get(i)
+							.getUpdate_time(), "yyyy-MM-dd"));
 			list_tech.add(map);
 		}
 		dataMap.put("list_tech", list_tech);
-		
-		//增加政策解读列表1
+
+		// 增加政策解读列表1
 		keyMap = new HashMap<String, Object>();
 		keyMap.put("category", "政策解读");
 		keyMap.put("igraph", Integer.valueOf(1));
 		keyMap.put("irecom", Integer.valueOf(1));
 		Pager<CmsArticle> policyPager = as.findArticlesByKey(keyMap, 0, 3);
-		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String,String>>();
+		List<Map<String, String>> list_policy_1 = new LinkedList<Map<String, String>>();
 		for (int i = 0; i < policyPager.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "g/policy/" + policyPager.getPageList().get(i).getAid().toString());
+			map.put("href", "g/policy/"
+					+ policyPager.getPageList().get(i).getAid().toString());
 			map.put("title", policyPager.getPageList().get(i).getTitle());
-			map.put("time", DateFormatUtils.format(policyPager.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
+			map.put("time",
+					DateFormatUtils.format(policyPager.getPageList().get(i)
+							.getCreate_time(), "yyyy-MM-dd"));
 			list_policy_1.add(map);
 		}
 		dataMap.put("list_policy_1", list_policy_1);
-		
-		//增加政策解读列表2
+
+		// 增加政策解读列表2
 		keyMap = new HashMap<String, Object>();
 		keyMap.put("category", "政策解读");
 		keyMap.put("igraph", Integer.valueOf(1));
 		keyMap.put("irecom", Integer.valueOf(1));
 		Pager<CmsArticle> policyPager2 = as.findArticlesByKey(keyMap, 1, 3);
-		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String,String>>();
+		List<Map<String, String>> list_policy_2 = new LinkedList<Map<String, String>>();
 		for (int i = 0; i < policyPager2.getPageList().size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("href", "g/policy/" + policyPager2.getPageList().get(i).getAid().toString());
+			map.put("href", "g/policy/"
+					+ policyPager2.getPageList().get(i).getAid().toString());
 			map.put("title", policyPager2.getPageList().get(i).getTitle());
-			map.put("time", DateFormatUtils.format(policyPager2.getPageList().get(i).getCreate_time(), "yyyy-MM-dd"));
+			map.put("time",
+					DateFormatUtils.format(policyPager2.getPageList().get(i)
+							.getCreate_time(), "yyyy-MM-dd"));
 			list_policy_2.add(map);
 		}
 		dataMap.put("list_policy_2", list_policy_2);
-		
+
 		dataMap.put("basePath", config.getWebAdminSideBaseUrl());
 		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
 				config.getWebUserSideRootPath() + "test.html");
-		
+
 		return "success";
 	}
 
