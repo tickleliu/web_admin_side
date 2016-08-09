@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgEntInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgEntInfo">
+	    insert into org_ent_info(uid, employees, sales, profits, qualification) values(#{uid}, #{employees}, #{sales}, #{profits}, #{qualification})
+	</insert>
+	
+	<resultMap type="orgEntInfo" id="orgEntInfoMap">
+	<id property="uid" column="uid" />
+	<result property="employees" column="employees"></result>
+	<result property="sales" column="sales"></result>
+	<result property="profits" column="profits"></result>
+	<result property="qualification" column="qualification"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="orgEntInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_ent_info
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgEntInfo">
+	  update org_ent_info set employees=#{employees}, sales=#{sales}, profits=#{profits}, qualification=#{qualification} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgEntInfo" parameterType="map">
+	  select * from org_ent_info 
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_ent_info 
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_ent_info where uid=#{id}
+	</delete>
+</mapper>    

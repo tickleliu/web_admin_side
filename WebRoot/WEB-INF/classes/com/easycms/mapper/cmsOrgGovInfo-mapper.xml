@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgGovInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgGovInfo">
+	    insert into org_gov_info(uid, gdp, gdp_growth, military_gdp) values(#{uid}, #{gdp}, #{gdp_growth}, #{military_gdp})
+	</insert>
+	
+	<resultMap type="orgGovInfo" id="orgGovInfoMap">
+	<id property="uid" column="uid" />
+	<result property="gdp" column="gdp"></result>
+	<result property="gdp_growth" column="gdp_growth"></result>
+	<result property="military_gdp" column="military_gdp"></result>
+
+	</resultMap>
+	
+	<select id="findById" resultMap="orgGovInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_gov_info
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgGovInfo">
+	  update org_gov_info set gdp=#{gdp}, gdp_growth=#{gdp_growth}, military_gdp=#{military_gdp} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgGovInfo" parameterType="map">
+	  select * from org_gov_info
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_gov_info
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_gov_info where uid=#{id}
+	</delete>
+</mapper>    

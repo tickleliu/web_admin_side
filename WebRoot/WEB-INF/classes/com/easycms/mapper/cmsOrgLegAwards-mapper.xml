@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgLegAwards">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgLegAwards">
+	    insert into org_leg_awrards(uid, get_time, title) values(#{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{title})
+	</insert>
+	
+	<resultMap type="orgLegAwards" id="orgLegAwardsMap">
+	<id property="uid" column="uid" />
+	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="title" column="title"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="orgLegAwardsMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_leg_awrards
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgLegAwards">
+	  update org_leg_awrards set get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date}, title=#{title} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgLegAwards" parameterType="map">
+	  select * from org_leg_awrards 
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_leg_awrards 
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_leg_awrards where uid=#{id}
+	</delete>
+</mapper>    

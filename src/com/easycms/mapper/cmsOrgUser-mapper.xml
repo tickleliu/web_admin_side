@@ -4,103 +4,62 @@
 
 <mapper namespace="com.easycms.entity.CmsOrgUser">
     <!-- 插入操作 -->
-	<insert id="add" parameterType="article">
-	    insert into ac_content(aid,create_time,update_time,cate,author,title,content,irecom,igraph,gpath) values(#{aid},#{create_time, jdbcType=DATE, javaType=java.util.Date},#{update_time, jdbcType=DATE, javaType=java.util.Date},#{cate},#{author},#{title},#{content},#{irecom},#{igraph},#{gpath})
+	<insert id="add" parameterType="orgUser">
+	    insert into org_basic_info(uid, enterprise_name, license_number, registered_capital, legal_representative, region, address, zip_code, enterprise_type, enterprise_nature, industry_fields, web_site, contact_name, contact_position, phone, email, main_business, resume) 
+	    values(#{uid}, #{enterprise_name}, #{license_number}, #{registered_capital}, #{legal_representative}, #{region}, #{address}, #{zip_code}, #{enterprise_type}, #{enterprise_nature}, #{industry_fields}, #{web_site}, #{contact_name}, #{contact_position}, #{phone}, #{email}, #{main_business}, #{resume})
 	</insert>
-	<resultMap type="article" id="articleMap">
-	<id property="aid" column="aid" />
-	<result property="create_time" column="create_time" javaType="java.util.Date" jdbcType="DATE"></result>
-	<result property="update_time" column="update_time" javaType="java.util.Date" jdbcType="DATE"></result>
-	<result property="author" column="author"></result>
-	<result property="title" column="title"></result>
-	<result property="content" column="content"></result>
-	<result property="cate" column="cate"></result>
-	<result property="igraph" column="igraph"></result>
-	<result property="irecom" column="irecom"></result>
-	<result property="gpath" column="gpath"></result>
+	
+	<resultMap type="orgUser" id="orgUserMap">
+	<id property="uid" column="uid" />
+	<result property="enterprise_name" column="enterprise_name" ></result>
+	<result property="license_number" column="license_number" ></result>
+	<result property="registered_capital" column="registered_capital" ></result>
+	<result property="legal_representative" column="legal_representative" ></result>
+	<result property="region" column="region" ></result>
+	<result property="address" column="address" ></result>
+	<result property="zip_code" column="zip_code" ></result>
+	<result property="enterprise_type" column="enterprise_type" ></result>
+	<result property="enterprise_nature" column="enterprise_nature" ></result>
+	<result property="industry_fields" column="industry_fields" ></result>
+	<result property="web_site" column="web_site" ></result>
+	<result property="contact_name" column="contact_name" ></result>
+	<result property="contact_position" column="contact_position" ></result>
+	<result property="phone" column="phone" ></result>
+	<result property="email" column="email" ></result>
+	<result property="main_business" column="main_business" ></result>
+	<result property="resume" column="resume" ></result>
 	</resultMap>
 	
-	<select id="findById" resultMap="articleMap" parameterType="long">
+	<select id="findById" resultMap="orgUserMap" parameterType="long">
 	  select 
 	  	*
 	  from 
-	  	ac_content
+	  	org_basic_info
 	  where 
-	  	aid=#{id}
+	  	uid=#{id}
 	</select>
-	<update id="update" parameterType="article">
-	  update ac_content set create_time=#{create_time},update_time=#{update_time},cate=#{cate},author=#{author},title=#{title},content=#{content}, igraph=#{igraph}, irecom=#{irecom}, gpath=#{gpath} where aid=#{aid}
+	
+	<update id="update" parameterType="orgUser">
+	  update org_basic_info set enterprise_name=#{enterprise_name}, license_number=#{license_number}, registered_capital=#{registered_capital}, legal_representative=#{legal_representative}, region=#{region}, address=#{address}, zip_code#{zip_code}, enterprise_type=#{enterprise_type}, enterprise_nature=#{enterprise_nature}, industry_fields=#{industry_fields}, web_site=#{web_site}, contact_name=#{contact_name}, contact_position=#{contact_position}, phone=#{phone}, email=#{email}, main_business=#{main_business}, resume=#{resume} where uid=#{uid}
 	</update>
 	
-	<select id="findByKey" resultType="article" parameterType="map">
-	  select * from ac_content 
-	  <where>
-	    <if test="category !=null and category != ''">
-	         cate = #{category}
-	    </if>
-	    <if test="datefrom != null and datefrom != ''">
-	         and create_time &gt;= Date(#{datefrom}) 
-	    </if>
-	    <if test="dateto != null and dateto != ''">
-	         and create_time &lt;= Date(#{dateto}) 
-	    </if>
-	    <if test="author !=null and author!= ''">
-	        and author = #{author}
-	    </if>
-	    
-	    <if test="igraph !=null and igraph!= ''">
-	        and igraph = #{igraph}
-	    </if>
-	    
-	    <if test="irecom !=null and irecom!= ''">
-	        and irecom = #{irecom}
-	    </if>
-	    
-	    <if test="keyw != null">
-	        <foreach collection="keyw" item="key"
-	        open="" separator="" close="">
-	        and concat(`title`,`content`) like concat("%",#{key},"%")
-	        </foreach>
-	    </if>
+	<select id="findByKey" resultType="orgUser" parameterType="map">
+	  select * from org_basic_info 
+	  <where>	    
 	    
 	  </where>
-	  order by aid desc limit #{showPages},#{pageSize} 
+	  order by uid desc limit #{showPages},#{pageSize} 
 	</select>
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
-	  select count(*) from ac_content 
+	  select count(*) from org_basic_info
 	  <where>
-	    <if test="category !=null and category != ''">
-	         cate = #{category}
-	    </if>
-	    <if test="datefrom != null and datefrom != ''">
-	         and create_time &gt;= Date(#{datefrom}) 
-	    </if>
-	    <if test="dateto!= null and dateto!= ''">
-	         and create_time &lt;= Date(#{dateto}) 
-	    </if>
-	    <if test="author !=null and author != ''">
-	         and author = #{author}
-	    </if>
 	    
-	    <if test="igraph !=null and igraph!= ''">
-	        and igraph = #{igraph}
-	    </if>
-	    
-	    <if test="irecom !=null and irecom!= ''">
-	        and irecom = #{irecom}
-	    </if>
-	    
-	    <if test="keyw != null">
-	        <foreach collection="keyw" item="key"
-	        open="" separator="" close="">
-	        and concat(`title`,`content`) like concat("%",#{key},"%")
-	        </foreach>
-	    </if>
 	  </where>
 	</select>
-		<!-- 删除操作 -->
+	
+	<!-- 删除操作 -->
 	<delete id="delete" parameterType="long">
-	  delete from ac_content where aid=#{id}
+	  delete from org_basic_info where aid=#{id}
 	</delete>
 </mapper>    

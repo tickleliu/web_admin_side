@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgLegInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgLegInfo">
+	    insert into org_leg_info(uid, competent_authority, technical_person_number, per_capital_output) values(#{uid}, #{competent_authority}, #{technical_person_number}, #{per_capital_output})
+	</insert>
+	
+	<resultMap type="orgLegInfo" id="orgLegInfoMap">
+	<id property="uid" column="uid" />
+	<result property="competent_authority" column="competent_authority"></result>
+	<result property="technical_person_number" column="technical_person_number"></result>
+	<result property="per_capital_output" column="per_capital_output"></result>
+
+	</resultMap>
+	
+	<select id="findById" resultMap="orgLegInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_leg_info
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgLegInfo">
+	  update org_leg_info set competent_authority=#{competent_authority}, technical_person_number=#{technical_person_number}, per_capital_output=#{per_capital_output} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgLegInfo" parameterType="map">
+	  select * from org_leg_info
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_leg_info
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_leg_info where uid=#{id}
+	</delete>
+</mapper>    

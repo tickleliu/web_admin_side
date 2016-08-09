@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgUserAttachment">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgUserAttachment">
+	    insert into org_attachment(uid, path, title) values(#{uid}, #{path}, #{title})
+	</insert>
+	
+	<resultMap type="orgUserAttachment" id="orgUserAttachmentMap">
+	<id property="uid" column="uid" />
+	<result property="path" column="path"></result>
+	<result property="title" column="title"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="orgUserAttachmentMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_attachment
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgUserAttachment">
+	  update org_attachment set path=#{path}, title=#{title} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgUserAttachment" parameterType="map">
+	  select * from org_attachment 
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_attachment 
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_attachment where uid=#{id}
+	</delete>
+</mapper>    

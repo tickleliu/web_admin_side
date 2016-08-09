@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.CmsOrgCert">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="orgCert">
+	    insert into org_basic_cert(uid, name, level, get_time, valid_time) values(#{uid}, #{name}, #{level}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{valid_time, jdbcType=DATE, javaType=java.util.Date})
+	</insert>
+	
+	<resultMap type="orgCert" id="orgCertMap">
+	<id property="uid" column="uid" />
+	<result property="name" column="name"></result>
+	<result property="level" column="level" ></result>
+	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="valid_time" column="valid_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="orgCertMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	org_basic_cert
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="orgCert">
+	  update org_basic_cert set name=#{name}, level=#{level}, get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date}, valid_time=#{valid_time, jdbcType=DATE, javaType=java.util.Date} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="orgCert" parameterType="map">
+	  select * from org_basic_cert 
+	  <where>
+	    
+	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from org_basic_cert 
+	  <where>
+	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from org_basic_cert where uid=#{id}
+	</delete>
+</mapper>    
