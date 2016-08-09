@@ -29,4 +29,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <hr/>
   <iframe src="${page_url}g/${category}/${aid}" width="100%" height="100%"></iframe>
   </body>
+  
 </html>
