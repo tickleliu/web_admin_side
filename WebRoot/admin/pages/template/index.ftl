@@ -9,10 +9,14 @@
 function resize(element, maxWidth, maxHeight){ 
 	if(element.width > maxWidth || element.height > maxHeight){ 
 		if(element.width / element.height > maxWidth / maxHeight){ 
+			var offset=0.5*(element.width*(maxHeight/element.height)-maxWidth);
 			element.height = maxHeight;
+			$(element).css("margin-left",'-' + offset + 'px');
 		}
 		else{ 
+			var offset=0.5*(element.height*(maxWidth/element.width)-maxHeight);
 			element.width = maxWidth;  
+			$(element).css('margin-top','-' + offset + 'px');
 		} 
 	} 
 };
@@ -176,8 +180,8 @@ $(function(){
 		<!--右侧信息栏-->
 		<div class="right">	
 			<div class="news">
-				<a class="title" href="#"><span></span>新闻资讯</a>
-				<a class="more" href="#">更多>></a>
+				<a class="title" href="info/list/news" target="_blank"><span></span>新闻资讯</a>
+				<a class="more" href="info/list/news" target="_blank">更多>></a>
 			</div>
 			<div class="news_list">
 				<div id="slideWrap"> <!--滚动图片-->
@@ -249,8 +253,8 @@ $(function(){
 			</div>
 			
 			<div class="tech">
-				<a class="title" href="#"><span></span>技术前沿</a>
-				<a class="more" href="#">更多>></a>
+				<a class="title" href="info/list/tech" target="_blank"><span></span>技术前沿</a>
+				<a class="more" href="info/list/tech" target="_blank">更多>></a>
 			</div>
 			<div class="tech_list">
 				<div class="imgNews">	<!--图片新闻-->
@@ -294,8 +298,8 @@ $(function(){
 			</div>
 			
 			<div class="policy">
-				<a class="title" href="#"><span></span>政策解读</a>
-				<a class="more" href="#">更多>></a>
+				<a class="title" href="info/list/policy" target="_blank"><span></span>政策解读</a>
+				<a class="more" href="info/list/policy" target="_blank">更多>></a>
 			</div>
 			<div class="policy_list">
 				<div class="icons" id="policy_1">	<!--图标-->
