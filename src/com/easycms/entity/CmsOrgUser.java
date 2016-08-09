@@ -3,6 +3,9 @@ package com.easycms.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 组织用户基本信息表
+ * */
 public class CmsOrgUser implements Serializable {
 	public CmsOrgUser() {
 		// TODO Auto-generated constructor stub

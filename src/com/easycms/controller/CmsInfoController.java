@@ -19,6 +19,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -510,7 +512,9 @@ public class CmsInfoController {
 			map.put("href", "g/news/" + newsPager.getPageList().get(i).getAid().toString());
 			map.put("src", newsPager.getPageList().get(i).getGpath());
 			map.put("title", newsPager.getPageList().get(i).getTitle());
-			map.put("content", newsPager.getPageList().get(i).getContent());
+			Document document = Jsoup.parse(newsPager.getPageList().get(i).getContent());
+			String content = document.text();
+			map.put("content", content);
 			list_slide_news.add(map);
 		}
 		dataMap.put("list_slide_news", list_slide_news);
