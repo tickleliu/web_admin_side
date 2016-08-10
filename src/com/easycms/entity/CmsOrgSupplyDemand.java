@@ -11,21 +11,29 @@ public class CmsOrgSupplyDemand implements Serializable {
 	
 	public CmsOrgSupplyDemand() {
 		super();
+		this.sd_id = 0L;
 		this.uid = 0L;
 		this.isS_D = "";
 		this.title = "";
 		this.intro = "";
 	}
 
+	private Long sd_id;
 	private Long uid;
 	private String isS_D; //供应还是需求
 	private String title; //标题
 	private String intro; //供需介绍
 	
 	//getters and setters
+	public Long getSd_id() {
+		return sd_id;
+	}
+	public void setSd_id(Long sd_id) {
+		this.sd_id = sd_id;
+	}
 	public Long getUid() {
 		return uid;
-	}
+	}	
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}

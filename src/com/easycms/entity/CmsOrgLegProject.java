@@ -12,6 +12,7 @@ public class CmsOrgLegProject implements Serializable {
 	
 	public CmsOrgLegProject() {
 		super();
+		this.project_id = 0L;
 		this.uid = 0L;
 		this.start_time = new Date();
 		this.end_time = new Date();
@@ -19,6 +20,7 @@ public class CmsOrgLegProject implements Serializable {
 		this.intro = "";
 	}
 
+	private Long project_id;
 	private Long uid;
 	private Date start_time; //开始时间
 	private Date end_time; //结束时间
@@ -26,6 +28,12 @@ public class CmsOrgLegProject implements Serializable {
 	private String intro; //介绍
 	
 	//getters and setters
+	public Long getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(Long project_id) {
+		this.project_id = project_id;
+	}
 	public Long getUid() {
 		return uid;
 	}

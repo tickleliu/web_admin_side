@@ -11,16 +11,24 @@ public class CmsOrgUserAttachment implements Serializable {
 	
 	public CmsOrgUserAttachment() {
 		super();
+		this.attach_id = 0L;
 		this.uid = 0L;
 		this.path = "";
 		this.title = "";		
 	}
 	
+	private Long attach_id;
 	private Long uid; 
 	private String path; //附件路径
 	private String title; //标题
 	
 	//getters and setters
+	public Long getAttach_id() {
+		return attach_id;
+	}
+	public void setAttach_id(Long attach_id) {
+		this.attach_id = attach_id;
+	}
 	public Long getUid() {
 		return uid;
 	}

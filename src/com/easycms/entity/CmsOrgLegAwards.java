@@ -12,16 +12,24 @@ public class CmsOrgLegAwards implements Serializable {
 	
 	public CmsOrgLegAwards() {
 		super();
+		this.award_id = 0L;
 		this.uid = 0L;
 		this.get_time = new Date();
 		this.title = "";		
 	}
 	
+	private Long award_id;
 	private Long uid; 
 	private Date get_time; //获奖时间
 	private String title; //获奖名称
 	
-	//getters and setters	
+	//getters and setters
+	public Long getAward_id() {
+		return award_id;
+	}
+	public void setAward_id(Long award_id) {
+		this.award_id = award_id;
+	}
 	public Long getUid() {
 		return uid;
 	}

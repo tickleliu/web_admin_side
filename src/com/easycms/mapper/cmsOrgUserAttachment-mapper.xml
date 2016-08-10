@@ -5,11 +5,12 @@
 <mapper namespace="com.easycms.entity.CmsOrgUserAttachment">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgUserAttachment">
-	    insert into org_attachment(uid, path, title) values(#{uid}, #{path}, #{title})
+	    insert into org_attachment(attach_id, uid, path, title) values(#{attach_id}, #{uid}, #{path}, #{title})
 	</insert>
 	
 	<resultMap type="orgUserAttachment" id="orgUserAttachmentMap">
-	<id property="uid" column="uid" />
+	<id property="attach_id" column="attach_id" />
+	<result property="uid" column="uid" />
 	<result property="path" column="path"></result>
 	<result property="title" column="title"></result>
 	</resultMap>
@@ -20,11 +21,11 @@
 	  from 
 	  	org_attachment
 	  where 
-	  	uid=#{id}
+	  	attach_id=#{id}
 	</select>
 	
 	<update id="update" parameterType="orgUserAttachment">
-	  update org_attachment set path=#{path}, title=#{title} where uid=#{uid}
+	  update org_attachment set uid=#{uid}, path=#{path}, title=#{title} where attach_id=#{attach_id}
 	</update>
 	
 	<select id="findByKey" resultType="orgUserAttachment" parameterType="map">
@@ -33,7 +34,7 @@
 	    
 	    
 	  </where>
-	  order by uid desc limit #{showPages},#{pageSize} 
+	  order by attach_id desc limit #{showPages},#{pageSize} 
 	</select>
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
@@ -45,6 +46,6 @@
 	
 	<!-- 删除操作 -->
 	<delete id="delete" parameterType="long">
-	  delete from org_attachment where uid=#{id}
+	  delete from org_attachment where attach_id=#{id}
 	</delete>
 </mapper>    

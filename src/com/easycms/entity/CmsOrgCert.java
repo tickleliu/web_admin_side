@@ -12,6 +12,7 @@ public class CmsOrgCert implements Serializable {
 	
 	public CmsOrgCert() {
 		super();
+		this.cert_id = 0L;
 		this.uid = 0L;
 		this.name = "";
 		this.level = "";
@@ -19,13 +20,22 @@ public class CmsOrgCert implements Serializable {
 		this.valid_time = new Date();
 	}
 
-	private Long uid;
+	
+
+	private Long cert_id;
+	private Long uid; //user ID
 	private String name; //认证名称
 	private String level; //认证级别
 	private Date get_time; //取得时间
 	private Date valid_time; //有效期限
 	
 	//getters and setters
+	public Long getId() {
+		return cert_id;
+	}
+	public void setId(Long id) {
+		this.cert_id = id;
+	}
 	public Long getUid() {
 		return uid;
 	}

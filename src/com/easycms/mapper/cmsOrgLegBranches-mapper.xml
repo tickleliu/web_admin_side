@@ -5,11 +5,12 @@
 <mapper namespace="com.easycms.entity.CmsOrgLegBranches">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgLegBranches">
-	    insert into org_leg_branches(uid, title) values(#{uid}, #{title})
+	    insert into org_leg_branches(branch_id, uid, title) values(#{branch_id}, #{uid}, #{title})
 	</insert>
 	
 	<resultMap type="orgLegBranches" id="orgLegBranchesMap">
-	<id property="uid" column="uid" />	
+	<id property="branch_id" column="branch_id" />
+	<result property="uid" column="uid" />
 	<result property="title" column="title"></result>
 	</resultMap>
 	
@@ -19,11 +20,11 @@
 	  from 
 	  	org_leg_branches
 	  where 
-	  	uid=#{id}
+	  	branch_id=#{id}
 	</select>
 	
 	<update id="update" parameterType="orgLegBranches">
-	  update org_leg_branches set title=#{title} where uid=#{uid}
+	  update org_leg_branches set uid=#{uid}, title=#{title} where branch_id=#{branch_id}
 	</update>
 	
 	<select id="findByKey" resultType="orgLegBranches" parameterType="map">
@@ -32,7 +33,7 @@
 	    
 	    
 	  </where>
-	  order by uid desc limit #{showPages},#{pageSize} 
+	  order by branch_id desc limit #{showPages},#{pageSize} 
 	</select>
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
@@ -44,6 +45,6 @@
 	
 	<!-- 删除操作 -->
 	<delete id="delete" parameterType="long">
-	  delete from org_leg_branches where uid=#{id}
+	  delete from org_leg_branches where branch_id=#{id}
 	</delete>
 </mapper>    

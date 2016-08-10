@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2016-08-09 17:53:46
+Date: 2016-08-10 12:39:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -191,9 +191,11 @@ CREATE TABLE `ec_user_ext` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_attachment`;
 CREATE TABLE `org_attachment` (
+  `attach_id` bigint(20) NOT NULL,
   `uid` bigint(20) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL COMMENT '附件路径',
-  `title` varchar(255) DEFAULT NULL COMMENT '标题'
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  PRIMARY KEY (`attach_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织用户附件表';
 
 -- ----------------------------
@@ -201,11 +203,13 @@ CREATE TABLE `org_attachment` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_basic_cert`;
 CREATE TABLE `org_basic_cert` (
+  `cert_id` bigint(20) unsigned NOT NULL,
   `uid` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `level` varchar(45) DEFAULT NULL,
   `get_time` date DEFAULT NULL,
-  `valid_time` date DEFAULT NULL
+  `valid_time` date DEFAULT NULL,
+  PRIMARY KEY (`cert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -261,9 +265,11 @@ CREATE TABLE `org_gov_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_leg_awrards`;
 CREATE TABLE `org_leg_awrards` (
+  `award_id` bigint(20) NOT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  `get_time` date NOT NULL COMMENT '获奖时间',
-  `title` varchar(255) NOT NULL COMMENT '获奖名称'
+  `get_time` date DEFAULT NULL COMMENT '获奖时间',
+  `title` varchar(255) DEFAULT NULL COMMENT '获奖名称',
+  PRIMARY KEY (`award_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员获奖';
 
 -- ----------------------------
@@ -271,8 +277,10 @@ CREATE TABLE `org_leg_awrards` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_leg_branches`;
 CREATE TABLE `org_leg_branches` (
+  `branch_id` bigint(20) NOT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL COMMENT '分支机构名称'
+  `title` varchar(255) DEFAULT NULL COMMENT '分支机构名称',
+  PRIMARY KEY (`branch_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员分支机构';
 
 -- ----------------------------
@@ -291,11 +299,13 @@ CREATE TABLE `org_leg_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_leg_proj`;
 CREATE TABLE `org_leg_proj` (
-  `uid` int(11) NOT NULL,
+  `project_id` bigint(20) NOT NULL,
+  `uid` bigint(20) NOT NULL,
   `start_time` date DEFAULT NULL COMMENT '开始时间',
   `end_time` date DEFAULT NULL COMMENT '结束时间',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
-  `intro` text COMMENT '介绍'
+  `intro` text COMMENT '介绍',
+  PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员重要工程';
 
 -- ----------------------------
@@ -303,8 +313,10 @@ CREATE TABLE `org_leg_proj` (
 -- ----------------------------
 DROP TABLE IF EXISTS `org_supply_demand`;
 CREATE TABLE `org_supply_demand` (
+  `sd_id` bigint(20) NOT NULL,
   `uid` bigint(20) DEFAULT NULL,
   `isS_D` varchar(45) DEFAULT NULL COMMENT '供应还是需求',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
-  `intro` text COMMENT '供需介绍'
+  `intro` text COMMENT '供需介绍',
+  PRIMARY KEY (`sd_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='企业供需表';

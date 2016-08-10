@@ -5,11 +5,12 @@
 <mapper namespace="com.easycms.entity.CmsOrgLegAwards">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgLegAwards">
-	    insert into org_leg_awrards(uid, get_time, title) values(#{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{title})
+	    insert into org_leg_awrards(award_id, uid, get_time, title) values(#{award_id}, #{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{title})
 	</insert>
 	
 	<resultMap type="orgLegAwards" id="orgLegAwardsMap">
-	<id property="uid" column="uid" />
+	<id property="award_id" column="award_id" />
+	<result property="uid" column="uid" />
 	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
 	<result property="title" column="title"></result>
 	</resultMap>
@@ -20,11 +21,11 @@
 	  from 
 	  	org_leg_awrards
 	  where 
-	  	uid=#{id}
+	  	award_id=#{id}
 	</select>
 	
 	<update id="update" parameterType="orgLegAwards">
-	  update org_leg_awrards set get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date}, title=#{title} where uid=#{uid}
+	  update org_leg_awrards set uid=#{uid}, get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date}, title=#{title} where award_id=#{award_id}
 	</update>
 	
 	<select id="findByKey" resultType="orgLegAwards" parameterType="map">
@@ -33,7 +34,7 @@
 	    
 	    
 	  </where>
-	  order by uid desc limit #{showPages},#{pageSize} 
+	  order by award_id desc limit #{showPages},#{pageSize} 
 	</select>
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
@@ -45,6 +46,6 @@
 	
 	<!-- 删除操作 -->
 	<delete id="delete" parameterType="long">
-	  delete from org_leg_awrards where uid=#{id}
+	  delete from org_leg_awrards where award_id=#{id}
 	</delete>
 </mapper>    

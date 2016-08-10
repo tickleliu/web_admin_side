@@ -5,11 +5,12 @@
 <mapper namespace="com.easycms.entity.CmsOrgSupplyDemand">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgSupplyDemand">
-	    insert into org_supply_demand(uid, isS_D, title, intro) values(#{uid}, #{isS_D}, #{title}, #{intro})
+	    insert into org_supply_demand(sd_id, uid, isS_D, title, intro) values(#{sd_id}, #{uid}, #{isS_D}, #{title}, #{intro})
 	</insert>
 	
 	<resultMap type="orgSupplyDemand" id="orgSupplyDemandMap">
-	<id property="uid" column="uid" />
+	<id property="sd_id" column="sd_id" />
+	<result property="uid" column="uid" />
 	<result property="isS_D" column="isS_D"></result>
 	<result property="title" column="title"></result>
 	<result property="intro" column="intro"></result>
@@ -22,11 +23,11 @@
 	  from 
 	  	org_supply_demand
 	  where 
-	  	uid=#{id}
+	  	sd_id=#{id}
 	</select>
 	
 	<update id="update" parameterType="orgSupplyDemand">
-	  update org_supply_demand set isS_D=#{isS_D}, title=#{title}, intro=#{intro} where uid=#{uid}
+	  update org_supply_demand set uid=#{uid}, isS_D=#{isS_D}, title=#{title}, intro=#{intro} where sd_id=#{sd_id}
 	</update>
 	
 	<select id="findByKey" resultType="orgSupplyDemand" parameterType="map">
@@ -35,7 +36,7 @@
 	    
 	    
 	  </where>
-	  order by uid desc limit #{showPages},#{pageSize} 
+	  order by sd_id desc limit #{showPages},#{pageSize} 
 	</select>
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
@@ -47,6 +48,6 @@
 	
 	<!-- 删除操作 -->
 	<delete id="delete" parameterType="long">
-	  delete from org_supply_demand where uid=#{id}
+	  delete from org_supply_demand where sd_id=#{id}
 	</delete>
 </mapper>    
