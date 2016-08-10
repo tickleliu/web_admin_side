@@ -131,11 +131,9 @@ $(function(){
 			</div>
 			<div class="rzpx_list_1">
 				<a id="rzpx_1" href="#"><span></span>申请开课</a>
-				<a id="rzpx_2" href="#"><span></span>课程咨询</a>
-				<a id="rzpx_3" href="#"><span></span>课程管理</a>
-				<a id="rzpx_4" href="#"><span></span>专家简介</a>
-				<a id="rzpx_5" href="#"><span></span>课程报名</a>
-				<a id="rzpx_6" href="#"><span></span>人才招募</a>
+				<a id="rzpx_2" href="#"><span></span>课程资讯</a>
+				<a id="rzpx_3" href="#"><span></span>课程报名</a>
+				<a id="rzpx_4" href="#"><span></span>资质认证</a>
 			</div>
 
 			<div class="rzpx_list_2">
@@ -145,9 +143,9 @@ $(function(){
 					<a href="#" target="_blank" id="rzpx_9"></a>
 				</div>
 				<div class="titles">
-					<a href="#" target="_blank">讨论区</a>
-					<a href="#" target="_blank">资质认证</a>
-					<a href="#" target="_blank">用户认证</a>
+					<a href="#" target="_blank">人才招募</a>
+					<a href="#" target="_blank">项目推荐</a>
+					<a href="#" target="_blank">企业推荐</a>
 				</div>
 			</div>
 			
