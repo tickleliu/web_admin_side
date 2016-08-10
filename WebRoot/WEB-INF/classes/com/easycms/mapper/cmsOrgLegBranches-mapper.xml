@@ -30,8 +30,9 @@
 	<select id="findByKey" resultType="orgLegBranches" parameterType="map">
 	  select * from org_leg_branches 
 	  <where>
-	    
-	    
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>
 	  </where>
 	  order by branch_id desc limit #{showPages},#{pageSize} 
 	</select>
@@ -39,7 +40,9 @@
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
 	  select count(*) from org_leg_branches 
 	  <where>
-	    
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>
 	  </where>
 	</select>
 	

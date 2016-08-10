@@ -33,8 +33,9 @@
 	<select id="findByKey" resultType="orgCert" parameterType="map">
 	  select * from org_basic_cert 
 	  <where>
-	    
-	    
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>	    
 	  </where>
 	  order by cert_id desc limit #{showPages},#{pageSize} 
 	</select>
@@ -42,7 +43,9 @@
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
 	  select count(*) from org_basic_cert 
 	  <where>
-	    
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>
 	  </where>
 	</select>
 	
