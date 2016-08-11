@@ -19,6 +19,143 @@ CREATE TABLE  `cms`.`ac_content` (
   KEY `author_index` (`author`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- ----------------------------
+-- Table structure for org_attachment
+-- ----------------------------
+DROP TABLE IF EXISTS `org_attachment`;
+CREATE TABLE `org_attachment` (
+  `attach_id` bigint(20) NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL COMMENT '附件路径',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  PRIMARY KEY (`attach_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织用户附件表';
+
+-- ----------------------------
+-- Table structure for org_basic_cert
+-- ----------------------------
+DROP TABLE IF EXISTS `org_basic_cert`;
+CREATE TABLE `org_basic_cert` (
+  `cert_id` bigint(20) unsigned NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `level` varchar(45) DEFAULT NULL,
+  `get_time` date DEFAULT NULL,
+  `valid_time` date DEFAULT NULL,
+  PRIMARY KEY (`cert_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for org_basic_info
+-- ----------------------------
+DROP TABLE IF EXISTS `org_basic_info`;
+CREATE TABLE `org_basic_info` (
+  `uid` bigint(20) NOT NULL,
+  `enterprise_name` varchar(255) DEFAULT NULL COMMENT '企业名称',
+  `license_number` varchar(255) DEFAULT NULL COMMENT '工商营业执照号',
+  `registered_capital` bigint(20) DEFAULT NULL COMMENT '注册资金',
+  `legal_representative` varchar(45) DEFAULT NULL COMMENT '法人代表',
+  `region` varchar(255) DEFAULT NULL COMMENT '所在地区',
+  `address` varchar(255) DEFAULT NULL COMMENT '通信地址',
+  `zip_code` varchar(45) DEFAULT NULL COMMENT '邮编',
+  `enterprise_type` varchar(45) DEFAULT NULL COMMENT '企业类型',
+  `enterprise_nature` varchar(45) DEFAULT NULL COMMENT '企业性质',
+  `industry_fields` varchar(255) DEFAULT NULL COMMENT '所属行业领域',
+  `web_site` varchar(255) DEFAULT NULL COMMENT '企业网址',
+  `contact_name` varchar(45) DEFAULT NULL COMMENT '联系人姓名',
+  `contact_position` varchar(45) DEFAULT NULL COMMENT '联系人职务',
+  `phone` varchar(45) DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(45) DEFAULT NULL COMMENT '电子邮箱',
+  `main_business` varchar(255) DEFAULT NULL COMMENT '主营业务',
+  `resume` text COMMENT '简历'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类用户基本信息';
+
+-- ----------------------------
+-- Table structure for org_ent_info
+-- ----------------------------
+DROP TABLE IF EXISTS `org_ent_info`;
+CREATE TABLE `org_ent_info` (
+  `uid` bigint(20) DEFAULT NULL,
+  `employees` bigint(20) DEFAULT NULL COMMENT '雇员数',
+  `sales` bigint(20) DEFAULT NULL COMMENT '销售额',
+  `profits` bigint(20) DEFAULT NULL COMMENT '盈利额',
+  `qualification` varchar(255) DEFAULT NULL COMMENT '资质'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类用户，企业机构信息';
+
+-- ----------------------------
+-- Table structure for org_gov_info
+-- ----------------------------
+DROP TABLE IF EXISTS `org_gov_info`;
+CREATE TABLE `org_gov_info` (
+  `uid` bigint(20) DEFAULT NULL,
+  `gdp` bigint(20) DEFAULT NULL COMMENT '上年度gdp',
+  `gdp_growth` bigint(20) DEFAULT NULL COMMENT 'gdp增幅',
+  `military_gdp` bigint(20) DEFAULT NULL COMMENT '军工gdp占比'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类，政府机构信息';
+
+-- ----------------------------
+-- Table structure for org_leg_awrards
+-- ----------------------------
+DROP TABLE IF EXISTS `org_leg_awrards`;
+CREATE TABLE `org_leg_awrards` (
+  `award_id` bigint(20) NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `get_time` date DEFAULT NULL COMMENT '获奖时间',
+  `title` varchar(255) DEFAULT NULL COMMENT '获奖名称',
+  PRIMARY KEY (`award_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员获奖';
+
+-- ----------------------------
+-- Table structure for org_leg_branches
+-- ----------------------------
+DROP TABLE IF EXISTS `org_leg_branches`;
+CREATE TABLE `org_leg_branches` (
+  `branch_id` bigint(20) NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '分支机构名称',
+  PRIMARY KEY (`branch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员分支机构';
+
+-- ----------------------------
+-- Table structure for org_leg_info
+-- ----------------------------
+DROP TABLE IF EXISTS `org_leg_info`;
+CREATE TABLE `org_leg_info` (
+  `uid` bigint(20) DEFAULT NULL,
+  `competent_authority` varchar(255) DEFAULT NULL COMMENT '主管机关',
+  `technical_person_number` bigint(20) DEFAULT NULL COMMENT '技术人员数',
+  `per_capital_output` bigint(20) DEFAULT NULL COMMENT '人均产值'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类，评估联盟成员信息';
+
+-- ----------------------------
+-- Table structure for org_leg_proj
+-- ----------------------------
+DROP TABLE IF EXISTS `org_leg_proj`;
+CREATE TABLE `org_leg_proj` (
+  `project_id` bigint(20) NOT NULL,
+  `uid` bigint(20) NOT NULL,
+  `start_time` date DEFAULT NULL COMMENT '开始时间',
+  `end_time` date DEFAULT NULL COMMENT '结束时间',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `intro` text COMMENT '介绍',
+  PRIMARY KEY (`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员重要工程';
+
+-- ----------------------------
+-- Table structure for org_supply_demand
+-- ----------------------------
+DROP TABLE IF EXISTS `org_supply_demand`;
+CREATE TABLE `org_supply_demand` (
+  `sd_id` bigint(20) NOT NULL,
+  `uid` bigint(20) DEFAULT NULL,
+  `isS_D` varchar(45) DEFAULT NULL COMMENT '供应还是需求',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `intro` text COMMENT '供需介绍',
+  PRIMARY KEY (`sd_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='企业供需表';
+
+
 create table ec_group(
   id int primary key auto_increment,
   name varchar(100) not null,
