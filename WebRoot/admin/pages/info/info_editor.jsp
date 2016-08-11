@@ -68,11 +68,11 @@
 				<div style="height:16%">
 					<input type="hidden" id="aid" name="aid" value="${aid}"/>
 				 	<a>标题： </a>
-					<input type="text" name="title" id="title" value='${title}' style="width:500px" />
+					<input type="text" name="title" id="title" placeholder='${title}' style="width:500px" />
 				</div>
 				<div style="height:16%">
 					<a>作者：</a> 
-					<input type="text" name="author" id="author" value='${author}' style="width:200px" />
+					<input type="text" name="author" id="author" placeholder='${author}' style="width:200px" />
 				</div>
 				<div style="height:16%">
 					<a>类别：</a>
