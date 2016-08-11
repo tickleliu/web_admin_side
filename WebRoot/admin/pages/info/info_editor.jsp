@@ -68,11 +68,15 @@
 				<div style="height:16%">
 					<input type="hidden" id="aid" name="aid" value="${aid}"/>
 				 	<a>标题： </a>
-					<input type="text" name="title" id="title" placeholder='${title}' style="width:500px" />
+					<input type="text" name="title" id="title" value="${title}" style="width:500px;color:gray"
+					onclick="if(this.value=='${title}'){this.value='';this.style='width:500px;color:black'}"
+					onblur="if(this.value=='') {this.value='${title}';this.style='width:500px;color:gray'}"/>
 				</div>
 				<div style="height:16%">
 					<a>作者：</a> 
-					<input type="text" name="author" id="author" placeholder='${author}' style="width:200px" />
+					<input type="text" name="author" id="author" value="${author}" style="width:200px;color:gray"
+					onclick="if(this.value=='${author}'){this.value='';this.style='width:200px;color:black'}"
+					onblur="if(this.value=='') {this.value='${author}';this.style='width:200px;color:gray'}"/>
 				</div>
 				<div style="height:16%">
 					<a>类别：</a>
