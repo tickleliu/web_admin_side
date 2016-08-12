@@ -9,6 +9,7 @@ import com.easycms.base.AbstractBaseDao;
 import com.easycms.common.Pager;
 import com.easycms.entity.CmsReceiverMessage;
 import com.easycms.service.CmsReMessageService;
+
 @Service
 public class CmsReMessageServiceImpl extends AbstractBaseDao<CmsReceiverMessage, Integer> implements CmsReMessageService {
 
