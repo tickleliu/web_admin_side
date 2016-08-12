@@ -36,7 +36,5 @@ public class CmsArticleTest {
 		} else {
 			System.out.println("delete: failed");
 		}
-		
 	}
-	
 }
