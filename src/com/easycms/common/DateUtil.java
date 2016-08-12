@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
+
+import org.apache.commons.lang.time.DateFormatUtils;
  
 
 
@@ -766,6 +768,9 @@ public class DateUtil {
 		Calendar calendar=Calendar.getInstance();
 		return calendar.getTime();
 	}
-
 	
+	public static String reformatDateString(String dateString, String oriformat,String outformat) throws ParseException {
+		java.util.Date date = parse(dateString, oriformat);
+		return DateFormatUtils.format(date, "yyyy-MM-dd");
+	}
 }
