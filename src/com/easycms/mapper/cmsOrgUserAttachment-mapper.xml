@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgUserAttachment">
+<mapper namespace="com.easycms.entity.user.CmsOrgUserAttachment">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgUserAttachment">
 	    insert into org_attachment(attach_id, uid, path, title) values(#{attach_id}, #{uid}, #{path}, #{title})

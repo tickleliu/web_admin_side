@@ -1,9 +1,9 @@
-package com.easycms.entity;
+package com.easycms.entity.user;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class CmsEngineerWorkLife implements Serializable {
+public class CmsUserEngineerWorkLife implements Serializable {
 public Long getWork_life_id() {
 	return work_life_id;
 }

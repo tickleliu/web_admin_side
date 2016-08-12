@@ -1,9 +1,9 @@
-package com.easycms.entity;
+package com.easycms.entity.user;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class CmsEngineerInfo implements Serializable {
+public class CmsUserEngineerInfo implements Serializable {
 private	Long uid;
 private	String profession_engaged;
 public Long getUid() {

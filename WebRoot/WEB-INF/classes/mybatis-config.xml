@@ -13,15 +13,17 @@
 	   <typeAlias type="com.easycms.entity.CmsMessage" alias="message"></typeAlias>
 	   <typeAlias type="com.easycms.entity.CmsReceiverMessage" alias="reMessage"></typeAlias>
 	   <typeAlias type="com.easycms.entity.CmsArticle" alias="article"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgUser" alias="orgUser"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgUserAttachment" alias="orgUserAttachment"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgEntInfo" alias="orgEntInfo"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgLegInfo" alias="orgLegInfo"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgGovInfo" alias="orgGovInfo"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgSupplyDemand" alias="orgSupplyDemand"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgCert" alias="orgCert"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgLegAwards" alias="orgLegAwards"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgLegBranches" alias="orgLegBranches"></typeAlias>
-	   <typeAlias type="com.easycms.entity.CmsOrgLegProject" alias="orgLegProject"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgUser" alias="orgUser"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgUserAttachment" alias="orgUserAttachment"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgEntInfo" alias="orgEntInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgLegInfo" alias="orgLegInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgGovInfo" alias="orgGovInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgSupplyDemand" alias="orgSupplyDemand"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgCert" alias="orgCert"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgLegAwards" alias="orgLegAwards"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgLegBranches" alias="orgLegBranches"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsOrgLegProject" alias="orgLegProject"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserLoginInfo" alias="loginInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserRoleInfo" alias="userRole"></typeAlias>
 	</typeAliases>
 </configuration>

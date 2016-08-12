@@ -4,11 +4,23 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CmsUserLoginInfo implements Serializable{
-	public Long getUidLong() {
-		return uidLong;
+	
+	public CmsUserLoginInfo() {
+		uid = 0L;
+		username = "";
+		password = "";
+		create_time = new Date();
+		update_time = new Date();
+		uwechatid = "";
+		head_image = "";
+		email = "";
+		status = 0;
 	}
-	public void setUidLong(Long uidLong) {
-		this.uidLong = uidLong;
+	public Long getUid() {
+		return uid;
+	}
+	public void setUid(Long uidLong) {
+		this.uid= uidLong;
 	}
 	public String getUsername() {
 		return username;
@@ -22,11 +34,11 @@ public class CmsUserLoginInfo implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getCreat_time() {
-		return creat_time;
+	public Date getCreate_time() {
+		return create_time;
 	}
-	public void setCreat_time(Date creat_time) {
-		this.creat_time = creat_time;
+	public void setCreate_time(Date creat_time) {
+		this.create_time = creat_time;
 	}
 	public Date getUpdate_time() {
 		return update_time;
@@ -58,10 +70,10 @@ public class CmsUserLoginInfo implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	private Long uidLong;
+	private Long uid;
 	private String username;
 	private String password;
-	private Date creat_time;
+	private Date create_time;
 	private Date update_time;
 	private String uwechatid;
 	private String head_image;

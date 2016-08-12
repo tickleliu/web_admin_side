@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgSupplyDemand">
+<mapper namespace="com.easycms.entity.user.CmsOrgSupplyDemand">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgSupplyDemand">
 	    insert into org_supply_demand(sd_id, uid, isS_D, title, intro) values(#{sd_id}, #{uid}, #{isS_D}, #{title}, #{intro})

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgUser">
+<mapper namespace="com.easycms.entity.user.CmsOrgUser">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgUser">
 	    insert into org_basic_info(uid, enterprise_name, license_number, registered_capital, legal_representative, region, address, zip_code, enterprise_type, enterprise_nature, industry_fields, web_site, contact_name, contact_position, phone, email, main_business, resume) 

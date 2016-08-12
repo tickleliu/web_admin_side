@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgLegBranches">
+<mapper namespace="com.easycms.entity.user.CmsOrgLegBranches">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgLegBranches">
 	    insert into org_leg_branches(branch_id, uid, title) values(#{branch_id}, #{uid}, #{title})

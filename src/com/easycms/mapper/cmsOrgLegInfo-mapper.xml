@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgLegInfo">
+<mapper namespace="com.easycms.entity.user.CmsOrgLegInfo">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgLegInfo">
 	    insert into org_leg_info(uid, competent_authority, technical_person_number, per_capital_output) values(#{uid}, #{competent_authority}, #{technical_person_number}, #{per_capital_output})

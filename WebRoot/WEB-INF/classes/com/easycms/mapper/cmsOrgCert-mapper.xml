@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgCert">
+<mapper namespace="com.easycms.entity.user.CmsOrgCert">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgCert">
 	    insert into org_basic_cert(cert_id, uid, name, level, get_time, valid_time) values(#{cert_id}, #{uid}, #{name}, #{level}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{valid_time, jdbcType=DATE, javaType=java.util.Date})

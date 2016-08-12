@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easycms.entity.CmsOrgLegAwards">
+<mapper namespace="com.easycms.entity.user.CmsOrgLegAwards">
     <!-- 插入操作 -->
 	<insert id="add" parameterType="orgLegAwards">
 	    insert into org_leg_awrards(award_id, uid, get_time, title) values(#{award_id}, #{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{title})
