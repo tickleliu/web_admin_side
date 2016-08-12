@@ -9,107 +9,258 @@
 	<script type="text/javascript" src="admin/assets/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="jeasyui/jquery.easyui.min.js"></script>
 	<script>
-	$(document).ready(function(){
-		$("#testb").click(function(){
-			var df = $('#dfrom').datebox('getValue');
-			var dt = $('#dto').datebox('getValue');
-			var keyw = $('#searchkw').val();
-			var ct = $('#category').val();
-			alert("From: " + df + " To: " + dt + " keyword: " + keyw + " category: " + ct);
-	  	});
-	});
-	
 	function doSearch(){
-		$('#tt').datagrid('load',{
-			datefrom: $('#dfrom').datebox('getValue'),
-			dateto: $('#dto').datebox('getValue'),
-			keyw: $('#searchkw').val(),
-			ct: $('#category').val(),
-			author:$('#author').val(),
-		});
-	};
-	
-	function doAdd(){
-		alert("增添文章");
-	};
-	
-	function doEdit(){
-		var rows = $('#tt').datagrid('getSelections');
-		if(rows.length == 0){
-			alert("没有选中");
-		}
-		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			
-			alert("编辑, id: " + dataid);
-		}
-		else{
-			alert("超过一个被选中");
-		}
-	};
-	
-	function doDelete(){
-		var rows = $('#tt').datagrid('getSelections');
-		if(rows.length == 0){
-			alert("");
-		}
-		else{
-			$.messager.confirm("", function (data) {  
-            	if (data) {  
-                	var ids = [];
-					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
-					} 
-					alert(":\n" + ids.join("\n"));
-           		}  
-            	else {  
-                	alert("");  
-            	} 
-            });
-		}
+		
+			$('#t1').datagrid('load',{
+				uid:$('#uid').val(),
+				enterprise_name:$('#enterprise_name').val(),
+				license_number:$('#license_number').val(),
+				region:$('#region').val(),				
+				registered_capital_beyond:$('#registered_capital_beyond').val(),
+				registered_capital_below:$('#registered_capital_below').val(),
+				enterprise_type:$('#enterprise_type').val(),
+				industry_fields:$('#industry_fields').val(),
+				contact_name:$('#contact_name').val(),
+				phone:$('#phone').val(),
+				email:$('#email').val(),
+				main_business:$('#main_business').val(),				
+
+			});
+			$('#t2').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t3').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t4').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t5').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t6').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t7').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t8').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t9').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+			$('#t10').datagrid('load',{				
+				uid:$('#uid').val(),
+			});
+		
 	};
 	</script>
 </head>
 <body>
-	<h2>文章列表</h2>
-	<table id="tt" title="文章列表" class="easyui-datagrid" style="width:800px"
-			url="info/info_g" 
+	<div>
+		uid:
+		<input id="uid" textField="text" style="width:50px"/>
+		enterprise_name:
+		<input id="enterprise_name" textField="text" style="width:50px"/>
+		license_number:
+		<input id="license_number" textField="text" style="width:50px"/>
+		region:
+		<input id="region" textField="text" style="width:50px"/>
+		registered_capital_beyond:
+		<input id="registered_capital_beyond" textField="text" style="width:50px"/>
+		registered_capital_below:
+		<input id="registered_capital_below" textField="text" style="width:50px"/>
+		enterprise_type:
+		<input id="enterprise_type" textField="text" style="width:50px"/>
+		industry_fields:
+		<input id="industry_fields" textField="text" style="width:50px"/>
+		contact_name:
+		<input id="contact_name" textField="text" style="width:50px"/>
+		phone:
+		<input id="phone" textField="text" style="width:50px"/>
+		email:
+		<input id="email" textField="text" style="width:50px"/>
+		main_business:
+		<input id="main_business" textField="text" style="width:50px"/>		
+	</div>
+	<div>
+	<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+	</div>
+	<table id="t1" title="orgUserList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_orgUser_g" 
 			toolbar="#tb"
 			pagination="true" rownumbers="true"
 			fitColumns="true">
 		<thead>
 			<tr>
 				<th field="ck" checkbox="true"></th>
-				<th field="title" width="80">标题</th>
-				<th field="autor" width="70">作者</th>
-				<th field="category" width="70">类别</th>
+				<th field="uid" width="80">uid</th>
+				<th field="enterprise_name" width="80">enterprise_name</th>
+				<th field="license_number" width="70">license_number</th>
+				<th field="registered_capital" width="registered_capital">registered_capital</th>
+				<th field="legal_representative" width="70">legal_representative</th>
+				<th field="region" width="70">region</th>
+				<th field="address" width="70">address</th>
+				<th field="zip_code" width="70">zip_code</th>
+				<th field="enterprise_type" width="70">enterprise_type</th>
+				<th field="enterprise_nature" width="70">enterprise_nature</th>
+				<th field="industry_fields" width="70">industry_fields</th>
+				<th field="web_site" width="70">web_site</th>
+				<th field="contact_name" width="70">contact_name</th>
+				<th field="contact_position" width="70">contact_position</th>
+				<th field="phone" width="70">phone</th>
+				<th field="email" width="70">email</th>
+				<th field="main_business" width="70">main_business</th>
+				<th field="resume" width="70">resume</th>				
 			</tr>
 		</thead>
 	</table>
 	
-	<div id="tb" style="padding:5px;height:auto">
-		<div style="margin-bottom:5px">
-			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="doAdd()"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="doEdit()"></a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="doDelete()"></a>
-		</div>
-		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:90px">
-			到: <input id="dto" class="easyui-datebox" style="width:90px">
-			关键词: 
-			<input id="searchkw" textField="text" style="width:130px">
-			作者: 
-			<input id="author" textField="text" style="width:80px">
-			类别: <select name="category" id="category">
-			<c:forEach var="item" items="${categories}" varStatus="s">
-				<option value="${s.count}">${item}</option>
-			</c:forEach>
-		</select>
-			
-			
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">Search</a>
-		</div>
-	</div>
+	<table id="t2" title="orgAttachmentList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_attachment_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="path" width="70">path</th>
+				<th field="title" width="70">title</th>								
+			</tr>
+		</thead>
+	</table>
+	
+	
+	<table id="t3" title="orgCertList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_cert_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="name" width="70">name</th>
+				<th field="level" width="70">level</th>	
+				<th field="get_time" width="70">get_time</th>	
+				<th field="valid_time" width="70">valid_time</th>								
+			</tr>
+		</thead>
+	</table>	
+	
+	<table id="t4" title="orgEntInfoList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_entInfo_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="employees" width="70">employees</th>
+				<th field="sales" width="70">sales</th>	
+				<th field="profits" width="70">profits</th>	
+				<th field="qualification" width="70">qualification</th>								
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t5" title="orgGovInfoList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_govInfo_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="gdp" width="70">gdp</th>
+				<th field="gdp_growth" width="70">gdp_growth</th>	
+				<th field="military_gdp" width="70">military_gdp</th>												
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t6" title="orgLegInfoList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_legInfo_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="technical_person_number" width="70">technical_person_number</th>
+				<th field="per_capital_output" width="70">per_capital_output</th>	
+				<th field="competent_authority" width="70">competent_authority</th>												
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t7" title="orgSdList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_sd_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="isS_D" width="70">isS_D</th>
+				<th field="title" width="70">title</th>	
+				<th field="intro" width="70">intro</th>												
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t8" title="orgLegAwardsList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_legAwards_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="get_time" width="70">get_time</th>
+				<th field="title" width="70">title</th>															
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t9" title="orgLegBranchesList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_legBranches_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>				
+				<th field="title" width="70">title</th>															
+			</tr>
+		</thead>
+	</table>
+	
+	<table id="t10" title="orgLegProjectList" class="easyui-datagrid" style="width:1080px"
+			url="test/test_legProject_g" 
+			toolbar="#tb"
+			pagination="true" rownumbers="true"
+			fitColumns="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				<th field="uid" width="70">uid</th>
+				<th field="start_time" width="70">start_time</th>
+				<th field="end_time" width="70">end_time</th>
+				<th field="title" width="70">title</th>
+				<th field="intro" width="70">intro</th>														
+			</tr>
+		</thead>
+	</table>
+		
 	<button id="testb">test</button>
 </body>
 </html>

@@ -30,11 +30,11 @@ public class CmsOrgCert implements Serializable {
 	private Date valid_time; //有效期限
 	
 	//getters and setters
-	public Long getId() {
+	public Long getCert_id() {
 		return cert_id;
 	}
-	public void setId(Long id) {
-		this.cert_id = id;
+	public void setCert_id(Long cert_id) {
+		this.cert_id = cert_id;
 	}
 	public Long getUid() {
 		return uid;

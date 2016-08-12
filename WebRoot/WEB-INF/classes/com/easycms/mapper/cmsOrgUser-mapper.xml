@@ -49,8 +49,8 @@
 	    <if test="uid !=null and uid != ''">
 	         uid = #{uid}
 	    </if>
-	    <if test="enterprise_name !=null and enterprise_name != ''">
-	         <foreach collection="enterprise_name" item="key"
+	    <if test="enterprise_name !=null">
+	        <foreach collection="enterprise_name" item="key"
 	        open="" separator="" close="">
 	        	and enterprise_name like concat("%",#{key},"%")
 	        </foreach>
@@ -60,21 +60,21 @@
 	    </if>
 	    <if test="region !=null and region != ''">
 	         and region like concat("%",#{region},"%")
-	    </if>
-	    <if test="license_number !=null and license_number != ''">
-	         and license_number = #{license_number}
-	    </if>
+	    </if>	    
 	    <if test="registered_capital_beyond != null and registered_capital_beyond != ''">
-	         and registered_capital &gt;= #{registered_capital_beyond} 
+	         and registered_capital &gt;= #{registered_capital_beyond, jdbcType=BIGINT}
 	    </if>
 	    <if test="registered_capital_below != null and registered_capital_below != ''">
-	         and registered_capital &lt;= #{registered_capital_below} 
+	         and registered_capital &lt;= #{registered_capital_below, jdbcType=BIGINT}
 	    </if>
 	    <if test="enterprise_type !=null and enterprise_type != ''">
 	         and enterprise_type = #{enterprise_type}
 	    </if>
-	    <if test="industry_fields !=null and industry_fields != ''">
-	         and industry_fields like concat("%",#{industry_fields},"%")
+	    <if test="industry_fields !=null">	        
+	         <foreach collection="industry_fields" item="key"
+	        open="" separator="" close="">
+	        	and industry_fields like concat("%",#{key},"%")
+	        </foreach>
 	    </if>
 	    <if test="contact_name !=null and contact_name != ''">
 	         and contact_name = #{contact_name}
@@ -85,7 +85,7 @@
 	    <if test="email !=null and email != ''">
 	         and email = #{email}
 	    </if>
-	    <if test="main_business !=null and main_business != ''">
+	    <if test="main_business !=null">
 	         <foreach collection="main_business" item="key"
 	        open="" separator="" close="">
 	        	and main_business like concat("%",#{key},"%")
