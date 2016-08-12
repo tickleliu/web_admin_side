@@ -118,8 +118,9 @@
 		<thead>
 			<tr style="width:100%">
 				<th field="ck" checkbox="true" style="width:10%"></th>
-				<th field="name" style="width:30%">用户名</th>
-				<th field="type" style="width:10%">用户类型</th>
+				<th field="name" style="width:20%">用户名</th>
+				<th field="email" style="width:15%">用户邮箱</th>
+				<th field="type" style="width:5%">用户类型</th>
 				<th field="regis_time" style="width:10%">注册时间</th>
 				<th field="wechat_id" style="width:20%">微信账号</th>
 				<th field="status" style="width:10%">用户状态</th>
@@ -137,26 +138,27 @@
 			注册时间  从: <input id="dfrom" class="easyui-datebox" style="width:150px">
 			到: <input id="dto" class="easyui-datebox" style="width:150px">
 			
-			|	
+			&nbsp;
 			用户名: 
-			<input id="name" textField="text" style="width:230px">
+			<input id="name" textField="text" style="width:180px">
 			
-			|
+			&nbsp;
 			用户类型: <select name="type" id="type">
 				<option value="0">全体用户</option>
 				<option value="1">普通用户</option>
 				</select>
-			|	
+				
+			&nbsp;
 			用户微信号: 
-			<input id="wechat_id" textField="text" style="width:230px">
+			<input id="wechat_id" textField="text" style="width:180px">
 			
-			|
+			&nbsp;
 			用户状态: <select name="status" id="status">
 				<option value="0">有效</option>
 				<option value="1">无效</option>
 				</select>
 			
-			
+			&nbsp;
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>
 	</div>
