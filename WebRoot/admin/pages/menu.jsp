@@ -14,57 +14,27 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>member/v_list.do">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/showUserList">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">会员管理</span>
+                          <span class="txt">登录信息管理</span>
                         </a>
                       </li>
                       <li>
                         <a  href="javascript:;" data-url="<%=basePath%>group/v_list.do">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">会员组管理</span>
+                          <span class="txt">角色信息管理</span>
                         </a>
                       </li>
                       <li>
                         <a  href="javascript:;" data-url="">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">管理员(全站)</span>
+                          <span class="txt">个人用户管理</span>
                         </a>
                       </li>
                       <li>
                         <a  href="javascript:;" data-url="">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">管理员(全站)</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>role/v_list.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">角色管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>log/v_list_log.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">后台操作日志</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>log/v_list_login_success.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">登录成功日志</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>log/v_list_login_failure.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">登录失败日志</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>message/v_list.do">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">站内信管理</span>
+                          <span class="txt">组织机构用户管理</span>
                         </a>
                       </li>
                     </ul>  
@@ -284,12 +254,6 @@
                         <a href="javascript:;" data-url="全文检索.html">
                           <i class="icon icon-circle"></i>
                           <span class="txt">全文检索</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="采集管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">采集管理</span>
                         </a>
                       </li>
                     </ul>

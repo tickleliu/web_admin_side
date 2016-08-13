@@ -44,7 +44,7 @@
 				datefrom: $('#dfrom').datebox('getValue'),
 				dateto: $('#dto').datebox('getValue'),
 				name:$('#name').val(),
-				type:$('#type').val(),
+				email:$('#email').val(),
 				wechat_id:$('#wechat_id').val(),
 				status:$('#status').val(),
 			});
@@ -119,12 +119,11 @@
 			<tr style="width:100%">
 				<th field="ck" checkbox="true" style="width:10%"></th>
 				<th field="name" style="width:20%">用户名</th>
-				<th field="email" style="width:15%">用户邮箱</th>
-				<th field="type" style="width:5%">用户类型</th>
-				<th field="regis_time" style="width:10%">注册时间</th>
+				<th field="email" style="width:20%">用户邮箱</th>
 				<th field="wechat_id" style="width:20%">微信账号</th>
 				<th field="status" style="width:10%">用户状态</th>
 				<th field="image_url" style="width:15%;float:right">头像文件路径</th>
+				<th field="regis_time" style="width:10%">注册时间</th>
 			</tr>
 		</thead>
 	</table>
@@ -140,17 +139,15 @@
 			
 			&nbsp;
 			用户名: 
-			<input id="name" textField="text" style="width:180px">
+			<input id="name" textField="text" style="width:150px">
 			
 			&nbsp;
-			用户类型: <select name="type" id="type">
-				<option value="0">全体用户</option>
-				<option value="1">普通用户</option>
-				</select>
+			用户邮箱: 
+			<input id="email" textField="text" style="width:150px">
 				
 			&nbsp;
 			用户微信号: 
-			<input id="wechat_id" textField="text" style="width:180px">
+			<input id="wechat_id" textField="text" style="width:150px">
 			
 			&nbsp;
 			用户状态: <select name="status" id="status">

@@ -394,7 +394,6 @@ public class TestCmsOrgUserController {
 
 		for (CmsOrgCert orgCert : pager.getPageList()) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("attach_id", orgCert.getCert_id());
 			jsonMap.put("uid", orgCert.getUid());
 			jsonMap.put("name", orgCert.getName());
 			jsonMap.put("level", orgCert.getLevel());
