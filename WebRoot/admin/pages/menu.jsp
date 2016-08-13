@@ -233,7 +233,7 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a href="javascript:;" data-url="首页静态化.html">
+                        <a href="javascript:;" data-url="<%=basePath%>info/static_m">
                           <i class="icon icon-circle"></i>
                           <span class="txt">首页静态化</span>
                         </a>

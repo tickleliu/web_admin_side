@@ -31,7 +31,6 @@
 	$(document).ready(function(){
 	  $("button").click(function(){
 	    $.post('info/static', {}, function( dta ) {
-   			alert('post成功', dta);
  		});
  		$('#static_page').attr('src', $('#static_page').attr('src'));  		
 	  });
@@ -42,8 +41,9 @@
   
   <body>
   	<div>
-  		<button style="height:40px;width:80px;">刷新静态主页</button>
+  		<button style="height:40px;width:80px;">重新生成静态主页</button>
   	</div>
+  	<hr/>
   	<iframe id="static_page" src="http://localhost:8000/o/test.html" 
   		style="width:100%;height:100%"></iframe>
   </body>
