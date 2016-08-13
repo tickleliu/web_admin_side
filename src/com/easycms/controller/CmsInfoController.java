@@ -585,7 +585,13 @@ public class CmsInfoController {
 		FreeMarkerUtils.processTemplate("index.ftl", dataMap,
 				config.getWebUserSideRootPath() + "test.html");
 
-		return "success";
+		return "http://localhost:8000/o/test.html";
 	}
+	
+	@RequestMapping(value = "static_m")
+	public String staticManage(HttpServletRequest request,
+			HttpServletResponse response, Model model) {		
 
+		return "info/static_manage";
+	}
 }
