@@ -30,26 +30,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.easycms.common.FreeMarkerUtils;
 import com.easycms.common.Pager;
 import com.easycms.common.WebConfig;
-import com.easycms.entity.CmsOrgCert;
-import com.easycms.entity.CmsOrgEntInfo;
-import com.easycms.entity.CmsOrgGovInfo;
-import com.easycms.entity.CmsOrgLegAwards;
-import com.easycms.entity.CmsOrgLegBranches;
-import com.easycms.entity.CmsOrgLegInfo;
-import com.easycms.entity.CmsOrgLegProject;
-import com.easycms.entity.CmsOrgSupplyDemand;
-import com.easycms.entity.CmsOrgUser;
-import com.easycms.entity.CmsOrgUserAttachment;
-import com.easycms.service.CmsOrgCertService;
-import com.easycms.service.CmsOrgEntInfoService;
-import com.easycms.service.CmsOrgGovInfoService;
-import com.easycms.service.CmsOrgLegAwardsService;
-import com.easycms.service.CmsOrgLegBranchesService;
-import com.easycms.service.CmsOrgLegInfoService;
-import com.easycms.service.CmsOrgLegProjectService;
-import com.easycms.service.CmsOrgSupplyDemandService;
-import com.easycms.service.CmsOrgUserAttachmentService;
-import com.easycms.service.CmsOrgUserService;
+import com.easycms.entity.user.CmsOrgCert;
+import com.easycms.entity.user.CmsOrgEntInfo;
+import com.easycms.entity.user.CmsOrgGovInfo;
+import com.easycms.entity.user.CmsOrgLegAwards;
+import com.easycms.entity.user.CmsOrgLegBranches;
+import com.easycms.entity.user.CmsOrgLegInfo;
+import com.easycms.entity.user.CmsOrgLegProject;
+import com.easycms.entity.user.CmsOrgSupplyDemand;
+import com.easycms.entity.user.CmsOrgUser;
+import com.easycms.entity.user.CmsOrgUserAttachment;
+import com.easycms.service.user.CmsOrgCertService;
+import com.easycms.service.user.CmsOrgEntInfoService;
+import com.easycms.service.user.CmsOrgGovInfoService;
+import com.easycms.service.user.CmsOrgLegAwardsService;
+import com.easycms.service.user.CmsOrgLegBranchesService;
+import com.easycms.service.user.CmsOrgLegInfoService;
+import com.easycms.service.user.CmsOrgLegProjectService;
+import com.easycms.service.user.CmsOrgSupplyDemandService;
+import com.easycms.service.user.CmsOrgUserAttachmentService;
+import com.easycms.service.user.CmsOrgUserService;
 
 
 @Controller
@@ -394,7 +394,6 @@ public class TestCmsOrgUserController {
 
 		for (CmsOrgCert orgCert : pager.getPageList()) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("attach_id", orgCert.getCert_id());
 			jsonMap.put("uid", orgCert.getUid());
 			jsonMap.put("name", orgCert.getName());
 			jsonMap.put("level", orgCert.getLevel());
