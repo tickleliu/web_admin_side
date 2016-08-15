@@ -34,7 +34,7 @@
 		if(vf.length > 0 && vt.length > 0){
 			var df = $.fn.datebox.defaults.parser(vf);
 			var dt = $.fn.datebox.defaults.parser(vt);
-			valid = dt > df;
+			valid = dt >= df;
 		}
 		if(!valid){
 			alert("错误：结束时间早于开始时间。\n");
