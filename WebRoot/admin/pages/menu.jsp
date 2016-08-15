@@ -14,7 +14,7 @@
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>user/showUserList">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/sul">
                           <i class="icon icon-circle"></i>
                           <span class="txt">登录信息管理</span>
                         </a>
@@ -85,88 +85,89 @@
                     </ul>
                   </li>
                   <li class="hasSub">
-                    <a href="javascript:;" data-nbid="4" title="模板" class="notExpand">
+                    <a href="javascript:;" data-nbid="4" title="申请审批" class="notExpand">
                       <i class="icon icon-tasks"></i>
-                      <span class="txt">模板</span>
+                      <span class="txt">申请审批</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
-                        <a href="javascript:;" data-url="模板管理.html">
+                        <a href="javascript:;" data-url="专家申请审批.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">模板管理</span>
+                          <span class="txt">专家申请</span>
+                        </a>
+                      </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="专家申请审批.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">企业试点</span>
+                        </a>
+                      </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="专家申请审批.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">区域试点</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="javascript:;" data-url="专家申请审批.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">联盟申请</span>
                         </a>
                       </li>
                     </ul>
                   </li>
                   <li class="hasSub">
-                    <a href="javascript:;" data-nbid="5" title="资源" class="notExpand">
+                    <a href="javascript:;" data-nbid="5" title="评估" class="notExpand">
                       <i class="icon icon-inbox"></i>
-                      <span class="txt">资源</span>
+                      <span class="txt">评估审批</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
                         <a href="javascript:;" data-url="资源管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">资源管理</span>
+                          <span class="txt">企业评估</span>
                         </a>
                       </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="资源管理.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">区域评估</span>
+                        </a>
+                      </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="资源管理.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">技术评估</span>
+                        </a>
+                      </li>
+                      
+                      <li>
+                        <a href="javascript:;" data-url="资源管理.html">
+                          <i class="icon icon-circle"></i>
+                          <span class="txt">项目评估</span>
+                        </a>
+                      </li>
+                      
                     </ul>
                   </li>
+                  
                   <li class="hasSub">
                     <a href="javascript:;" data-nbid="6" title="辅助" class="notExpand">
                       <i class="icon icon-group"></i>
-                      <span class="txt">辅助</span>
+                      <span class="txt">资质认证</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
                         <a href="javascript:;" data-url="评论管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">评论管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="投票管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">投票管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="留言管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">留言管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="留言类别.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">留言类别</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="广告管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">广告管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="广告版位.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">广告版位</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="友情链接管理.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">友情链接管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="友情链接类别.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">友情链接类别</span>
+                          <span class="txt">资质申请</span>
                         </a>
                       </li>
                     </ul>
@@ -174,38 +175,32 @@
                   <li class="hasSub">
                     <a href="javascript:;" data-nbid="7" title="维护" class="notExpand">
                       <i class="icon icon-legal"></i>
-                      <span class="txt">维护</span>
+                      <span class="txt">人才培训</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">
                       <li>
                         <a href="javascript:;" data-url="专题管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">专题管理</span>
+                          <span class="txt">招聘公告</span>
                         </a>
                       </li>
                       <li>
                         <a href="javascript:;" data-url="TAG管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">TAG管理</span>
+                          <span class="txt">课程管理</span>
                         </a>
                       </li>
                       <li>
                         <a href="javascript:;" data-url="关键词管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">关键词管理</span>
+                          <span class="txt">课程申请</span>
                         </a>
                       </li>
                       <li>
                         <a href="javascript:;" data-url="敏感词管理.html">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">敏感词管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="内容回收站.html">
-                          <i class="icon icon-circle"></i>
-                          <span class="txt">内容回收站</span>
+                          <span class="txt">报名管理</span>
                         </a>
                       </li>
                     </ul>
@@ -261,7 +256,7 @@
                   <li class="hasSub">
                     <a href="javascript:;" data-nbid="10" title="配置" class="notExpand">
                       <i class="icon icon-gear"></i>
-                      <span class="txt">配置</span>
+                      <span class="txt">配置与维护</span>
                       <span class="more"><i class="icon-caret-down"></i></span>
                     </a>
                     <ul class="sub-nav">

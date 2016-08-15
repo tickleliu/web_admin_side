@@ -34,7 +34,7 @@
 		if(vf.length > 0 && vt.length > 0){
 			var df = $.fn.datebox.defaults.parser(vf);
 			var dt = $.fn.datebox.defaults.parser(vt);
-			valid = dt > df;
+			valid = dt >= df;
 		}
 		if(!valid){
 			alert("错误：结束时间早于开始时间。\n");
@@ -119,7 +119,6 @@
 			<tr style="width:100%">
 				<th field="ck" checkbox="true" style="width:10%"></th>
 				<th field="name" style="width:20%">用户名</th>
-				<th field="email" style="width:20%">用户邮箱</th>
 				<th field="wechat_id" style="width:20%">微信账号</th>
 				<th field="status" style="width:10%">用户状态</th>
 				<th field="image_url" style="width:15%;float:right">头像文件路径</th>
@@ -134,25 +133,23 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			注册时间  从: <input id="dfrom" class="easyui-datebox" style="width:150px">
+			注册时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
 			到: <input id="dto" class="easyui-datebox" style="width:150px">
 			
 			&nbsp;
 			用户名: 
-			<input id="name" textField="text" style="width:150px">
+			<input id="name" name="name" textField="text" style="width:150px">
 			
 			&nbsp;
-			用户邮箱: 
-			<input id="email" textField="text" style="width:150px">
-				
-			&nbsp;
 			用户微信号: 
-			<input id="wechat_id" textField="text" style="width:150px">
+			<input id="wechat_id" name="wechat_id" textField="text" style="width:150px">
 			
 			&nbsp;
 			用户状态: <select name="status" id="status">
-				<option value="0">有效</option>
-				<option value="1">无效</option>
+				<option value="0">全部用户</option>
+			<c:forEach var="item" items="${status}" varStatus="s">
+				<option value="${s.count}">${item}</option>
+			</c:forEach>
 				</select>
 			
 			&nbsp;
