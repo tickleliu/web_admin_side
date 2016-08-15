@@ -34,7 +34,7 @@
 		if(vf.length > 0 && vt.length > 0){
 			var df = $.fn.datebox.defaults.parser(vf);
 			var dt = $.fn.datebox.defaults.parser(vt);
-			valid = dt > df;
+			valid = dt >= df;
 		}
 		if(!valid){
 			alert("错误：结束时间早于开始时间。\n");
@@ -64,8 +64,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/userrole_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/userrole_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -83,7 +83,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids
@@ -145,48 +145,48 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			创建时间  从: <input id="dfrom" class="easyui-datebox" style="width:150px">
-			到: <input id="dto" class="easyui-datebox" style="width:150px">
+			创建时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
+			到: <input id="dto" name="dto" class="easyui-datebox" style="width:150px">
 			
 			&nbsp;
 			用户名: 
-			<input id="name" textField="text" style="width:200px">
+			<input id="name" name="name" textField="text" style="width:200px">
 			
 			&nbsp;
 			邮箱: 
-			<input id="email" textField="text" style="width:200px">
+			<input id="email" name="email" textField="text" style="width:200px">
 			
 			<br>
 			是个人用户: 
-			<input type="checkbox" id="personal" style="vertical-align:sub;">
+			<input type="checkbox" id="personal" name="personal" style="vertical-align:sub;">
 			
 			&nbsp;
 			是管理员用户: 
-			<input type="checkbox" id="admin" style="vertical-align:sub;">
+			<input type="checkbox" id="admin" name="admin" style="vertical-align:sub;">
 			
 			&nbsp;
 			是专家用户: 
-			<input type="checkbox" id="expert" style="vertical-align:sub;">
+			<input type="checkbox" id="expert" name="expert" style="vertical-align:sub;">
 			
 			&nbsp;
 			是领导用户: 
-			<input type="checkbox" id="leader" style="vertical-align:sub;">
+			<input type="checkbox" id="leader" name="leader" style="vertical-align:sub;">
 			
 			&nbsp;
 			是技术用户: 
-			<input type="checkbox" id="tech" style="vertical-align:sub;">
+			<input type="checkbox" id="tech" name="tech" style="vertical-align:sub;">
 			
 			&nbsp;
 			是企业用户: 
-			<input type="checkbox" id="firm" style="vertical-align:sub;">
+			<input type="checkbox" id="firm" name="firm" style="vertical-align:sub;">
 			
 			&nbsp;
 			是区域用户: 
-			<input type="checkbox" id="region" style="vertical-align:sub;">
+			<input type="checkbox" id="region" name="region" style="vertical-align:sub;">
 			
 			&nbsp;
 			是联盟成员: 
-			<input type="checkbox" id="member" style="vertical-align:sub;">
+			<input type="checkbox" id="member" name="member" style="vertical-align:sub;">
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>

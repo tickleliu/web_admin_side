@@ -50,8 +50,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/userbasic_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/userbasic_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -69,7 +69,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids
@@ -131,15 +131,15 @@
 		</div>
 		<div>
 			昵称: 
-			<input id="nickname" textField="text" style="width:100px">
+			<input id="nickname" name="nickname" textField="text" style="width:100px">
 				
 			&nbsp;
 			真实姓名: 
-			<input id="realname" textField="text" style="width:100px">
+			<input id="realname" name="realname" textField="text" style="width:100px">
 			
 			&nbsp;
 			身份证号: 
-			<input id="id_number" textField="text" style="width:300px">
+			<input id="id_number" name="id_number" textField="text" style="width:300px">
 			
 			&nbsp;
 			性别: <select name="gender" id="gender">
@@ -149,27 +149,27 @@
 			
 			&nbsp;
 			文化程度: 
-			<input id="degree" textField="text" style="width:100px">
+			<input id="degree" name="degree" textField="text" style="width:100px">
 			
 			&nbsp;
 			所学专业: 
-			<input id="major" textField="text" style="width:200px">
+			<input id="major" name="major" textField="text" style="width:200px">
 			
 			<br>
 			工作单位: 
-			<input id="workunit" textField="text" style="width:200px">
+			<input id="workunit" name="workunit" textField="text" style="width:200px">
 			
 			&nbsp;
 			职务: 
-			<input id="position" textField="text" style="width:100px">
+			<input id="position" name="position" textField="text" style="width:100px">
 			
 			&nbsp;
 			电话: 
-			<input id="phone" textField="text" style="width:100px">
+			<input id="phone" name="phone" textField="text" style="width:100px">
 			
 			&nbsp;
 			电子邮箱: 
-			<input id="email" textField="text" style="width:200px">
+			<input id="email" name="email" textField="text" style="width:200px">
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>

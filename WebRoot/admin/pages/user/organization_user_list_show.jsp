@@ -47,8 +47,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/orgbasic_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/orgbasic_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -66,7 +66,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids
@@ -125,31 +125,31 @@
 		</div>
 		<div>
 			单位名称: 
-			<input id="organizationname" textField="text" style="width:150px">
+			<input id="organizationname" name="organizationname" textField="text" style="width:150px">
 				
 			&nbsp;
 			地区: 
-			<input id="region" textField="text" style="width:100px">
+			<input id="region" name="region" textField="text" style="width:100px">
 			
 			&nbsp;
 			联系人姓名: 
-			<input id="name" textField="text" style="width:100px">
+			<input id="name" name="name" textField="text" style="width:100px">
 			
 			&nbsp;
 			联系人职务: 
-			<input id="position" textField="text" style="width:100px">
+			<input id="position" name="position" textField="text" style="width:100px">
 			
 			&nbsp;
 			联系电话: 
-			<input id="phone" textField="text" style="width:100px">
+			<input id="phone" name="phone" textField="text" style="width:100px">
 			
 			<br>
 			通信地址: 
-			<input id="address" textField="text" style="width:200px">
+			<input id="address" name="address" textField="text" style="width:200px">
 			
 			&nbsp;
 			电子邮箱: 
-			<input id="email" textField="text" style="width:200px">
+			<input id="email" name="email" textField="text" style="width:200px">
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>

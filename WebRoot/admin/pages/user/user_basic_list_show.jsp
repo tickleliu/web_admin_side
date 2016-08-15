@@ -34,7 +34,7 @@
 		if(vf.length > 0 && vt.length > 0){
 			var df = $.fn.datebox.defaults.parser(vf);
 			var dt = $.fn.datebox.defaults.parser(vt);
-			valid = dt > df;
+			valid = dt >= df;
 		}
 		if(!valid){
 			alert("错误：结束时间早于开始时间。\n");
@@ -58,8 +58,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/user_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/user_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -77,7 +77,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids
@@ -134,20 +134,20 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			注册时间  从: <input id="dfrom" class="easyui-datebox" style="width:150px">
-			到: <input id="dto" class="easyui-datebox" style="width:150px">
+			注册时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
+			到: <input id="dto" name="dto" class="easyui-datebox" style="width:150px">
 			
 			&nbsp;
 			用户名: 
-			<input id="name" textField="text" style="width:150px">
+			<input id="name" name="name" textField="text" style="width:150px">
 			
 			&nbsp;
 			用户邮箱: 
-			<input id="email" textField="text" style="width:150px">
+			<input id="email" name="email" textField="text" style="width:150px">
 				
 			&nbsp;
 			用户微信号: 
-			<input id="wechat_id" textField="text" style="width:150px">
+			<input id="wechat_id" name="wechat_id" textField="text" style="width:150px">
 			
 			&nbsp;
 			用户状态: <select name="status" id="status">
