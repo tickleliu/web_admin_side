@@ -1,21 +1,18 @@
 package com.easycms.common;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;  
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;  
-import java.util.Locale;  
-import java.util.Map;  
-  
-import javax.servlet.ServletContext;  
+import java.io.Writer;
+import java.util.Locale;
+import java.util.Map;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-  
-import freemarker.template.Configuration;  
-import freemarker.template.DefaultObjectWrapper;  
-import freemarker.template.Template;  
-import freemarker.template.TemplateException;  
+import javax.servlet.ServletContext;
+
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 public class FreeMarkerUtils {
 	 private static  Configuration config = new Configuration();   
      

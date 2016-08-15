@@ -5,15 +5,16 @@ import java.util.Date;
 
 public class CmsUserRoleInfo implements Serializable {
 	public CmsUserRoleInfo() {
-		uid = 0l;
-		isorg = 0;
-		isadmin = 0;
-		isexperter = 0;
-		ismanager = 0;
-		isengineer = 0;
-		isent = 0;
-		isleg = 0;
-		isgov = 0;
+		uid = 1l;
+		isorg = 2;
+		isadmin = 2;
+		isexperter = 2;
+		ismanager = 2;
+		isengineer = 2;
+		isent = 2;
+		isleg = 2;
+		isgov = 2;
+		issuperadmin = 2;
 		create_time = new Date();
 		update_time = new Date();
 	}
@@ -109,6 +110,15 @@ public class CmsUserRoleInfo implements Serializable {
 	private Long uid;
 	private Integer isorg;
 	private Integer isadmin;
+	private Integer issuperadmin;
+	public Integer getIssuperadmin() {
+		return issuperadmin;
+	}
+
+	public void setIssuperadmin(Integer issuperadmin) {
+		this.issuperadmin = issuperadmin;
+	}
+
 	private Integer isexperter;
 	private Integer ismanager;
 	private Integer isengineer;

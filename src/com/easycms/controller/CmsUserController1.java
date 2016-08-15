@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.easycms.common.DateUtil;
 import com.easycms.common.Pager;
 import com.easycms.entity.user.CmsUserLoginInfo;
+import com.easycms.entity.user.CmsUserRoleInfo;
 import com.easycms.service.impl.user.CmsUserLoginInfoServiceImpl;
+import com.easycms.service.impl.user.CmsUserRoleServiceImpl;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -37,6 +39,9 @@ public class CmsUserController1 {
 
 	@Resource(name = "cmsUserLoginInfoServiceImpl")
 	CmsUserLoginInfoServiceImpl uls;
+
+	@Resource(name = "cmsUserRoleServiceImpl")
+	CmsUserRoleServiceImpl urs;
 
 	/**
 	 * 用户登录信息管理页
@@ -221,7 +226,7 @@ public class CmsUserController1 {
 			HttpServletResponse response, Model model) {
 		return "user/user_role_list_show";
 	}
-	
+
 	/**
 	 * 用户角色信息获取
 	 * */
@@ -233,7 +238,7 @@ public class CmsUserController1 {
 		response.setCharacterEncoding("UTF-8");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		String datefrom = request.getParameter("datefrom");
+		String datefrom = request.getParameter("dfrom");
 		if (datefrom != null) {
 			try {
 				map.put("datefrom", DateUtil.reformatDateString(datefrom,
@@ -243,7 +248,7 @@ public class CmsUserController1 {
 				e.printStackTrace();
 			}
 		}
-		String dateto = request.getParameter("dateto");
+		String dateto = request.getParameter("dto");
 		if (dateto != null) {
 			try {
 				map.put("dateto", DateUtil.reformatDateString(dateto,
@@ -252,6 +257,67 @@ public class CmsUserController1 {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+
+		String username = request.getParameter("name");
+		Pager<CmsUserLoginInfo> userLoginPager = null;
+		if (username != null && !username.equals("")) {
+			map.put("username", username);
+			userLoginPager = uls.findUserLoginInfoByKey(map, 0, 1);
+			if (userLoginPager.getPageList() != null
+					&& userLoginPager.getPageList().size() >= 1) {
+				map.put("uid", userLoginPager.getPageList().get(0).getUid());
+			}
+		}
+
+		String issuperadmin = request.getParameter("superadmin");
+		if (issuperadmin != null
+				&& (issuperadmin.equals("on") || issuperadmin.equals("true"))) {
+			map.put("issuperadmin", 1);
+		}
+
+		String isorg = request.getParameter("persional");
+		if (isorg != null && (isorg.equals("on") || isorg.equals("true"))) {
+			map.put("isorg", 1);
+		}
+
+		String isadmin = request.getParameter("admin");
+		if (isadmin != null
+				&& (isadmin.equals("on") || isadmin.equals("true"))) {
+			map.put("isadmin", 1);
+		}
+
+		String isexperter = request.getParameter("expert");
+		if (isexperter != null
+				&& (isexperter.equals("on") || isexperter.equals("true"))) {
+			map.put("isexperter", 1);
+		}
+
+		String ismanager = request.getParameter("leader");
+		if (ismanager != null
+				&& (ismanager.equals("on") || ismanager.equals("true"))) {
+			map.put("ismanager", 1);
+		}
+
+		String isengineer = request.getParameter("tech");
+		if (isengineer != null
+				&& (isengineer.equals("on") || isengineer.equals("true"))) {
+			map.put("isengineer", 1);
+		}
+
+		String isent = request.getParameter("firm");
+		if (isent != null && (isent.equals("on") || isent.equals("true"))) {
+			map.put("isent", 1);
+		}
+
+		String isgov = request.getParameter("region");
+		if (isgov != null && (isgov.equals("on") || isgov.equals("true"))) {
+			map.put("isgov", 1);
+		}
+
+		String isleg = request.getParameter("member");
+		if (isleg != null && (isleg.equals("on") || isleg.equals("true"))) {
+			map.put("isleg", 1);
 		}
 
 		int showPages = 0;
@@ -277,49 +343,88 @@ public class CmsUserController1 {
 		}
 
 		showPages = showPages * pageSize;
-		String keyword = request.getParameter("keyw");
-
-		List<String> keywords = new LinkedList<String>();
-		if (keyword != null) {
-			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
-					" ,\t");
-			while (stringTokenizer.hasMoreTokens()) {
-				String tokenString = stringTokenizer.nextToken();
-				if (tokenString.trim().length() > 0) {
-					keywords.add(tokenString.trim());
-				}
-			}
-		}
-		if (keywords.size() > 0) {
-			map.put("keyw", keywords);
-		}
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("total", 10);
+
+		Pager<CmsUserRoleInfo> pager = urs.findUserRolesByKey(map, showPages,
+				pageSize);
+
+		jsonObject.put("total", pager.getTotal());
 		List<HashedMap> articles = new ArrayList<HashedMap>();
 		JSONArray jsonArray = new JSONArray();
 
 		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < pager.getPageList().size(); i++) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("uid", random.nextLong());
-			jsonMap.put("name", "testname");
-			jsonMap.put("type", "普通");
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
+			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
+					.getPageList().get(i).getUid());
+			jsonMap.put("name", cmsUserLoginInfo.getUsername());
+			
+			if(pager.getPageList().get(i).getIssuperadmin().equals(1)) {
+				jsonMap.put("superadmin", "是");
+			} else {
+				jsonMap.put("superadmin", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsadmin().equals(1)) {
+				jsonMap.put("admin", "是");
+			} else {
+				jsonMap.put("admin", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsorg().equals(1)) {
+				jsonMap.put("personal", "是");
+			} else {
+				jsonMap.put("personal", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsexperter().equals(1)) {
+				jsonMap.put("expert", "是");
+			} else {
+				jsonMap.put("expert", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsengineer().equals(1)) {
+				jsonMap.put("tech", "是");
+			} else {
+				jsonMap.put("tech", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsmanager().equals(1)) {
+				jsonMap.put("leader", "是");
+			} else {
+				jsonMap.put("leader", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsent().equals(1)) {
+				jsonMap.put("firm", "是");
+			} else {
+				jsonMap.put("firm", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsgov().equals(1)) {
+				jsonMap.put("region", "是");
+			} else {
+				jsonMap.put("region", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsleg().equals(1)) {
+				jsonMap.put("member", "是");
+			} else {
+				jsonMap.put("member", "否");
+			}
+			
 			String regis_time = DateFormatUtils
-					.format(new Date(), "yyyy-MM-dd");
-			jsonMap.put("regis_time", regis_time);
-			// jsonMap.put("update_time", article.getAid());
-			jsonMap.put("wechat_id", random.nextLong());
-			jsonMap.put("status", random.nextInt());
-			jsonMap.put("image_url", "null");
-
+					.format(cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
+			jsonMap.put("time", regis_time);
 			jsonArray.put(jsonMap);
 		}
 
 		jsonObject.put("rows", jsonArray);
 		return jsonObject.toString();
 	}
-	
+
 	/**
 	 * 用户角色信息删除页
 	 * */
@@ -453,104 +558,4 @@ public class CmsUserController1 {
 		return jsonObject.toString();
 	}
 
-	@RequestMapping(value = "showUserRole")
-	public String showUserRole(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		return "";
-	}
-
-	@RequestMapping(value = "/userrole_g", produces = "text/html;charset=UTF-8")
-	@ResponseBody
-	public String getUserRole(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		response.setContentType("text/json;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		String datefrom = request.getParameter("datefrom");
-		if (datefrom != null) {
-			try {
-				map.put("datefrom", DateUtil.reformatDateString(datefrom,
-						"yyyy-MM-dd", "yyyy-MM-dd"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		String dateto = request.getParameter("dateto");
-		if (dateto != null) {
-			try {
-				map.put("dateto", DateUtil.reformatDateString(dateto,
-						"yyyy-MM-dd", "yyyy-MM-dd"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		int showPages = 0;
-		String pageString = request.getParameter("page");
-		if (pageString != null) {
-			try {
-				showPages = Integer.parseInt(pageString) - 1;
-			} catch (NumberFormatException e) {
-				// TODO: handle exception
-				showPages = 0;
-			}
-		}
-
-		int pageSize = 10;
-		String rowsString = request.getParameter("rows");
-		if (rowsString != null) {
-			try {
-				pageSize = Integer.parseInt(rowsString);
-			} catch (NumberFormatException e) {
-				// TODO: handle exception
-				pageSize = 10;
-			}
-		}
-
-		showPages = showPages * pageSize;
-		String keyword = request.getParameter("keyw");
-
-		List<String> keywords = new LinkedList<String>();
-		if (keyword != null) {
-			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
-					" ,\t");
-			while (stringTokenizer.hasMoreTokens()) {
-				String tokenString = stringTokenizer.nextToken();
-				if (tokenString.trim().length() > 0) {
-					keywords.add(tokenString.trim());
-				}
-			}
-		}
-		if (keywords.size() > 0) {
-			map.put("keyw", keywords);
-		}
-
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("total", 10);
-		List<HashedMap> articles = new ArrayList<HashedMap>();
-		JSONArray jsonArray = new JSONArray();
-
-		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("uid", random.nextLong());
-			jsonMap.put("name", "testname");
-			jsonMap.put("type", "普通");
-			String regis_time = DateFormatUtils
-					.format(new Date(), "yyyy-MM-dd");
-			jsonMap.put("regis_time", regis_time);
-			// jsonMap.put("update_time", article.getAid());
-			jsonMap.put("wechat_id", random.nextLong());
-			jsonMap.put("status", random.nextInt());
-			jsonMap.put("image_url", "null");
-
-			jsonArray.put(jsonMap);
-		}
-
-		jsonObject.put("rows", jsonArray);
-		return jsonObject.toString();
-	}
 }

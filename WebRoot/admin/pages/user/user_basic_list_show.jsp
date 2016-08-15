@@ -134,27 +134,13 @@
 		</div>
 		<div>
 			注册时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
-<<<<<<< HEAD
-			到: <input id="dto" class="easyui-datebox" style="width:150px">
-=======
 			到: <input id="dto" name="dto" class="easyui-datebox" style="width:150px">
->>>>>>> 149363f995d43e23c402dd404d8cf67963c4760b
-			
 			&nbsp;
 			用户名: 
 			<input id="name" name="name" textField="text" style="width:150px">
-			
 			&nbsp;
-<<<<<<< HEAD
-=======
-			用户邮箱: 
-			<input id="email" name="email" textField="text" style="width:150px">
-				
-			&nbsp;
->>>>>>> 149363f995d43e23c402dd404d8cf67963c4760b
 			用户微信号: 
 			<input id="wechat_id" name="wechat_id" textField="text" style="width:150px">
-			
 			&nbsp;
 			用户状态: <select name="status" id="status">
 				<option value="0">全部用户</option>
@@ -162,7 +148,6 @@
 				<option value="${s.count}">${item}</option>
 			</c:forEach>
 				</select>
-			
 			&nbsp;
 			<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>

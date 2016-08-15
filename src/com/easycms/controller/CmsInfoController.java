@@ -263,14 +263,14 @@ public class CmsInfoController {
 
 		String irecomString = request.getParameter("irecom");
 		if (irecomString != null) {
-			if (irecomString.equals("1") || irecomString.equals("on")) {
+			if (irecomString.equals("1") || irecomString.equals("true")) {
 				cmsArticle.setIrecom(1);
 			}
 		}
 
 		String igraphString = request.getParameter("igraph");
 		if (igraphString != null) {
-			if (igraphString.equals("1") || igraphString.equals("on")) {
+			if (igraphString.equals("1") || igraphString.equals("true")) {
 				cmsArticle.setIgraph(1);
 			}
 		}
@@ -381,14 +381,14 @@ public class CmsInfoController {
 
 		String irecomString = request.getParameter("irecom");
 		if (irecomString != null) {
-			if (irecomString.equals("1") || irecomString.equals("on")) {
+			if (irecomString.equals("1") || irecomString.equals("true")) {
 				map.put("irecom", 1);
 			}
 		}
 
 		String igraphString = request.getParameter("igraph");
 		if (igraphString != null) {
-			if (igraphString.equals("1") || igraphString.equals("on")) {
+			if (igraphString.equals("1") || igraphString.equals("true")) {
 				map.put("igraph", 1);
 			}
 		}

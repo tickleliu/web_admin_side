@@ -44,15 +44,15 @@
 				datefrom: $('#dfrom').datebox('getValue'),
 				dateto: $('#dto').datebox('getValue'),
 				name:$('#name').val(),
-				email:$('#email').val(),
-				personal:$('#personal').val(),
-				admin:$('#admin').val(),
-				expert:$('#expert').val(),
-				leader:$('#leader').val(),
-				tech:$('#tech').val(),
-				firm:$('#firm').val(),
-				region:$('#region').val(),
-				member:$('#member').val(),
+				personal:$('#personal').is(":checked"),
+				admin:$('#admin').is(":checked"),
+				expert:$('#expert').is(":checked"),
+				leader:$('#leader').is(":checked"),
+				tech:$('#tech').is(":checked"),
+				firm:$('#firm').is(":checked"),
+				region:$('#region').is(":checked"),
+				member:$('#member').is(":checked"),
+				superadmin:$('#superadmin').is(":checked"),
 			});
 		}
 	};
@@ -125,12 +125,12 @@
 			<tr style="width:100%">
 				<th field="ck" checkbox="true" style="width:10%"></th>
 				<th field="name" style="width:20%">用户名</th>
-				<th field="email" style="width:20%">邮箱</th>
-				<th field="personal" style="width:5%">个人用户</th>
-				<th field="admin" style="width:5%">管理员用户</th>
-				<th field="expert" style="width:5%">专家用户</th>
-				<th field="leader" style="width:5%">领导用户</th>
-				<th field="tech" style="width:5%">技术用户</th>
+				<th field="superadmin" style="width:5%">超级管理员</th>
+				<th field="admin" style="width:5%">管理员</th>
+				<th field="personal" style="width:5%">集体用户</th>
+				<th field="expert" style="width:5%">专家</th>
+				<th field="leader" style="width:5%">领导</th>
+				<th field="tech" style="width:5%">技术人员</th>
 				<th field="firm" style="width:5%">企业用户</th>
 				<th field="region" style="width:5%">区域用户</th>
 				<th field="member" style="width:5%">联盟成员</th>
@@ -142,7 +142,6 @@
 	<div id="tb" style="padding:5px;height:auto">
 		<div style="margin-bottom:5px">
 			<a href="javascript:doEdit()" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
-			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
 			创建时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
@@ -153,39 +152,39 @@
 			<input id="name" name="name" textField="text" style="width:200px">
 			
 			&nbsp;
-			邮箱: 
-			<input id="email" name="email" textField="text" style="width:200px">
-			
-			<br>
-			是个人用户: 
+			超级管理员: 
+			<input id="superadmin" name="superadmin" type="checkbox" style="vertical-align:sub;">
+			&nbsp;
+			集体用户: 
 			<input type="checkbox" id="personal" name="personal" style="vertical-align:sub;">
+			<br>
 			
 			&nbsp;
-			是管理员用户: 
+			管理员: 
 			<input type="checkbox" id="admin" name="admin" style="vertical-align:sub;">
 			
 			&nbsp;
-			是专家用户: 
+			专家: 
 			<input type="checkbox" id="expert" name="expert" style="vertical-align:sub;">
 			
 			&nbsp;
-			是领导用户: 
+			领导: 
 			<input type="checkbox" id="leader" name="leader" style="vertical-align:sub;">
 			
 			&nbsp;
-			是技术用户: 
+			技术人员: 
 			<input type="checkbox" id="tech" name="tech" style="vertical-align:sub;">
 			
 			&nbsp;
-			是企业用户: 
+			企业用户: 
 			<input type="checkbox" id="firm" name="firm" style="vertical-align:sub;">
 			
 			&nbsp;
-			是区域用户: 
+			区域用户: 
 			<input type="checkbox" id="region" name="region" style="vertical-align:sub;">
 			
 			&nbsp;
-			是联盟成员: 
+			联盟成员: 
 			<input type="checkbox" id="member" name="member" style="vertical-align:sub;">
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;
