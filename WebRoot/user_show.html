@@ -51,8 +51,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/userrole_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/userrole_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -70,7 +70,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids

@@ -58,8 +58,8 @@
 			alert("错误：没有选择需要编辑的用户.\n");
 		}
 		else if(rows.length == 1){
-			var dataid = rows[0].aid;
-			var url = "user/user_e.do?aid=" + dataid;
+			var datuid = rows[0].uid;
+			var url = "user/user_e.do?uid=" + datuid;
 			location.href = url; 
 		}
 		else{
@@ -77,7 +77,7 @@
             	if (data) {  
                 	var ids = [];
 					for(var i=0; i<rows.length; i++){
-						ids.push(rows[i].aid);
+						ids.push(rows[i].uid);
 					}
 					var json_data = {
 						"deleteIds":ids
@@ -134,13 +134,24 @@
 		</div>
 		<div>
 			注册时间  从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
+<<<<<<< HEAD
 			到: <input id="dto" class="easyui-datebox" style="width:150px">
+=======
+			到: <input id="dto" name="dto" class="easyui-datebox" style="width:150px">
+>>>>>>> 149363f995d43e23c402dd404d8cf67963c4760b
 			
 			&nbsp;
 			用户名: 
 			<input id="name" name="name" textField="text" style="width:150px">
 			
 			&nbsp;
+<<<<<<< HEAD
+=======
+			用户邮箱: 
+			<input id="email" name="email" textField="text" style="width:150px">
+				
+			&nbsp;
+>>>>>>> 149363f995d43e23c402dd404d8cf67963c4760b
 			用户微信号: 
 			<input id="wechat_id" name="wechat_id" textField="text" style="width:150px">
 			

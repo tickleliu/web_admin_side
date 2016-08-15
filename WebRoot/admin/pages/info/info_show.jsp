@@ -34,7 +34,7 @@
 		if(vf.length > 0 && vt.length > 0){
 			var df = $.fn.datebox.defaults.parser(vf);
 			var dt = $.fn.datebox.defaults.parser(vt);
-			valid = dt > df;
+			valid = dt >= df;
 		}
 		if(!valid){
 			alert("错误：结束时间早于开始时间。\n");
@@ -139,24 +139,24 @@
 			<a href="javascript:doDelete()" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
 		</div>
 		<div>
-			日期 从: <input id="dfrom" class="easyui-datebox" style="width:150px">
-			到: <input id="dto" class="easyui-datebox" style="width:150px">
+			日期 从: <input id="dfrom" name="dfrom" class="easyui-datebox" style="width:150px">
+			到: <input id="dto" name="dto" class="easyui-datebox" style="width:150px">
 			
 			|	
 			关键词: 
-			<input id="searchkw" textField="text" style="width:300px">
+			<input id="searchkw" name="searchkw" textField="text" style="width:300px">
 			
 			|
 			作者:
-			<input id="author" textField="text" style="width:130px">
+			<input id="author" name="author" textField="text" style="width:130px">
 			
 			|
 			是推荐页:
-			<input type="checkbox" id="irecom" style="vertical-align:sub;">
+			<input type="checkbox" id="irecom" name="irecom" style="vertical-align:sub;">
 			
 			|
 			是图片页:
-			<input type="checkbox" id="igraph" style="vertical-align:sub;">			
+			<input type="checkbox" id="igraph" name="igraph" style="vertical-align:sub;">			
 			
 			|
 			类别: <select name="category" id="category">
