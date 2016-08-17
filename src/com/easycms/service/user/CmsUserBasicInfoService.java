@@ -7,9 +7,9 @@ import com.easycms.common.Pager;
 import com.easycms.entity.user.CmsUserBasicInfo;
 
 public interface CmsUserBasicInfoService extends BaseDao<CmsUserBasicInfo, Long>{
-	public void saveUserBasicInfoService(CmsUserBasicInfo info);
+	public void saveUserBasicInfo(CmsUserBasicInfo info);
 	public CmsUserBasicInfo findUserBasicInfoById(long id);
-	public void updateUserBasicInfo(CmsUserBasicInfo article);
-	public Pager<CmsUserBasicInfo> findUserBasicInfoByKey(Map<String, Object> map, int showPages, int pageSize);
+	public void updateUserBasicInfo(CmsUserBasicInfo info);
+	public Pager<CmsUserBasicInfo> findUserBasicInfosByKey(Map<String, Object> map, int showPages, int pageSize);
 	public void deleteUserBasicInfoById(long id);
 }

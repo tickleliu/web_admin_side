@@ -7,7 +7,15 @@ public class CmsUserRewardInfo implements Serializable {
 	private Long reward_id;
 	private Long uid;
 	private Date reward_time;
-	private String reward;
+	private String reward_content;
+	
+	public CmsUserRewardInfo(){
+		super();
+		this.reward_id = 0L;
+		this.uid = 0L;
+		this.reward_time = new Date();
+		this.reward_content = "";
+	}
 
 	public Long getReward_id() {
 		return reward_id;
@@ -33,11 +41,11 @@ public class CmsUserRewardInfo implements Serializable {
 		this.reward_time = reward_time;
 	}
 
-	public String getReward() {
-		return reward;
+	public String getReward_content() {
+		return reward_content;
 	}
 
-	public void setReward(String reward) {
-		this.reward = reward;
+	public void setReward_content(String reward_content) {
+		this.reward_content = reward_content;
 	}
 }

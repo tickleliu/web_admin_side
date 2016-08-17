@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserRewardInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userRewardInfo">
+	    insert into user_rewards(reward_id, uid, reward_time, reward_content) 
+	    values(#{reward_id}, #{uid}, #{reward_time, jdbcType=DATE, javaType=java.util.Date}, #{reward_content})
+	</insert>
+	
+	<resultMap type="userRewardInfo" id="userRewardInfoMap">
+	<id property="reward_id" column="reward_id" />
+	<result property="uid" column="uid" />
+	<result property="reward_time" column="reward_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="reward_content" column="reward_content"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userRewardInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_rewards	
+	  where 
+	  	reward_id=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_rewards set uid=#{uid}, reward_time=#{reward_time, jdbcType=DATE, javaType=java.util.Date}, reward_content=#{reward_content} where reward_id=#{reward_id}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_rewards 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_rewards
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_rewards where reward_id=#{id}
+	</delete>
+</mapper>    

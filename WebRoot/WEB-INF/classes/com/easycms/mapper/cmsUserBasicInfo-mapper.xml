@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserBasicInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userBasicInfo">
+	    insert into user_basic_info(uid, user_name, email, phone, realname, idcard_number, sex, bloodtype, nation, heighth, culture_degree, political_landscape, into_the_party_time, native, birth, school, graduation_time, specialty, first_record, degree, first_work_time, work_unit, unit_category, position_level, zip_code, address, resume) 
+	    values(#{uid}, #{user_name}, #{email}, #{phone}, #{realname}, #{idcard_number}, #{sex}, #{bloodtype}, #{nation}, #{heighth}, #{culture_degree}, #{political_landscape}, #{into_the_party_time, jdbcType=DATE, javaType=java.util.Date}, #{nativ}, #{birth, jdbcType=DATE, javaType=java.util.Date}, #{school}, #{graduation_time, jdbcType=DATE, javaType=java.util.Date}, #{specialty}, #{first_record}, #{degree}, #{first_work_time, jdbcType=DATE, javaType=java.util.Date}, #{work_unit}, #{unit_category}, #{position_level}, #{zip_code}, #{address}, #{resume})
+	</insert>
+	
+	<resultMap type="userBasicInfo" id="userBasicInfoMap">
+	<id property="uid" column="uid" />
+	<result property="user_name" column="user_name" ></result>
+	<result property="email" column="email" ></result>
+	<result property="phone" column="phone" ></result>
+	<result property="realname" column="realname" ></result>
+	<result property="idcard_number" column="idcard_number" ></result>
+	<result property="sex" column="sex" ></result>
+	<result property="bloodtype" column="bloodtype" ></result>
+	<result property="nation" column="nation" ></result>
+	<result property="heighth" column="heighth" ></result>
+	<result property="culture_degree" column="culture_degree" ></result>
+	<result property="political_landscape" column="political_landscape" ></result>
+	<result property="into_the_party_time" column="into_the_party_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="nativ" column="native" ></result>
+	<result property="birth" column="birth" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="school" column="school" ></result>
+	<result property="graduation_time" column="graduation_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="specialty" column="specialty" ></result>
+	<result property="first_record" column="first_record" ></result>
+	<result property="degree" column="degree" ></result>
+	<result property="first_work_time" column="first_work_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="work_unit" column="work_unit" ></result>
+	<result property="unit_category" column="unit_category" ></result>
+	<result property="position_level" column="position_level" ></result>
+	<result property="zip_code" column="zip_code" ></result>
+	<result property="address" column="address" ></result>
+	<result property="resume" column="resume" ></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userBasicInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  	user_basic_info
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="userBasicInfo">
+	  update user_basic_info set user_name=#{user_name}, email=#{email}, phone=#{phone}, realname=#{realname}, idcard_number=#{idcard_number}, sex=#{sex}, bloodtype=#{bloodtype}, nation=#{nation}, heighth=#{heighth}, culture_degree=#{culture_degree}, political_landscape=#{political_landscape}, into_the_party_time=#{into_the_party_time, jdbcType=DATE, javaType=java.util.Date}, native=#{nativ}, birth=#{birth, jdbcType=DATE, javaType=java.util.Date}, school=#{school}, graduation_time=#{graduation_time, jdbcType=DATE, javaType=java.util.Date}, specialty=#{specialty}, first_record=#{first_record}, degree=#{degree}, first_work_time=#{first_work_time, jdbcType=DATE, javaType=java.util.Date}, work_unit=#{work_unit}, unit_category=#{unit_category}, position_level=#{position_level}, zip_code=#{zip_code}, address=#{address}, resume=#{resume} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="userBasicInfo" parameterType="map">
+	  select * from user_basic_info 
+	  <where>	    
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_basic_info
+	  <where>
+	    <if test="uid !=null and uid != ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	</select>
+	
+	<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_basic_info where uid=#{id}
+	</delete>
+</mapper>    

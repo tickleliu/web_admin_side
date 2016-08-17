@@ -4,20 +4,31 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CmsUserExperterProjInfo implements Serializable {
-	private Long pid;
+	private Long project_id;
 	private Long uid;
 	private Date proj_start_time;
 	private Date proj_end_time;
 	private String intro;
 	private String contribution;
 	private String title;
-
-	public Long getPid() {
-		return pid;
+	
+	public CmsUserExperterProjInfo(){
+		super();
+		this.project_id = 0L;
+		this.uid = 0L;
+		this.proj_start_time = new Date();
+		this.proj_end_time = new Date();
+		this.intro = "";
+		this.contribution = "";
+		this.title = "";
 	}
 
-	public void setPid(Long pid) {
-		this.pid = pid;
+	public Long getProject_id() {
+		return project_id;
+	}
+
+	public void setProject_id(Long project_id) {
+		this.project_id = project_id;
 	}
 
 	public Long getUid() {

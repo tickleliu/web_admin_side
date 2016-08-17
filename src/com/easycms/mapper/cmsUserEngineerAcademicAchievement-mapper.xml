@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserEngineerAcademicAchievement">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userEngineerAcademicAchievement">
+	    insert into user_engineer_academic_achievement(academic_id, uid, get_time, name) 
+	    values(#{academic_id},#{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{name})
+	</insert>
+	
+	<resultMap type="userEngineerAcademicAchievement" id="userEngineerAcademicAchievementMap">
+	<id property="academic_id" column="academic_id" />
+	<result property="uid" column="uid" />
+	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="name" column="name"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userEngineerAcademicAchievementMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_engineer_academic_achievement	
+	  where 
+	  	academic_id=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_engineer_academic_achievement set uid=#{uid},get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date},name=#{name} where academic_id=#{academic_id}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_engineer_academic_achievement 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_engineer_academic_achievement
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_engineer_academic_achievement where academic_id=#{id}
+	</delete>
+</mapper>    

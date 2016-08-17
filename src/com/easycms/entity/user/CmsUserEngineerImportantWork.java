@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CmsUserEngineerImportantWork implements Serializable {
-	public Long getWord_id() {
-		return word_id;
+	public Long getWork_id() {
+		return work_id;
 	}
-	public void setWord_id(Long word_id) {
-		this.word_id = word_id;
+	public void setWork_id(Long work_id) {
+		this.work_id = work_id;
 	}
 	public Long getUid() {
 		return uid;
@@ -28,7 +28,15 @@ public class CmsUserEngineerImportantWork implements Serializable {
 	public void setWork_name(String work_name) {
 		this.work_name = work_name;
 	}
-	Long word_id;
+	
+	public CmsUserEngineerImportantWork(){
+		super();
+		this.work_id = 0L;
+		this.uid = 0L;
+		this.get_time = new Date();
+		this.work_name = "";		
+	}
+	Long work_id;
 	Long uid;
 	Date get_time;
 	String work_name;

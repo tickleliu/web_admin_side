@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.easycms.base.BaseDao;
 import com.easycms.common.Pager;
-import com.easycms.entity.CmsArticle;
 import com.easycms.entity.user.CmsUserLoginInfo;
 
 public interface CmsUserLoginInfoService  extends BaseDao<CmsUserLoginInfo, Long>{

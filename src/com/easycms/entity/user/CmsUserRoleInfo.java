@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class CmsUserRoleInfo implements Serializable {
 	public CmsUserRoleInfo() {
-		uid = 1l;
+		uid = 0L;
 		isorg = 2;
 		isadmin = 2;
 		isexperter = 2;
@@ -106,11 +106,7 @@ public class CmsUserRoleInfo implements Serializable {
 	public void setUpdate_time(Date update_time) {
 		this.update_time = update_time;
 	}
-
-	private Long uid;
-	private Integer isorg;
-	private Integer isadmin;
-	private Integer issuperadmin;
+	
 	public Integer getIssuperadmin() {
 		return issuperadmin;
 	}
@@ -119,6 +115,10 @@ public class CmsUserRoleInfo implements Serializable {
 		this.issuperadmin = issuperadmin;
 	}
 
+	private Long uid;
+	private Integer isorg;
+	private Integer isadmin;
+	private Integer issuperadmin;
 	private Integer isexperter;
 	private Integer ismanager;
 	private Integer isengineer;

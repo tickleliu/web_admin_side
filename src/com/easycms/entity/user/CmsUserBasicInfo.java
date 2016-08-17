@@ -16,6 +16,12 @@ public class CmsUserBasicInfo implements Serializable {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getPhone() {
 		return phone;
 	}
@@ -119,10 +125,10 @@ public class CmsUserBasicInfo implements Serializable {
 		this.degree = degree;
 	}
 	public Date getFirst_word_time() {
-		return first_word_time;
+		return first_work_time;
 	}
-	public void setFirst_word_time(Date first_word_time) {
-		this.first_word_time = first_word_time;
+	public void setFirst_word_time(Date first_work_time) {
+		this.first_work_time = first_work_time;
 	}
 	public String getWork_unit() {
 		return work_unit;
@@ -160,31 +166,65 @@ public class CmsUserBasicInfo implements Serializable {
 	public void setResume(String resume) {
 		this.resume = resume;
 	}
+	
+
+	public CmsUserBasicInfo(){
+		super();
+		this.uid = 0L;
+		this.user_name = "";
+		this.email = "";
+		this.phone = "";
+		this.realname = "";
+		this.idcard_number = "";
+		this.sex = 1;
+		this.bloodtype = "";
+		this.nation = "";
+		this.heighth = 0L;
+		this.culture_degree = "";
+		this.political_landscape = "";
+		this.into_the_party_time = new Date();
+		this.nativ = "";
+		this.birth = new Date();
+		this.school = "";
+		this.graduation_time = new Date();
+		this.specialty = "";
+		this.first_record = "";
+		this.degree = "";
+		this.first_work_time = new Date();
+		this.work_unit = "";
+		this.unit_category = "";
+		this.position_level = "";
+		this.zip_code = "";
+		this.address = "";
+		this.resume = "";
+		
+	}
 	private Long uid;
-	private String user_name;
-	private String phone;
-	private String realname;
-	private String idcard_number;
-	private Integer sex;
-	private String bloodtype;
-	private String nation;
-	private Long heighth;
-	private String culture_degree;
-	private String political_landscape;
-	private Date into_the_party_time;
-	private String nativ;
-	private Date birth;
-	private String school;
-	private Date graduation_time;
-	private String specialty;
-	private String first_record;
-	private String degree;
-	private Date first_word_time;
-	private String work_unit;
-	private String unit_category;
-	private String position_level;
-	private String zip_code;
-	private String address;
-	private String resume;
+	private String user_name; //昵称
+	private String email; //电子邮件
+	private String phone; //联系电话	 
+	private String realname; //真实姓名
+	private String idcard_number; //身份证号
+	private Integer sex; //性别
+	private String bloodtype; //血型
+	private String nation; //民族
+	private Long heighth; //身高
+	private String culture_degree; //文化程度
+	private String political_landscape; //政治面貌
+	private Date into_the_party_time; //入党团时间
+	private String nativ; //籍贯
+	private Date birth; //出生年月日
+	private String school; //毕业学校
+	private Date graduation_time; //毕业时间
+	private String specialty; //专业
+	private String first_record; //第一学历
+	private String degree; //学位
+	private Date first_work_time; //参加工作时间
+	private String work_unit; //工作单位
+	private String unit_category; //单位类型
+	private String position_level; //职务
+	private String zip_code; //邮编
+	private String address; //工作地址
+	private String resume; //个人简介
 	
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserEngineerImportantWork">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userEngineerImportantWork">
+	    insert into user_engineer_important_work(work_id, uid, get_time, work_name) 
+	    values(#{work_id},#{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{work_name})
+	</insert>
+	
+	<resultMap type="userEngineerImportantWork" id="userEngineerImportantWorkMap">
+	<id property="work_id" column="work_id" />
+	<result property="uid" column="uid" />
+	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="work_name" column="work_name"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userEngineerImportantWorkMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_engineer_important_work	
+	  where 
+	  	work_id=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_engineer_important_work set uid=#{uid}, get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date},work_name=#{work_name} where work_id=#{work_id}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_engineer_important_work 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_engineer_important_work
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_engineer_important_work where work_id=#{id}
+	</delete>
+</mapper>    

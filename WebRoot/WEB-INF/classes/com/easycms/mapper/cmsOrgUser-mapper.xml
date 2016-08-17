@@ -40,7 +40,7 @@
 	</select>
 	
 	<update id="update" parameterType="orgUser">
-	  update org_basic_info set enterprise_name=#{enterprise_name}, license_number=#{license_number}, registered_capital=#{registered_capital}, legal_representative=#{legal_representative}, region=#{region}, address=#{address}, zip_code#{zip_code}, enterprise_type=#{enterprise_type}, enterprise_nature=#{enterprise_nature}, industry_fields=#{industry_fields}, web_site=#{web_site}, contact_name=#{contact_name}, contact_position=#{contact_position}, phone=#{phone}, email=#{email}, main_business=#{main_business}, resume=#{resume} where uid=#{uid}
+	  update org_basic_info set enterprise_name=#{enterprise_name}, license_number=#{license_number}, registered_capital=#{registered_capital}, legal_representative=#{legal_representative}, region=#{region}, address=#{address}, zip_code=#{zip_code}, enterprise_type=#{enterprise_type}, enterprise_nature=#{enterprise_nature}, industry_fields=#{industry_fields}, web_site=#{web_site}, contact_name=#{contact_name}, contact_position=#{contact_position}, phone=#{phone}, email=#{email}, main_business=#{main_business}, resume=#{resume} where uid=#{uid}
 	</update>
 	
 	<select id="findByKey" resultType="orgUser" parameterType="map">

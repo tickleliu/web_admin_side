@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserExperterInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userExperterInfo">
+	    insert into user_experter_info(uid, category, year_of_employment, technical_grade, title, profession_engaged, profession_engaged_time, current_position, current_position_time) 
+	    values(#{uid}, #{category}, #{year_of_employment, jdbcType=DATE, javaType=java.util.Date}, #{technical_grade}, #{title}, #{profession_engaged}, #{profession_engaged_time, jdbcType=DATE, javaType=java.util.Date}, #{current_position}, #{current_position_time, jdbcType=DATE, javaType=java.util.Date})
+	</insert>
+	
+	<resultMap type="userExperterInfo" id="userExperterInfoMap">
+	<id property="uid" column="uid" />
+	<result property="category" column="category" />
+	<result property="year_of_employment" column="year_of_employment" javaType="java.util.Date" jdbcType="DATE"/>
+	<result property="technical_grade" column="technical_grade" />
+	<result property="title" column="title" />
+	<result property="profession_engaged" column="profession_engaged" />
+	<result property="profession_engaged_time" column="profession_engaged_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="current_position" column="current_position"></result>
+	<result property="current_position_time" column="current_position_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userExperterInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_experter_info	
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_experter_info set category=#{category}, year_of_employment=#{year_of_employment, jdbcType=DATE, javaType=java.util.Date}, technical_grade=#{technical_grade}, title=#{title}, profession_engaged=#{profession_engaged}, profession_engaged_time=#{profession_engaged_time, jdbcType=DATE, javaType=java.util.Date}, current_position=#{current_position}, current_position_time=#{current_position_time, jdbcType=DATE, javaType=java.util.Date} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_experter_info 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_experter_info
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_experter_info where uid=#{id}
+	</delete>
+</mapper>    

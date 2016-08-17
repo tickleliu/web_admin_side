@@ -7,9 +7,9 @@ import com.easycms.common.Pager;
 import com.easycms.entity.user.CmsUserRewardInfo;
 
 public interface CmsUserRewardInfoService extends BaseDao<CmsUserRewardInfo, Long>{
-	public void saveRewardInfo(CmsUserRewardInfo article);
-	public CmsUserRewardInfo findRewardInfoById(long id);
-	public void updateRewardInfo(CmsUserRewardInfo rewardInfo);
-	public Pager<CmsUserRewardInfo> findRewardInfosByKey(Map<String, Object> map, int showPages, int pageSize);
-	public void deleteRewardInfoById(long id);
+	public void saveUserRewardInfo(CmsUserRewardInfo reward);
+	public CmsUserRewardInfo findUserRewardInfoById(long id);
+	public void updateUserRewardInfo(CmsUserRewardInfo reward);
+	public Pager<CmsUserRewardInfo> findUserRewardInfosByKey(Map<String, Object> map, int showPages, int pageSize);
+	public void deleteUserRewardInfoById(long id);
 }

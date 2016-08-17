@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserEngineerCertificate">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userEngineerCertificate">
+	    insert into user_engineer_certificate(cert_id, uid, get_time, certificate_name) 
+	    values(#{cert_id},#{uid}, #{get_time, jdbcType=DATE, javaType=java.util.Date}, #{certificate_name})
+	</insert>
+	
+	<resultMap type="userEngineerCertificate" id="userEngineerCertificateMap">
+	<id property="cert_id" column="cert_id" />
+	<result property="uid" column="uid" />
+	<result property="get_time" column="get_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="certificate_name" column="certificate_name"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userEngineerCertificateMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_engineer_certificate	
+	  where 
+	  	cert_id=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_engineer_certificate set uid=#{uid}, get_time=#{get_time, jdbcType=DATE, javaType=java.util.Date},certificate_name=#{certificate_name} where cert_id=#{cert_id}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_engineer_certificate 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_engineer_certificate
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_engineer_certificate where cert_id=#{id}
+	</delete>
+</mapper>    

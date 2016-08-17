@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycms.entity.user.CmsUserEngineerInfo">
+    <!-- 插入操作 -->
+	<insert id="add" parameterType="userEngineerInfo">
+	    insert into user_engineer_info(uid, profession_engaged, major_category, detail_category, engaged_time, profession_ability) 
+	    values(#{uid}, #{profession_engaged}, #{major_category}, #{detail_category}, #{engaged_time, jdbcType=DATE, javaType=java.util.Date}, #{profession_ability})
+	</insert>
+	
+	<resultMap type="userEngineerInfo" id="userEngineerInfoMap">
+	<id property="uid" column="uid" />
+	<result property="profession_engaged" column="profession_engaged" />
+	<result property="major_category" column="major_category" />
+	<result property="detail_category" column="detail_category" />
+	<result property="engaged_time" column="engaged_time" javaType="java.util.Date" jdbcType="DATE"></result>
+	<result property="profession_ability" column="profession_ability"></result>
+	</resultMap>
+	
+	<select id="findById" resultMap="userEngineerInfoMap" parameterType="long">
+	  select 
+	  	*
+	  from 
+	  user_engineer_info	
+	  where 
+	  	uid=#{id}
+	</select>
+	
+	<update id="update" parameterType="loginInfo">
+	  update user_engineer_info set profession_engaged=#{profession_engaged}, major_category=#{major_category}, detail_category=#{detail_category}, engaged_time=#{engaged_time, jdbcType=DATE, javaType=java.util.Date}, profession_ability=#{profession_ability} where uid=#{uid}
+	</update>
+	
+	<select id="findByKey" resultType="loginInfo" parameterType="map">
+	  select * from user_engineer_info 
+	  <where>
+	    <if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>	    
+	  </where>
+	  order by uid desc limit #{showPages},#{pageSize} 
+	</select>
+
+	<select id="findByKeyTotal" resultType="int" parameterType="map">
+	  select count(*) from user_engineer_info
+	  <where>
+	 	<if test="uid!=null and uid!= ''">
+	         uid = #{uid}
+	    </if>
+	  </where>
+	</select>
+		<!-- 删除操作 -->
+	<delete id="delete" parameterType="long">
+	  delete from user_engineer_info where uid=#{id}
+	</delete>
+</mapper>    

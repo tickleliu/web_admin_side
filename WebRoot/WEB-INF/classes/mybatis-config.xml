@@ -25,5 +25,14 @@
 	   <typeAlias type="com.easycms.entity.user.CmsOrgLegProject" alias="orgLegProject"></typeAlias>
 	   <typeAlias type="com.easycms.entity.user.CmsUserLoginInfo" alias="loginInfo"></typeAlias>
 	   <typeAlias type="com.easycms.entity.user.CmsUserRoleInfo" alias="userRole"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserBasicInfo" alias="userBasicInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserEngineerAcademicAchievement" alias="userEngineerAcademicAchievement"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserEngineerCertificate" alias="userEngineerCertificate"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserEngineerImportantWork" alias="userEngineerImportantWork"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserEngineerInfo" alias="userEngineerInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserEngineerWorkLife" alias="userEngineerWorkLife"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserExperterInfo" alias="userExperterInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserExperterProjInfo" alias="userExperterProjInfo"></typeAlias>
+	   <typeAlias type="com.easycms.entity.user.CmsUserRewardInfo" alias="userRewardInfo"></typeAlias>
 	</typeAliases>
 </configuration>

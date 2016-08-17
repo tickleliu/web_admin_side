@@ -28,6 +28,14 @@ public class CmsUserEngineerCertificate implements Serializable{
 	public void setCertificate_name(String certificate_name) {
 		this.certificate_name = certificate_name;
 	}
+	
+	public CmsUserEngineerCertificate(){
+		super();
+		this.cert_id = 0L;
+		this.uid = 0L;
+		this.get_time = new Date();
+		this.certificate_name = "";
+	}
 	Long cert_id;
 	Long uid;
 	Date get_time;
