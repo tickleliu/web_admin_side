@@ -138,14 +138,16 @@ $(function(){
 
 			<div class="rzpx_list_2">
 				<div class="icons">
+					<a href="#" target="_blank" id="rzpx_5"></a>
+					<a href="#" target="_blank" id="rzpx_6"></a>
 					<a href="#" target="_blank" id="rzpx_7"></a>
 					<a href="#" target="_blank" id="rzpx_8"></a>
-					<a href="#" target="_blank" id="rzpx_9"></a>
 				</div>
 				<div class="titles">
-					<a href="#" target="_blank">人才招募</a>
-					<a href="#" target="_blank">项目推荐</a>
+					<a href="#" target="_blank">区域推荐</a>
 					<a href="#" target="_blank">企业推荐</a>
+					<a href="#" target="_blank">项目推荐</a>
+					<a href="#" target="_blank">技术推荐</a>
 				</div>
 			</div>
 			
