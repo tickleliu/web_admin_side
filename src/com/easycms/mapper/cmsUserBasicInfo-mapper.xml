@@ -57,7 +57,37 @@
 	  <where>	    
 	    <if test="uid !=null and uid != ''">
 	         uid = #{uid}
-	    </if>	    
+	    </if>
+	    <if test="user_name !=null and user_name != ''">
+	         and user_name = #{user_name}
+	    </if>
+	    <if test="realname !=null and realname != ''">
+	         and realname = #{realname}
+	    </if>
+	    <if test="idcard_number !=null and idcard_number != ''">
+	         and idcard_number = #{idcard_number}
+	    </if>
+	    <if test="sex !=null and sex != ''">
+	         and sex = #{sex}
+	    </if>
+	    <if test="culture_degree !=null and culture_degree != ''">
+	         and culture_degree = #{culture_degree}
+	    </if>
+	    <if test="specialty !=null and specialty != ''">
+	         and specialty = #{specialty}
+	    </if>
+	    <if test="work_unit !=null and work_unit != ''">
+	         and work_unit = #{work_unit}
+	    </if>
+	    <if test="position_level !=null and position_level != ''">
+	         and position_level = #{position_level}
+	    </if>
+	    <if test="phone !=null and phone != ''">
+	         and phone = #{phone}
+	    </if>
+	    <if test="email !=null and email != ''">
+	         and email = #{email}
+	    </if>
 	  </where>
 	  order by uid desc limit #{showPages},#{pageSize} 
 	</select>
@@ -65,9 +95,39 @@
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
 	  select count(*) from user_basic_info
 	  <where>
-	    <if test="uid !=null and uid != ''">
+	   	<if test="uid !=null and uid != ''">
 	         uid = #{uid}
-	    </if>	    
+	    </if>
+	    <if test="user_name !=null and user_name != ''">
+	         and user_name = #{user_name}
+	    </if>
+	    <if test="realname !=null and realname != ''">
+	         and realname = #{realname}
+	    </if>
+	    <if test="idcard_number !=null and idcard_number != ''">
+	         and idcard_number = #{idcard_number}
+	    </if>
+	    <if test="sex !=null and sex != ''">
+	         and sex = #{sex}
+	    </if>
+	    <if test="culture_degree !=null and culture_degree != ''">
+	         and culture_degree = #{culture_degree}
+	    </if>
+	    <if test="specialty !=null and specialty != ''">
+	         and specialty = #{specialty}
+	    </if>
+	    <if test="work_unit !=null and work_unit != ''">
+	         and work_unit = #{work_unit}
+	    </if>
+	    <if test="position_level !=null and position_level != ''">
+	         and position_level = #{position_level}
+	    </if>
+	    <if test="phone !=null and phone != ''">
+	         and phone = #{phone}
+	    </if>
+	    <if test="email !=null and email != ''">
+	         and email = #{email}
+	    </if>
 	  </where>
 	</select>
 	
