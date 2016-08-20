@@ -460,7 +460,7 @@ public class CmsUserController1 {
 	@RequestMapping(value = "showOrgBasicInfo")
 	public String showOrgBasicInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		return "";
+		return "user/organization_user_list_show";
 	}
 
 	@RequestMapping(value = "/orgbasic_g", produces = "text/html;charset=UTF-8")
