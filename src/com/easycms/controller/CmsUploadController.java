@@ -23,7 +23,7 @@ import com.easycms.service.CmsArticleService;
 import com.google.gson.JsonObject;
 
 @Controller
-@RequestMapping(value="info/")
+@RequestMapping(value="/info/")
 public class CmsUploadController {
 	
 	@Resource(name = "cmsArticleServiceImpl")

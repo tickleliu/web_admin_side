@@ -19,7 +19,7 @@ import com.easycms.service.CmsReMessageService;
 @Controller
 @RequestMapping("/message")
 public class CmsMessageController {
-	private static final Logger logger = Logger.getLogger(CmsUserController.class);
+	private static final Logger logger = Logger.getLogger(CmsLoginController.class);
 	@Resource(name = "cmsMessageServiceImpl")
 	private CmsMessageService ms;
 	@Resource(name = "cmsReMessageServiceImpl")

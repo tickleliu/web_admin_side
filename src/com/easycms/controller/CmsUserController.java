@@ -1,215 +1,568 @@
 package com.easycms.controller;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import javax.servlet.http.HttpServletResponse;
 
-import com.easycms.common.CaptchaServlet;
-import com.easycms.common.MD5;
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.easycms.common.DateUtil;
 import com.easycms.common.Pager;
-import com.easycms.entity.CmsUser;
-import com.easycms.entity.CmsUserExt;
-import com.easycms.entity.CmsUserGroup;
-import com.easycms.service.CmsLogService;
-import com.easycms.service.CmsUserExtService;
-import com.easycms.service.CmsUserGroupService;
-import com.easycms.service.CmsUserService;
+import com.easycms.entity.user.CmsUserLoginInfo;
+import com.easycms.entity.user.CmsUserRoleInfo;
+import com.easycms.service.impl.user.CmsUserLoginInfoServiceImpl;
+import com.easycms.service.impl.user.CmsUserRoleServiceImpl;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping(value = "/user")
 public class CmsUserController {
-	private static final Logger logger = Logger.getLogger(CmsUserController.class);
-	@Resource(name = "cmsUserServiceImpl")
-	private CmsUserService us;
-	@Resource(name = "cmsUserGroupServiceImpl")
-	private CmsUserGroupService ugs;
-	@Resource(name = "cmsUserExtServiceImpl")
-	private CmsUserExtService ues;
-	@Resource(name = "cmsLogServiceImpl")
-	private CmsLogService ls;
-	
-	// 分页显示列表
-	@RequestMapping("/v_list.do")
-	public String list(HttpServletRequest req, ModelMap model) {
-		 int pageSize = 10;
-		 int pageNo = 0;
-		 String sPageNo = req.getParameter("pager.offset");
-		 if(sPageNo!=null) {
-			   pageNo = Integer.parseInt(sPageNo);
-		 }
-		 Pager<CmsUser> userPager = us.findByPage(pageNo, pageSize);
-		 model.addAttribute("userPager", userPager);
-		return "user/showUser";
-	}
-	
-	//显示添加
-	@RequestMapping("/v_add.do")
-	public String showAdd(HttpServletRequest req, ModelMap model){
-		//获的会员组
-		List<CmsUserGroup> groups = ugs.findAll();
-		model.addAttribute("groups", groups);
-		return "user/showAddUser";
-	}
-	
-	//添加数据
-	@RequestMapping("/o_add.do")
-	public String add(HttpServletRequest req, ModelMap model, CmsUser user, CmsUserExt userExt, Integer gid){
-		user.setGroup_id(gid);
-		user.setPassword(MD5.MD5Encode(user.getPassword()));
-		us.saveUser(user, userExt);
-		return list(req, model);
-	}
-	
-	//删除数据
-	@RequestMapping("/o_delete.do")
-	public String delete(HttpServletRequest req, ModelMap model, Integer id){
-		us.deleteById(id);
-		return list(req, model);
+
+	static final String[] Statuses = { "无效用户", "有效用户", "注销用户", "异常用户" };
+
+	@Resource(name = "cmsUserLoginInfoServiceImpl")
+	CmsUserLoginInfoServiceImpl uls;
+
+	@Resource(name = "cmsUserRoleServiceImpl")
+	CmsUserRoleServiceImpl urs;
+
+	/**
+	 * 用户登录信息管理页
+	 * */
+	@RequestMapping(value = "/sul")
+	public String showUserListPage(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		model.addAttribute("status", Statuses);
+		return "user/user_basic_list_show";
 	}
 
-	//显示修改
-	@RequestMapping("/v_update.do")
-	public String showUpdate(HttpServletRequest req, ModelMap model, Integer id){
-		//获得用户
-		CmsUser user = us.findById(id);
-		//获得用户扩展
-		CmsUserExt userExt = ues.findById(id);
-		//获的会员组
-		List<CmsUserGroup> groups = ugs.findAll();
-		
-		model.addAttribute("groups", groups);
-		model.addAttribute("user", user);
-		model.addAttribute("userExt", userExt);
-		return "user/updateUser";
-	}
-	
-	//修改
-	@RequestMapping("/o_update.do")
-	public String update(HttpServletRequest req, ModelMap model,CmsUser user, CmsUserExt userExt){
-		user.setPassword(MD5.MD5Encode(user.getPassword()));
-		us.update(user);
-		ues.update(userExt);
-		//System.out.println(user.getId());
-		//System.out.println(userExt.getId());
-		//System.out.println(user.getGroup_id());
+	/**
+	 * 根据搜索条件，获得用户登录信息
+	 * */
+	@RequestMapping(value = "/user_g", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getUserInfos(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 
-		//log it
-		if(logger.isDebugEnabled()){
-			logger.debug(model);
+		Map<String, Object> map = new HashMap<String, Object>();
+		String datefrom = request.getParameter("datefrom");
+		if (datefrom != null && !datefrom.equals("")) {
+			try {
+				map.put("datefrom", DateUtil.reformatDateString(datefrom,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return list(req, model);
-	}
-	
-	//登陆
-	@RequestMapping("/login.do")
-	public String login(HttpServletRequest req, ModelMap model,CmsUser user, String verifyCode) {
-		String captcha = CaptchaServlet.getStoredCaptchaString(req);
-		if(StringUtils.isNotBlank(captcha)){
-			if(captcha.equalsIgnoreCase(verifyCode)) {
-				CmsUser cu = us.findByName(user.getUsername());
-				if(cu != null){
-					if(cu.getPassword().equals(MD5.MD5Encode(user.getPassword()))){
-						//CmsUser cus = us.login(user);
-						logger.info("登录密码："+cu.getUsername() +"用户名：" +cu.getPassword());
-						HttpSession session = req.getSession();
-						session.setAttribute("user", cu);
-						ls.loginSucssessLog(req, "登录成功！");
-						return "index";
-					}else{
-						ls.loginFailureLog(req, "登录失败！","登录密码："+user.getUsername() +"用户名：" +user.getPassword());
-						return "login";
-					}
-				}else{
-					ls.loginFailureLog(req, "登录失败！","登录密码："+user.getUsername() +"用户名：" +user.getPassword());
-					return "login";
+		String dateto = request.getParameter("dateto");
+		if (dateto != null && !dateto.equals("")) {
+			try {
+				map.put("dateto", DateUtil.reformatDateString(dateto,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		String uwechatid = request.getParameter("wechat_id");
+		if (uwechatid != null) {
+			map.put("uwechatid", uwechatid);
+		}
+
+		String username = request.getParameter("name");
+		if (username != null) {
+			map.put("username", username);
+		}
+
+		int showPages = 0;
+		String pageString = request.getParameter("page");
+		if (pageString != null) {
+			try {
+				showPages = Integer.parseInt(pageString) - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				showPages = 0;
+			}
+		}
+
+		int pageSize = 10;
+		String rowsString = request.getParameter("rows");
+		if (rowsString != null) {
+			try {
+				pageSize = Integer.parseInt(rowsString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				pageSize = 10;
+			}
+		}
+
+		showPages = showPages * pageSize;
+		String keyword = request.getParameter("keyw");
+
+		List<String> keywords = new LinkedList<String>();
+		if (keyword != null) {
+			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
+					" ,\t");
+			while (stringTokenizer.hasMoreTokens()) {
+				String tokenString = stringTokenizer.nextToken();
+				if (tokenString.trim().length() > 0) {
+					keywords.add(tokenString.trim());
 				}
-				
-			}else{
-				ls.loginFailureLog(req, "登录失败！","登录密码："+user.getUsername() +"用户名：" +user.getPassword());
-				return "login";
 			}
-		}else{
-			ls.loginFailureLog(req, "登录失败！","登录密码："+user.getUsername() +"用户名：" +user.getPassword());
-			return "login";
+		}
+		if (keywords.size() > 0) {
+			map.put("keyw", keywords);
 		}
 
-
-
-		//验证码不能为空
-		/*if(StringUtils.isNotBlank(captcha)){
-			if(captcha.equalsIgnoreCase(verifyCode)) {
-				user.setPassword(MD5.MD5Encode(user.getPassword()));
-				user.setUsername(user.getUsername());
-				CmsUser cu = us.login(user);
-				logger.info("登录密码："+cu.getUsername() +"用户名：" +cu.getPassword());
-				HttpSession session = req.getSession();
-				session.setAttribute("user", cu);
-				//设置session超时时间
-				//session.setMaxInactiveInterval(100);
-				return "index";
-			}else{
-				return "login";
+		String statusString = request.getParameter("status");
+		Integer status = 0;
+		if (statusString != null) {
+			try {
+				status = Integer.parseInt(statusString);
+				status = status - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				status = 0;
 			}
-		}*/
-		//return "login";
-	}
-	
 
-	@RequestMapping(value="/logoutpage",method=RequestMethod.GET)
-	public String logoutpage(){
-		return "login";
-	}
-	
-	//注销
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest req, ModelMap model){
-		HttpSession session = req.getSession();
-		session.removeAttribute("user");
-		session.invalidate();
-		return "redirect:/member/logoutpage";
-	}
-	
-	//注册跳转链接
-	@RequestMapping("/register")
-	public String register(HttpServletRequest req, ModelMap model){
-		return "register";
-	}
-	//用户注册操作
-	@RequestMapping("/register.do")
-	public String registerOperating(HttpServletRequest req, ModelMap model, CmsUser user, CmsUserExt userExt, Integer gid, String verifyCode){
-		String captcha = CaptchaServlet.getStoredCaptchaString(req);
-		if(StringUtils.isNotBlank(captcha)){
-			if(captcha.equalsIgnoreCase(verifyCode)) {
-				user.setGroup_id(gid);
-				user.setPassword(MD5.MD5Encode(user.getPassword()));
-				us.saveUser(user, userExt);
-				logger.info("有用户注册了 name={"+ user.getUsername() +"}");
-				return "login";
-			}else{
-				return "register";
+			if (status >= 0 && status < Statuses.length) {
+				map.put("status", status);
+			} else {
+				status = 0;
 			}
-		}else{
-			return "register";
 		}
+
+		Pager<CmsUserLoginInfo> pager = uls.findUserLoginInfoByKey(map,
+				showPages, pageSize);
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("total", pager.getTotal());
+		List<HashedMap> users = new ArrayList<HashedMap>();
+		JSONArray jsonArray = new JSONArray();
+
+		Random random = new Random();
+		for (int i = 0; i < pager.getPageList().size(); i++) {
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
+			jsonMap.put("name", pager.getPageList().get(i).getUsername());
+			jsonMap.put("wechat_id", pager.getPageList().get(i).getUwechatid());
+			String regis_time = DateFormatUtils.format(
+					pager.getPageList().get(i).getCreate_time(), "yyyy-MM-dd");
+			jsonMap.put("regis_time", regis_time);
+			if (pager.getPageList().get(i).getStatus() >= 0
+					&& pager.getPageList().get(i).getStatus() < Statuses.length) {
+				jsonMap.put("status", Statuses[pager.getPageList().get(i)
+						.getStatus()]);
+			} else {
+				jsonMap.put("status", Statuses[0]);
+			}
+			jsonMap.put("image_url", pager.getPageList().get(i).getHead_image());
+
+			jsonArray.put(jsonMap);
+		}
+
+		jsonObject.put("rows", jsonArray);
+		return jsonObject.toString();
+	}
+
+	/**
+	 * 用户登录信息删除页
+	 * */
+	@RequestMapping(value = "/user_d")
+	@ResponseBody
+	public String deleteInfoResult(@RequestBody String deleteIds,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		JSONObject jsonObject = new JSONObject(deleteIds);
+		JSONArray jsonArray = jsonObject.getJSONArray("deleteIds");
+
+		JSONObject jsonObject2 = new JSONObject();
+
+		int length = jsonArray.length();
+		for (int i = 0; i < length; i++) {
+			try {
+				Long uid = jsonArray.getLong(i);
+				System.out.println(uid);
+				uls.deleteUserLoginInfoById(uid);
+			} catch (Exception e) {
+				// TODO: handle exception
+
+				jsonObject2.put("result", "error");
+			}
+		}
+
+		jsonObject2.put("result", "success");
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		return jsonObject2.toString();
+	}
+
+	/**
+	 * 用户角色信息管理页面
+	 * */
+	@RequestMapping(value = "sur")
+	public String showUserRoles(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		return "user/user_role_list_show";
+	}
+
+	/**
+	 * 用户角色信息获取
+	 * */
+	@RequestMapping(value = "/userrole_g", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getUserRoles(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String datefrom = request.getParameter("dfrom");
+		if (datefrom != null) {
+			try {
+				map.put("datefrom", DateUtil.reformatDateString(datefrom,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String dateto = request.getParameter("dto");
+		if (dateto != null) {
+			try {
+				map.put("dateto", DateUtil.reformatDateString(dateto,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		String username = request.getParameter("name");
+		Pager<CmsUserLoginInfo> userLoginPager = null;
+		if (username != null && !username.equals("")) {
+			map.put("username", username);
+			userLoginPager = uls.findUserLoginInfoByKey(map, 0, 1);
+			if (userLoginPager.getPageList() != null
+					&& userLoginPager.getPageList().size() >= 1) {
+				map.put("uid", userLoginPager.getPageList().get(0).getUid());
+			}
+		}
+
+		String issuperadmin = request.getParameter("superadmin");
+		if (issuperadmin != null
+				&& (issuperadmin.equals("on") || issuperadmin.equals("true"))) {
+			map.put("issuperadmin", 1);
+		}
+
+		String isorg = request.getParameter("persional");
+		if (isorg != null && (isorg.equals("on") || isorg.equals("true"))) {
+			map.put("isorg", 1);
+		}
+
+		String isadmin = request.getParameter("admin");
+		if (isadmin != null
+				&& (isadmin.equals("on") || isadmin.equals("true"))) {
+			map.put("isadmin", 1);
+		}
+
+		String isexperter = request.getParameter("expert");
+		if (isexperter != null
+				&& (isexperter.equals("on") || isexperter.equals("true"))) {
+			map.put("isexperter", 1);
+		}
+
+		String ismanager = request.getParameter("leader");
+		if (ismanager != null
+				&& (ismanager.equals("on") || ismanager.equals("true"))) {
+			map.put("ismanager", 1);
+		}
+
+		String isengineer = request.getParameter("tech");
+		if (isengineer != null
+				&& (isengineer.equals("on") || isengineer.equals("true"))) {
+			map.put("isengineer", 1);
+		}
+
+		String isent = request.getParameter("firm");
+		if (isent != null && (isent.equals("on") || isent.equals("true"))) {
+			map.put("isent", 1);
+		}
+
+		String isgov = request.getParameter("region");
+		if (isgov != null && (isgov.equals("on") || isgov.equals("true"))) {
+			map.put("isgov", 1);
+		}
+
+		String isleg = request.getParameter("member");
+		if (isleg != null && (isleg.equals("on") || isleg.equals("true"))) {
+			map.put("isleg", 1);
+		}
+
+		int showPages = 0;
+		String pageString = request.getParameter("page");
+		if (pageString != null) {
+			try {
+				showPages = Integer.parseInt(pageString) - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				showPages = 0;
+			}
+		}
+
+		int pageSize = 10;
+		String rowsString = request.getParameter("rows");
+		if (rowsString != null) {
+			try {
+				pageSize = Integer.parseInt(rowsString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				pageSize = 10;
+			}
+		}
+
+		showPages = showPages * pageSize;
+
+		JSONObject jsonObject = new JSONObject();
+
+		Pager<CmsUserRoleInfo> pager = urs.findUserRolesByKey(map, showPages,
+				pageSize);
+
+		jsonObject.put("total", pager.getTotal());
+		List<HashedMap> articles = new ArrayList<HashedMap>();
+		JSONArray jsonArray = new JSONArray();
+
+		Random random = new Random();
+		for (int i = 0; i < pager.getPageList().size(); i++) {
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
+			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
+					.getPageList().get(i).getUid());
+			jsonMap.put("name", cmsUserLoginInfo.getUsername());
+			
+			if(pager.getPageList().get(i).getIssuperadmin().equals(1)) {
+				jsonMap.put("superadmin", "是");
+			} else {
+				jsonMap.put("superadmin", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsadmin().equals(1)) {
+				jsonMap.put("admin", "是");
+			} else {
+				jsonMap.put("admin", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsorg().equals(1)) {
+				jsonMap.put("personal", "是");
+			} else {
+				jsonMap.put("personal", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsexperter().equals(1)) {
+				jsonMap.put("expert", "是");
+			} else {
+				jsonMap.put("expert", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsengineer().equals(1)) {
+				jsonMap.put("tech", "是");
+			} else {
+				jsonMap.put("tech", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsmanager().equals(1)) {
+				jsonMap.put("leader", "是");
+			} else {
+				jsonMap.put("leader", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsent().equals(1)) {
+				jsonMap.put("firm", "是");
+			} else {
+				jsonMap.put("firm", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsgov().equals(1)) {
+				jsonMap.put("region", "是");
+			} else {
+				jsonMap.put("region", "否");
+			}
+			
+			if(pager.getPageList().get(i).getIsleg().equals(1)) {
+				jsonMap.put("member", "是");
+			} else {
+				jsonMap.put("member", "否");
+			}
+			
+			String regis_time = DateFormatUtils
+					.format(cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
+			jsonMap.put("time", regis_time);
+			jsonArray.put(jsonMap);
+		}
+
+		jsonObject.put("rows", jsonArray);
+		return jsonObject.toString();
+	}
+
+	/**
+	 * 用户角色信息删除页
+	 * */
+	@RequestMapping(value = "/userrole_d")
+	@ResponseBody
+	public String deleteUserRoleResult(@RequestBody String deleteIds,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		JSONObject jsonObject = new JSONObject(deleteIds);
+		JSONArray jsonArray = jsonObject.getJSONArray("deleteIds");
+
+		JSONObject jsonObject2 = new JSONObject();
+
+		int length = jsonArray.length();
+		for (int i = 0; i < length; i++) {
+			try {
+				Long uid = jsonArray.getLong(i);
+				System.out.println(uid);
+				uls.deleteUserLoginInfoById(uid);
+			} catch (Exception e) {
+				// TODO: handle exception
+
+				jsonObject2.put("result", "error");
+			}
+		}
+
+		jsonObject2.put("result", "success");
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		return jsonObject2.toString();
+	}
+	@RequestMapping(value = "sui")
+	public String showUserBasicInfo(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		return "user/personal_user_list_show";
+	}
+
+	@RequestMapping(value = "soi")
+	public String showOrgBasicInfo(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		return "user/organization_user_list_show";
+	}
+
+	@RequestMapping(value = "/orgbasic_g", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getOrgBasicInfos(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String datefrom = request.getParameter("datefrom");
+		if (datefrom != null) {
+			try {
+				map.put("datefrom", DateUtil.reformatDateString(datefrom,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String dateto = request.getParameter("dateto");
+		if (dateto != null) {
+			try {
+				map.put("dateto", DateUtil.reformatDateString(dateto,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		int showPages = 0;
+		String pageString = request.getParameter("page");
+		if (pageString != null) {
+			try {
+				showPages = Integer.parseInt(pageString) - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				showPages = 0;
+			}
+		}
+
+		int pageSize = 10;
+		String rowsString = request.getParameter("rows");
+		if (rowsString != null) {
+			try {
+				pageSize = Integer.parseInt(rowsString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				pageSize = 10;
+			}
+		}
+
+		showPages = showPages * pageSize;
+		String keyword = request.getParameter("keyw");
+
+		List<String> keywords = new LinkedList<String>();
+		if (keyword != null) {
+			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
+					" ,\t");
+			while (stringTokenizer.hasMoreTokens()) {
+				String tokenString = stringTokenizer.nextToken();
+				if (tokenString.trim().length() > 0) {
+					keywords.add(tokenString.trim());
+				}
+			}
+		}
+		if (keywords.size() > 0) {
+			map.put("keyw", keywords);
+		}
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("total", 10);
+		List<HashedMap> articles = new ArrayList<HashedMap>();
+		JSONArray jsonArray = new JSONArray();
+
+		Random random = new Random();
+		for (int i = 0; i < 10; i++) {
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", random.nextLong());
+			jsonMap.put("name", "testname");
+			jsonMap.put("type", "普通");
+			String regis_time = DateFormatUtils
+					.format(new Date(), "yyyy-MM-dd");
+			jsonMap.put("regis_time", regis_time);
+			// jsonMap.put("update_time", article.getAid());
+			jsonMap.put("wechat_id", random.nextLong());
+			jsonMap.put("status", random.nextInt());
+			jsonMap.put("image_url", "null");
+
+			jsonArray.put(jsonMap);
+		}
+
+		jsonObject.put("rows", jsonArray);
+		return jsonObject.toString();
 	}
 	
-	//找回密码跳转链接
-	@RequestMapping("/forgot")
-	public String forgot(HttpServletRequest req, ModelMap model){
-		return "forgot";
-	}
-	
-	//找回密码操作
-	@RequestMapping("/forgot.do")
-	public String forgotOperating(HttpServletRequest req, ModelMap model){
-		return null;
-	}
+
+
 }

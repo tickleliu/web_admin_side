@@ -20,19 +20,19 @@
                         </a>
                       </li>
                       <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>group/v_list.do">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/sur">
                           <i class="icon icon-circle"></i>
                           <span class="txt">角色信息管理</span>
                         </a>
                       </li>
                       <li>
-                        <a  href="javascript:;" data-url="">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/sui">
                           <i class="icon icon-circle"></i>
                           <span class="txt">个人用户管理</span>
                         </a>
                       </li>
                       <li>
-                        <a  href="javascript:;" data-url="">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/sor">
                           <i class="icon icon-circle"></i>
                           <span class="txt">组织机构用户管理</span>
                         </a>
