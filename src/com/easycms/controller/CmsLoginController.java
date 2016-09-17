@@ -85,9 +85,10 @@ public class CmsLoginController {
 	// 注销
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest req, ModelMap model) {
-		HttpSession session = req.getSession();
-		session.removeAttribute("user");
-		session.invalidate();
+		Subject subject = SecurityUtils.getSubject();
+		if(subject.isAuthenticated()) {
+			subject.logout();
+		}
 		return "redirect:/member/logoutpage";
 	}
 

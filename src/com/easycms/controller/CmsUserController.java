@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easycms.common.DateUtil;
 import com.easycms.common.Pager;
+import com.easycms.entity.user.CmsUserBasicInfo;
 import com.easycms.entity.user.CmsUserLoginInfo;
 import com.easycms.entity.user.CmsUserRoleInfo;
+import com.easycms.service.impl.user.CmsUserBasicInfoServiceImpl;
 import com.easycms.service.impl.user.CmsUserLoginInfoServiceImpl;
 import com.easycms.service.impl.user.CmsUserRoleServiceImpl;
 
@@ -43,6 +45,9 @@ public class CmsUserController {
 	@Resource(name = "cmsUserRoleServiceImpl")
 	CmsUserRoleServiceImpl urs;
 
+	@Resource(name = "cmsUserBasicInfoServiceImpl")
+	CmsUserBasicInfoServiceImpl ubis;
+	
 	/**
 	 * 用户登录信息管理页
 	 * */
@@ -353,7 +358,6 @@ public class CmsUserController {
 		List<HashedMap> articles = new ArrayList<HashedMap>();
 		JSONArray jsonArray = new JSONArray();
 
-		Random random = new Random();
 		for (int i = 0; i < pager.getPageList().size(); i++) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("uid", pager.getPageList().get(i).getUid());
@@ -456,12 +460,182 @@ public class CmsUserController {
 		response.setCharacterEncoding("UTF-8");
 		return jsonObject2.toString();
 	}
+	
+	/**
+	 * 用户基本信息管理页
+	 * */
 	@RequestMapping(value = "sui")
 	public String showUserBasicInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		return "user/personal_user_list_show";
 	}
+	
+	/**
+	 * 获得用户的基本信息
+	 * */
+	@RequestMapping(value = "/userrole_g", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getUserBasicInfos(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 
+		response.setContentType("text/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String datefrom = request.getParameter("dfrom");
+		if (datefrom != null) {
+			try {
+				map.put("datefrom", DateUtil.reformatDateString(datefrom,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String dateto = request.getParameter("dto");
+		if (dateto != null) {
+			try {
+				map.put("dateto", DateUtil.reformatDateString(dateto,
+						"yyyy-MM-dd", "yyyy-MM-dd"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		String username = request.getParameter("nickname");
+		Pager<CmsUserLoginInfo> userLoginPager = null;
+		if (username != null && !username.equals("")) {
+			map.put("username", username);
+			userLoginPager = uls.findUserLoginInfoByKey(map, 0, 1);
+			if (userLoginPager.getPageList() != null
+					&& userLoginPager.getPageList().size() >= 1) {
+				map.put("uid", userLoginPager.getPageList().get(0).getUid());
+			}
+		}
+
+		String realname = request.getParameter("realname");
+		if (realname != null
+				&& !realname.equals("")) {
+			map.put("realname", realname);
+		}
+		
+		String idcard_number = request.getParameter("idcard_number");
+		if (idcard_number!= null
+				&& !idcard_number.equals("")) {
+			map.put("idcard_number", idcard_number);
+		}
+		
+		String sex = request.getParameter("gender");
+		if (sex!= null
+				&& !sex.equals("")) {
+			if(sex.equals("男")) {
+				sex = "1";
+			} else  {
+				sex = "2";
+			}
+			map.put("sex", sex);
+		}
+		
+		String culture_degree = request.getParameter("degree");
+		if (culture_degree != null
+				&& !culture_degree.equals("")) {
+			map.put("culture_degree", culture_degree);
+		}
+		
+		String specialty = request.getParameter("major");
+		if (specialty != null
+				&& !specialty.equals("")) {
+			map.put("specialty", specialty);
+		}
+		
+		String work_unit = request.getParameter("workunit");
+		if (work_unit!= null
+				&& !work_unit.equals("")) {
+			map.put("work_unit", work_unit);
+		}
+		
+		String position_level = request.getParameter("position");
+		if (position_level!= null
+				&& !position_level.equals("")) {
+			map.put("position_level", position_level);
+		}
+
+		String phone = request.getParameter("phone");
+		if (phone != null
+				&& !phone.equals("")) {
+			map.put("phone", phone);
+		}
+
+		String email = request.getParameter("email");
+		if (email != null
+				&& !email.equals("")) {
+			map.put("email", email);
+		}
+
+		int showPages = 0;
+		String pageString = request.getParameter("page");
+		if (pageString != null) {
+			try {
+				showPages = Integer.parseInt(pageString) - 1;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				showPages = 0;
+			}
+		}
+
+		int pageSize = 10;
+		String rowsString = request.getParameter("rows");
+		if (rowsString != null) {
+			try {
+				pageSize = Integer.parseInt(rowsString);
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				pageSize = 10;
+			}
+		}
+
+		showPages = showPages * pageSize;
+
+		JSONObject jsonObject = new JSONObject();
+
+		Pager<CmsUserBasicInfo> pager = ubis.findUserBasicInfosByKey(map, showPages,
+				pageSize);
+
+		jsonObject.put("total", pager.getTotal());
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < pager.getPageList().size(); i++) {
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
+			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
+					.getPageList().get(i).getUid());
+			CmsUserBasicInfo cmsUserBasicInfo = pager.getPageList().get(i);
+			jsonMap.put("nickname", cmsUserLoginInfo.getUsername());
+			
+			String regis_time = DateFormatUtils
+					.format(cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
+			jsonMap.put("time", regis_time);
+			
+			jsonMap.put("realname", cmsUserBasicInfo.getRealname());
+			jsonMap.put("id_number", cmsUserBasicInfo.getIdcard_number());
+			jsonMap.put("gender", cmsUserBasicInfo.getSex());
+			jsonMap.put("degree", cmsUserBasicInfo.getCulture_degree());
+			jsonMap.put("major", cmsUserBasicInfo.getSpecialty());
+			jsonMap.put("workunit", cmsUserBasicInfo.getWork_unit());
+			jsonMap.put("position", cmsUserBasicInfo.getPosition_level());
+			jsonMap.put("phone", cmsUserBasicInfo.getPhone());
+			jsonMap.put("email", cmsUserBasicInfo.getEmail());
+
+			jsonArray.put(jsonMap);
+		}
+
+		jsonObject.put("rows", jsonArray);
+		return jsonObject.toString();
+	}
+	/**
+	 * 组织角色信息管理页
+	 * */
 	@RequestMapping(value = "soi")
 	public String showOrgBasicInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
