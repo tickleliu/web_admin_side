@@ -1,34 +1,30 @@
-/*
-Navicat MySQL Data Transfer
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.7.13-log
 
-Source Server         : root
-Source Server Version : 50713
-Source Host           : localhost:3306
-Source Database       : cms
 
-Target Server Type    : MYSQL
-Target Server Version : 50713
-File Encoding         : 65001
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
-Date: 2016-08-19 13:24:43
-*/
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-SET FOREIGN_KEY_CHECKS=0;
 
--- ----------------------------
--- Table structure for account
--- ----------------------------
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE `account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+--
+-- Create schema cms
+--
 
--- ----------------------------
--- Table structure for ac_content
--- ----------------------------
+CREATE DATABASE IF NOT EXISTS cms;
+USE cms;
+
+--
+-- Definition of table `ac_content`
+--
+
 DROP TABLE IF EXISTS `ac_content`;
 CREATE TABLE `ac_content` (
   `aid` bigint(20) unsigned DEFAULT NULL,
@@ -46,9 +42,50 @@ CREATE TABLE `ac_content` (
   KEY `author_index` (`author`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_group
--- ----------------------------
+--
+-- Dumping data for table `ac_content`
+--
+
+/*!40000 ALTER TABLE `ac_content` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_content` ENABLE KEYS */;
+
+
+--
+-- Definition of table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `account`
+--
+
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` (`id`,`username`,`password`) VALUES 
+ (1,'moocss',NULL),
+ (2,'fuxin',NULL),
+ (3,'??',NULL),
+ (4,'fuxin123',NULL),
+ (5,'raonbow',NULL),
+ (6,'moocss','123456'),
+ (7,'??','xinyi116518'),
+ (8,'',''),
+ (9,'moocss','123456'),
+ (10,'moocss','123456'),
+ (11,'moocss','123456');
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_group`
+--
+
 DROP TABLE IF EXISTS `ec_group`;
 CREATE TABLE `ec_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,9 +100,23 @@ CREATE TABLE `ec_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_log
--- ----------------------------
+--
+-- Dumping data for table `ec_group`
+--
+
+/*!40000 ALTER TABLE `ec_group` DISABLE KEYS */;
+INSERT INTO `ec_group` (`id`,`name`,`priority`,`allowPerDay`,`allowMaxFile`,`allowSuffix`,`needCaptcha`,`needCheck`,`regDef`) VALUES 
+ (1,'设计组',1,2,1000,'.jpg/.jpeg/.png/.bmp',1,1,1),
+ (2,'产品组',7,2048,2000,'.jpg/.jpeg/.png/.bmp',1,1,1),
+ (3,'销售组',8,2048,5000,'.jpg/.jpeg/.png/.bmp',1,1,0),
+ (9,'投稿者',10,1024,1024,'.jpg/.jpeg/.png/.bmp',1,1,1);
+/*!40000 ALTER TABLE `ec_group` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_log`
+--
+
 DROP TABLE IF EXISTS `ec_log`;
 CREATE TABLE `ec_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,11 +128,30 @@ CREATE TABLE `ec_log` (
   `content` varchar(100) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_message
--- ----------------------------
+--
+-- Dumping data for table `ec_log`
+--
+
+/*!40000 ALTER TABLE `ec_log` DISABLE KEYS */;
+INSERT INTO `ec_log` (`id`,`category`,`time`,`ip`,`url`,`title`,`content`,`username`) VALUES 
+ (1,3,'2013-08-18 21:34:51','192.168.0.1',NULL,NULL,NULL,'amdin'),
+ (2,3,'2013-08-18 21:39:47','192.168.0.1',NULL,NULL,NULL,'fuxin'),
+ (3,2,'2013-08-19 21:43:04',NULL,NULL,NULL,NULL,'fuxin'),
+ (4,1,'2013-08-19 21:43:15',NULL,NULL,NULL,NULL,'moocss'),
+ (5,3,'2013-08-20 23:54:04','127.0.0.1',NULL,'添加用户组操作','添加的 : id=null;name=投稿者','fuxin'),
+ (6,1,'2016-08-13 10:27:55','127.0.0.1',NULL,'登录成功！',NULL,'fuxin'),
+ (7,1,'2016-08-13 10:29:18','127.0.0.1',NULL,'登录成功！',NULL,'fuxin'),
+ (8,1,'2016-08-13 16:27:16','127.0.0.1',NULL,'登录成功！',NULL,'fuxin'),
+ (9,1,'2016-08-13 16:27:39','127.0.0.1',NULL,'登录成功！',NULL,'fuxin');
+/*!40000 ALTER TABLE `ec_log` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_message`
+--
+
 DROP TABLE IF EXISTS `ec_message`;
 CREATE TABLE `ec_message` (
   `msgId` int(11) NOT NULL AUTO_INCREMENT,
@@ -100,9 +170,18 @@ CREATE TABLE `ec_message` (
   CONSTRAINT `ec_message_ibfk_2` FOREIGN KEY (`msgReceiverUserId`) REFERENCES `ec_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_message_receiver
--- ----------------------------
+--
+-- Dumping data for table `ec_message`
+--
+
+/*!40000 ALTER TABLE `ec_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ec_message` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_message_receiver`
+--
+
 DROP TABLE IF EXISTS `ec_message_receiver`;
 CREATE TABLE `ec_message_receiver` (
   `receiverId` int(11) NOT NULL AUTO_INCREMENT,
@@ -123,9 +202,18 @@ CREATE TABLE `ec_message_receiver` (
   CONSTRAINT `ec_message_receiver_ibfk_3` FOREIGN KEY (`receiverId`) REFERENCES `ec_message` (`msgId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_role
--- ----------------------------
+--
+-- Dumping data for table `ec_message_receiver`
+--
+
+/*!40000 ALTER TABLE `ec_message_receiver` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ec_message_receiver` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_role`
+--
+
 DROP TABLE IF EXISTS `ec_role`;
 CREATE TABLE `ec_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -136,9 +224,22 @@ CREATE TABLE `ec_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_user
--- ----------------------------
+--
+-- Dumping data for table `ec_role`
+--
+
+/*!40000 ALTER TABLE `ec_role` DISABLE KEYS */;
+INSERT INTO `ec_role` (`id`,`name`,`priority`,`m_super`,`siteId`) VALUES 
+ (1,'管理员',1,1,NULL),
+ (2,'发表者',1,0,NULL),
+ (3,'订阅者',1,0,NULL);
+/*!40000 ALTER TABLE `ec_role` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_user`
+--
+
 DROP TABLE IF EXISTS `ec_user`;
 CREATE TABLE `ec_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -163,9 +264,22 @@ CREATE TABLE `ec_user` (
   CONSTRAINT `ec_user_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `ec_group` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ec_user_ext
--- ----------------------------
+--
+-- Dumping data for table `ec_user`
+--
+
+/*!40000 ALTER TABLE `ec_user` DISABLE KEYS */;
+INSERT INTO `ec_user` (`id`,`group_id`,`username`,`password`,`email`,`registerTime`,`registerIP`,`lastLoginTime`,`lastLoginIp`,`loginCount`,`rank`,`uploadSize`,`uploadDate`,`admin`,`viewonlyAdmin`,`selfAdmin`,`disabled`) VALUES 
+ (2,1,'fuxin','e10adc3949ba59abbe56e057f20f883e','moocss@163.com','2013-08-20 15:52:29','127.0.0.1',NULL,'127.0.0.1',0,0,0,NULL,0,0,0,0),
+ (4,3,'zhangguang','7fa8282ad93047a4d6fe6111c93b308a','zhangguang@163.com','2013-07-21 13:58:08','127.0.0.1',NULL,'127.0.0.1',0,0,0,NULL,0,0,0,0),
+ (6,2,'admin','14e1b600b1fd579f47433b88e8d85291','admin@163.com','2013-08-17 08:52:31','127.0.0.1',NULL,'127.0.0.1',0,0,0,NULL,0,0,0,0);
+/*!40000 ALTER TABLE `ec_user` ENABLE KEYS */;
+
+
+--
+-- Definition of table `ec_user_ext`
+--
+
 DROP TABLE IF EXISTS `ec_user_ext`;
 CREATE TABLE `ec_user_ext` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -186,9 +300,22 @@ CREATE TABLE `ec_user_ext` (
   CONSTRAINT `ec_user_ext_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `ec_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for org_attachment
--- ----------------------------
+--
+-- Dumping data for table `ec_user_ext`
+--
+
+/*!40000 ALTER TABLE `ec_user_ext` DISABLE KEYS */;
+INSERT INTO `ec_user_ext` (`id`,`uid`,`realname`,`gender`,`birthday`,`intro`,`comefrom`,`qq`,`msn`,`phone`,`mobile`,`userImg`,`userSignature`) VALUES 
+ (2,2,'付鑫',1,'1984-10-11','1234','北京,北京','1234','1234','1234','134',NULL,NULL),
+ (4,4,'张广',0,'2001-10-19','123456','内蒙古','123456','123456','123456','123456',NULL,NULL),
+ (6,6,'admin',2,'1234','1234','1234','1234','1234','1234','1234',NULL,NULL);
+/*!40000 ALTER TABLE `ec_user_ext` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_attachment`
+--
+
 DROP TABLE IF EXISTS `org_attachment`;
 CREATE TABLE `org_attachment` (
   `attach_id` bigint(20) NOT NULL,
@@ -198,9 +325,18 @@ CREATE TABLE `org_attachment` (
   PRIMARY KEY (`attach_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织用户附件表';
 
--- ----------------------------
--- Table structure for org_basic_cert
--- ----------------------------
+--
+-- Dumping data for table `org_attachment`
+--
+
+/*!40000 ALTER TABLE `org_attachment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_attachment` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_basic_cert`
+--
+
 DROP TABLE IF EXISTS `org_basic_cert`;
 CREATE TABLE `org_basic_cert` (
   `cert_id` bigint(20) unsigned NOT NULL,
@@ -212,9 +348,18 @@ CREATE TABLE `org_basic_cert` (
   PRIMARY KEY (`cert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for org_basic_info
--- ----------------------------
+--
+-- Dumping data for table `org_basic_cert`
+--
+
+/*!40000 ALTER TABLE `org_basic_cert` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_basic_cert` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_basic_info`
+--
+
 DROP TABLE IF EXISTS `org_basic_info`;
 CREATE TABLE `org_basic_info` (
   `uid` bigint(20) NOT NULL,
@@ -232,14 +377,23 @@ CREATE TABLE `org_basic_info` (
   `contact_name` varchar(45) DEFAULT NULL COMMENT '联系人姓名',
   `contact_position` varchar(45) DEFAULT NULL COMMENT '联系人职务',
   `phone` varchar(45) DEFAULT NULL COMMENT '联系电话',
-  `email` varchar(45) DEFAULT NULL COMMENT '电子邮箱',
   `main_business` varchar(255) DEFAULT NULL COMMENT '主营业务',
-  `resume` text COMMENT '简历'
+  `resume` text COMMENT '简历',
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类用户基本信息';
 
--- ----------------------------
--- Table structure for org_ent_info
--- ----------------------------
+--
+-- Dumping data for table `org_basic_info`
+--
+
+/*!40000 ALTER TABLE `org_basic_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_basic_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_ent_info`
+--
+
 DROP TABLE IF EXISTS `org_ent_info`;
 CREATE TABLE `org_ent_info` (
   `uid` bigint(20) DEFAULT NULL,
@@ -249,9 +403,18 @@ CREATE TABLE `org_ent_info` (
   `qualification` varchar(255) DEFAULT NULL COMMENT '资质'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类用户，企业机构信息';
 
--- ----------------------------
--- Table structure for org_gov_info
--- ----------------------------
+--
+-- Dumping data for table `org_ent_info`
+--
+
+/*!40000 ALTER TABLE `org_ent_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_ent_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_gov_info`
+--
+
 DROP TABLE IF EXISTS `org_gov_info`;
 CREATE TABLE `org_gov_info` (
   `uid` bigint(20) DEFAULT NULL,
@@ -260,9 +423,18 @@ CREATE TABLE `org_gov_info` (
   `military_gdp` bigint(20) DEFAULT NULL COMMENT '军工gdp占比'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类，政府机构信息';
 
--- ----------------------------
--- Table structure for org_leg_awrards
--- ----------------------------
+--
+-- Dumping data for table `org_gov_info`
+--
+
+/*!40000 ALTER TABLE `org_gov_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_gov_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_leg_awrards`
+--
+
 DROP TABLE IF EXISTS `org_leg_awrards`;
 CREATE TABLE `org_leg_awrards` (
   `award_id` bigint(20) NOT NULL,
@@ -272,9 +444,18 @@ CREATE TABLE `org_leg_awrards` (
   PRIMARY KEY (`award_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员获奖';
 
--- ----------------------------
--- Table structure for org_leg_branches
--- ----------------------------
+--
+-- Dumping data for table `org_leg_awrards`
+--
+
+/*!40000 ALTER TABLE `org_leg_awrards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_leg_awrards` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_leg_branches`
+--
+
 DROP TABLE IF EXISTS `org_leg_branches`;
 CREATE TABLE `org_leg_branches` (
   `branch_id` bigint(20) NOT NULL,
@@ -283,9 +464,18 @@ CREATE TABLE `org_leg_branches` (
   PRIMARY KEY (`branch_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员分支机构';
 
--- ----------------------------
--- Table structure for org_leg_info
--- ----------------------------
+--
+-- Dumping data for table `org_leg_branches`
+--
+
+/*!40000 ALTER TABLE `org_leg_branches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_leg_branches` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_leg_info`
+--
+
 DROP TABLE IF EXISTS `org_leg_info`;
 CREATE TABLE `org_leg_info` (
   `uid` bigint(20) DEFAULT NULL,
@@ -294,9 +484,18 @@ CREATE TABLE `org_leg_info` (
   `per_capital_output` bigint(20) DEFAULT NULL COMMENT '人均产值'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构类，评估联盟成员信息';
 
--- ----------------------------
--- Table structure for org_leg_proj
--- ----------------------------
+--
+-- Dumping data for table `org_leg_info`
+--
+
+/*!40000 ALTER TABLE `org_leg_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_leg_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_leg_proj`
+--
+
 DROP TABLE IF EXISTS `org_leg_proj`;
 CREATE TABLE `org_leg_proj` (
   `project_id` bigint(20) NOT NULL,
@@ -308,9 +507,18 @@ CREATE TABLE `org_leg_proj` (
   PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟成员重要工程';
 
--- ----------------------------
--- Table structure for org_supply_demand
--- ----------------------------
+--
+-- Dumping data for table `org_leg_proj`
+--
+
+/*!40000 ALTER TABLE `org_leg_proj` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_leg_proj` ENABLE KEYS */;
+
+
+--
+-- Definition of table `org_supply_demand`
+--
+
 DROP TABLE IF EXISTS `org_supply_demand`;
 CREATE TABLE `org_supply_demand` (
   `sd_id` bigint(20) NOT NULL,
@@ -321,21 +529,29 @@ CREATE TABLE `org_supply_demand` (
   PRIMARY KEY (`sd_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='企业供需表';
 
--- ----------------------------
--- Table structure for user_basic_info
--- ----------------------------
+--
+-- Dumping data for table `org_supply_demand`
+--
+
+/*!40000 ALTER TABLE `org_supply_demand` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_supply_demand` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_basic_info`
+--
+
 DROP TABLE IF EXISTS `user_basic_info`;
 CREATE TABLE `user_basic_info` (
-  `uid` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `uid` bigint(20) unsigned DEFAULT NULL COMMENT '用户id',
   `user_name` varchar(45) DEFAULT NULL COMMENT '昵称',
-  `email` varchar(255) DEFAULT NULL COMMENT '电子邮件',
   `phone` varchar(45) DEFAULT NULL COMMENT '联系电话',
   `realname` varchar(45) DEFAULT NULL COMMENT '真实姓名',
   `idcard_number` varchar(45) DEFAULT NULL COMMENT '身份证号',
-  `sex` int(11) DEFAULT NULL COMMENT '性别',
+  `sex` int(10) unsigned DEFAULT NULL COMMENT '性别',
   `bloodtype` varchar(45) DEFAULT NULL COMMENT '血型',
   `nation` varchar(45) DEFAULT NULL COMMENT '民族',
-  `heighth` bigint(20) DEFAULT NULL COMMENT '身高',
+  `heighth` bigint(20) unsigned DEFAULT NULL COMMENT '身高',
   `culture_degree` varchar(45) DEFAULT NULL COMMENT '文化程度',
   `political_landscape` varchar(45) DEFAULT NULL COMMENT '政治面貌',
   `into_the_party_time` date DEFAULT NULL COMMENT '入党团时间',
@@ -352,102 +568,175 @@ CREATE TABLE `user_basic_info` (
   `position_level` varchar(45) DEFAULT NULL COMMENT '职务',
   `zip_code` varchar(45) DEFAULT NULL COMMENT '邮编',
   `address` varchar(255) DEFAULT NULL COMMENT '工作地址',
-  `resume` text COMMENT '个人简介'
+  `resume` text COMMENT '个人简介',
+  `email` varchar(255) DEFAULT NULL COMMENT '邮箱'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人用户类基本信息';
 
--- ----------------------------
--- Table structure for user_engineer_academic_achievement
--- ----------------------------
+--
+-- Dumping data for table `user_basic_info`
+--
+
+/*!40000 ALTER TABLE `user_basic_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_basic_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_engineer_academic_achievement`
+--
+
 DROP TABLE IF EXISTS `user_engineer_academic_achievement`;
 CREATE TABLE `user_engineer_academic_achievement` (
-  `academic_id` bigint(20) DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `get_time` date NOT NULL COMMENT '获取时间',
-  `name` varchar(255) NOT NULL COMMENT '成果名称'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学术成果表';
-
--- ----------------------------
--- Table structure for user_engineer_certificate
--- ----------------------------
-DROP TABLE IF EXISTS `user_engineer_certificate`;
-CREATE TABLE `user_engineer_certificate` (
-  `cert_id` bigint(20) DEFAULT NULL,
+  `academ_id` bigint(20) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
   `get_time` date DEFAULT NULL COMMENT '获取时间',
-  `certificate_name` varchar(255) DEFAULT NULL COMMENT '证书名称'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人用户认证信息表';
+  `name` varchar(255) DEFAULT NULL COMMENT '成果名称'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学术成果表';
 
--- ----------------------------
--- Table structure for user_engineer_important_work
--- ----------------------------
+--
+-- Dumping data for table `user_engineer_academic_achievement`
+--
+
+/*!40000 ALTER TABLE `user_engineer_academic_achievement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_engineer_academic_achievement` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_engineer_certificate`
+--
+
+DROP TABLE IF EXISTS `user_engineer_certificate`;
+CREATE TABLE `user_engineer_certificate` (
+  `cert_id` bigint(20) unsigned DEFAULT NULL,
+  `uid` date DEFAULT NULL,
+  `get_time` date DEFAULT NULL,
+  `certificate_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_engineer_certificate`
+--
+
+/*!40000 ALTER TABLE `user_engineer_certificate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_engineer_certificate` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_engineer_important_work`
+--
+
 DROP TABLE IF EXISTS `user_engineer_important_work`;
 CREATE TABLE `user_engineer_important_work` (
-  `work_id` bigint(20) DEFAULT NULL,
+  `word_id` bigint(20) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
   `get_time` date DEFAULT NULL COMMENT '完成时间',
   `work_name` varchar(255) DEFAULT NULL COMMENT '论著名称'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='技术人员重要论著表';
 
--- ----------------------------
--- Table structure for user_engineer_info
--- ----------------------------
+--
+-- Dumping data for table `user_engineer_important_work`
+--
+
+/*!40000 ALTER TABLE `user_engineer_important_work` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_engineer_important_work` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_engineer_info`
+--
+
 DROP TABLE IF EXISTS `user_engineer_info`;
 CREATE TABLE `user_engineer_info` (
-  `uid` bigint(11) NOT NULL,
-  `profession_engaged` varchar(255) DEFAULT NULL COMMENT '现从事专业',
-  `major_category` varchar(255) DEFAULT NULL COMMENT '专业大类',
-  `detail_category` varchar(255) DEFAULT NULL COMMENT '专业细类',
-  `engaged_time` date DEFAULT NULL COMMENT '从事专业时间',
-  `profession_ability` varchar(255) DEFAULT NULL COMMENT '技术能力'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人用户，技术人员详细信息';
-
--- ----------------------------
--- Table structure for user_engineer_worklife
--- ----------------------------
-DROP TABLE IF EXISTS `user_engineer_worklife`;
-CREATE TABLE `user_engineer_worklife` (
-  `work_life_id` bigint(20) DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `start_time` date DEFAULT NULL COMMENT '开始时间',
-  `end_time` date DEFAULT NULL COMMENT '结束时间',
-  `company` varchar(255) DEFAULT NULL COMMENT '就职公司',
-  `position` varchar(45) DEFAULT NULL COMMENT '职务',
-  `intro` text COMMENT '经历简介'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='技术用户工作履历表';
-
--- ----------------------------
--- Table structure for user_experter_info
--- ----------------------------
-DROP TABLE IF EXISTS `user_experter_info`;
-CREATE TABLE `user_experter_info` (
-  `uid` bigint(20) DEFAULT NULL,
-  `category` varchar(45) DEFAULT NULL COMMENT '专家类别',
-  `year_of_employment` date DEFAULT NULL COMMENT '聘任年份',
-  `technical_grade` varchar(45) DEFAULT NULL COMMENT '技术等级',
-  `title` varchar(45) DEFAULT NULL COMMENT '职称',
-  `profession_engaged` varchar(45) DEFAULT NULL COMMENT '从事专业',
-  `profession_engaged_time` date DEFAULT NULL COMMENT '从事专业年份',
-  `current_position` varchar(45) DEFAULT NULL COMMENT '当前职务',
-  `current_position_time` date DEFAULT NULL COMMENT '任现职级时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人用户，专家详细信息';
-
--- ----------------------------
--- Table structure for user_experter_proj_info
--- ----------------------------
-DROP TABLE IF EXISTS `user_experter_proj_info`;
-CREATE TABLE `user_experter_proj_info` (
-  `project_id` bigint(20) DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `proj_start_time` date DEFAULT NULL COMMENT '项目开始时间',
-  `proj_end_time` date DEFAULT NULL COMMENT '项目结束时间',
-  `intro` text COMMENT '项目简介',
-  `contribution` text COMMENT '主要贡献',
-  `title` varchar(255) DEFAULT NULL COMMENT '项目标题'
+  `uid` bigint(20) unsigned DEFAULT NULL,
+  `profession_engaged` varchar(255) DEFAULT NULL,
+  `major_category` varchar(255) DEFAULT NULL,
+  `detail_category` varchar(255) DEFAULT NULL,
+  `engaged_time` date DEFAULT NULL,
+  `profession_ability` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for user_login_info
--- ----------------------------
+--
+-- Dumping data for table `user_engineer_info`
+--
+
+/*!40000 ALTER TABLE `user_engineer_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_engineer_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_engineer_worklife`
+--
+
+DROP TABLE IF EXISTS `user_engineer_worklife`;
+CREATE TABLE `user_engineer_worklife` (
+  `uid` bigint(20) unsigned DEFAULT NULL,
+  `start_time` date DEFAULT NULL COMMENT '开始时间',
+  `end_time` date DEFAULT NULL COMMENT '结束时间',
+  `company` varchar(255) DEFAULT NULL COMMENT '就只公司',
+  `position` varchar(45) DEFAULT NULL COMMENT '职务',
+  `intro` text COMMENT '经历简介',
+  `work_life_id` bigint(20) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='技术用户工作履历表';
+
+--
+-- Dumping data for table `user_engineer_worklife`
+--
+
+/*!40000 ALTER TABLE `user_engineer_worklife` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_engineer_worklife` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_experter_info`
+--
+
+DROP TABLE IF EXISTS `user_experter_info`;
+CREATE TABLE `user_experter_info` (
+  `uid` bigint(20) unsigned DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `year_of_employment` date DEFAULT NULL,
+  `technical_grade` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `profession_engaged` varchar(255) DEFAULT NULL,
+  `profession_engaged_time` date DEFAULT NULL,
+  `current_position` varchar(255) DEFAULT NULL,
+  `current_position_time` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_experter_info`
+--
+
+/*!40000 ALTER TABLE `user_experter_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_experter_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_experter_proj_info`
+--
+
+DROP TABLE IF EXISTS `user_experter_proj_info`;
+CREATE TABLE `user_experter_proj_info` (
+  `pid` bigint(20) unsigned DEFAULT NULL,
+  `uid` bigint(20) unsigned DEFAULT NULL,
+  `proj_start_time` date DEFAULT NULL,
+  `proj_end_time` date DEFAULT NULL,
+  `intro` text,
+  `contribution` text,
+  `title` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_experter_proj_info`
+--
+
+/*!40000 ALTER TABLE `user_experter_proj_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_experter_proj_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_login_info`
+--
+
 DROP TABLE IF EXISTS `user_login_info`;
 CREATE TABLE `user_login_info` (
   `uid` bigint(20) unsigned DEFAULT NULL,
@@ -460,21 +749,40 @@ CREATE TABLE `user_login_info` (
   `status` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for user_rewards
--- ----------------------------
-DROP TABLE IF EXISTS `user_rewards`;
-CREATE TABLE `user_rewards` (
-  `reward_id` bigint(20) DEFAULT NULL,
-  `uid` bigint(20) NOT NULL,
-  `reward_time` date DEFAULT NULL COMMENT '获奖时间',
-  `reward_content` text NOT NULL COMMENT '获奖内容',
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户奖励情况表';
+--
+-- Dumping data for table `user_login_info`
+--
 
--- ----------------------------
--- Table structure for user_role_info
--- ----------------------------
+/*!40000 ALTER TABLE `user_login_info` DISABLE KEYS */;
+INSERT INTO `user_login_info` (`uid`,`username`,`password`,`create_time`,`update_time`,`uwechatid`,`head_image`,`status`) VALUES 
+ (123,'fuxin','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `user_login_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_reward_info`
+--
+
+DROP TABLE IF EXISTS `user_reward_info`;
+CREATE TABLE `user_reward_info` (
+  `reward_id` bigint(20) unsigned DEFAULT NULL,
+  `uid` bigint(20) unsigned DEFAULT NULL,
+  `reward_time` date DEFAULT NULL,
+  `reward` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_reward_info`
+--
+
+/*!40000 ALTER TABLE `user_reward_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_reward_info` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_role_info`
+--
+
 DROP TABLE IF EXISTS `user_role_info`;
 CREATE TABLE `user_role_info` (
   `uid` bigint(20) unsigned DEFAULT NULL,
@@ -490,3 +798,23 @@ CREATE TABLE `user_role_info` (
   `update_time` date DEFAULT NULL,
   `issuperadmin` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_role_info`
+--
+
+/*!40000 ALTER TABLE `user_role_info` DISABLE KEYS */;
+INSERT INTO `user_role_info` (`uid`,`isorg`,`isadmin`,`isexperter`,`ismanager`,`isengineer`,`isent`,`isleg`,`isgov`,`create_time`,`update_time`,`issuperadmin`) VALUES 
+ (123,2,1,2,2,2,2,2,2,NULL,NULL,1);
+/*!40000 ALTER TABLE `user_role_info` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
