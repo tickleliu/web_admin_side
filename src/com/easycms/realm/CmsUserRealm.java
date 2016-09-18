@@ -85,6 +85,11 @@ public class CmsUserRealm extends AuthorizingRealm {
 		} else {
 			logger.info("user:" + user.getPageList().get(0).getUsername()
 					+ ",password:" + user.getPageList().get(0).getPassword());
+
+			if(!user.getPageList().get(0).getStatus().equals(1)) {
+				return null;
+			}
+
 			return new SimpleAuthenticationInfo(user.getPageList().get(0)
 					.getUsername(), user.getPageList().get(0).getPassword()
 					.toCharArray(), this.getClass().toString());

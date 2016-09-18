@@ -32,7 +32,7 @@
                         </a>
                       </li>
                       <li>
-                        <a  href="javascript:;" data-url="<%=basePath%>user/sor">
+                        <a  href="javascript:;" data-url="<%=basePath%>user/soi">
                           <i class="icon icon-circle"></i>
                           <span class="txt">组织机构用户管理</span>
                         </a>

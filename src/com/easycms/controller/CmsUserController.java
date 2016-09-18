@@ -166,7 +166,6 @@ public class CmsUserController {
 		List<HashedMap> users = new ArrayList<HashedMap>();
 		JSONArray jsonArray = new JSONArray();
 
-		Random random = new Random();
 		for (int i = 0; i < pager.getPageList().size(); i++) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("uid", pager.getPageList().get(i).getUid());
@@ -359,10 +358,13 @@ public class CmsUserController {
 		JSONArray jsonArray = new JSONArray();
 
 		for (int i = 0; i < pager.getPageList().size(); i++) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
 					.getPageList().get(i).getUid());
+			if(!cmsUserLoginInfo.getStatus().equals(1)) {
+				continue;
+			}
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			jsonMap.put("name", cmsUserLoginInfo.getUsername());
 			
 			if(pager.getPageList().get(i).getIssuperadmin().equals(1)) {
@@ -473,7 +475,7 @@ public class CmsUserController {
 	/**
 	 * 获得用户的基本信息
 	 * */
-	@RequestMapping(value = "/userrole_g", produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "/userbasic_g", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String getUserBasicInfos(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
@@ -606,11 +608,17 @@ public class CmsUserController {
 		JSONArray jsonArray = new JSONArray();
 
 		for (int i = 0; i < pager.getPageList().size(); i++) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
 					.getPageList().get(i).getUid());
+			
+			if(!cmsUserLoginInfo.getStatus().equals(1)) {
+				continue;
+			}
+
 			CmsUserBasicInfo cmsUserBasicInfo = pager.getPageList().get(i);
+			
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			jsonMap.put("nickname", cmsUserLoginInfo.getUsername());
 			
 			String regis_time = DateFormatUtils
@@ -737,6 +745,4 @@ public class CmsUserController {
 		return jsonObject.toString();
 	}
 	
-
-
 }
