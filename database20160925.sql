@@ -387,6 +387,8 @@ CREATE TABLE `org_basic_info` (
 --
 
 /*!40000 ALTER TABLE `org_basic_info` DISABLE KEYS */;
+INSERT INTO `org_basic_info` (`uid`,`enterprise_name`,`license_number`,`registered_capital`,`legal_representative`,`region`,`address`,`zip_code`,`enterprise_type`,`enterprise_nature`,`industry_fields`,`web_site`,`contact_name`,`contact_position`,`phone`,`main_business`,`resume`,`email`) VALUES 
+ (123,'信息技术有限公司','23090310031022',0,'','','test','100010','','','','','王大力','经理','88108081','','','wangdali@qq.com');
 /*!40000 ALTER TABLE `org_basic_info` ENABLE KEYS */;
 
 
@@ -755,7 +757,7 @@ CREATE TABLE `user_login_info` (
 
 /*!40000 ALTER TABLE `user_login_info` DISABLE KEYS */;
 INSERT INTO `user_login_info` (`uid`,`username`,`password`,`create_time`,`update_time`,`uwechatid`,`head_image`,`status`) VALUES 
- (123,'fuxin','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,NULL);
+ (123,'fuxin','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `user_login_info` ENABLE KEYS */;
 
 

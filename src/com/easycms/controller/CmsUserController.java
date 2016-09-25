@@ -26,12 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easycms.common.DateUtil;
 import com.easycms.common.Pager;
+import com.easycms.entity.user.CmsOrgUser;
 import com.easycms.entity.user.CmsUserBasicInfo;
 import com.easycms.entity.user.CmsUserLoginInfo;
 import com.easycms.entity.user.CmsUserRoleInfo;
+import com.easycms.service.impl.user.CmsOrgUserServiceImpl;
 import com.easycms.service.impl.user.CmsUserBasicInfoServiceImpl;
 import com.easycms.service.impl.user.CmsUserLoginInfoServiceImpl;
 import com.easycms.service.impl.user.CmsUserRoleServiceImpl;
+import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -47,7 +50,10 @@ public class CmsUserController {
 
 	@Resource(name = "cmsUserBasicInfoServiceImpl")
 	CmsUserBasicInfoServiceImpl ubis;
-	
+
+	@Resource(name = "cmsOrgUserServiceImpl")
+	private CmsOrgUserServiceImpl ous;
+
 	/**
 	 * 用户登录信息管理页
 	 * */
@@ -286,8 +292,7 @@ public class CmsUserController {
 		}
 
 		String isadmin = request.getParameter("admin");
-		if (isadmin != null
-				&& (isadmin.equals("on") || isadmin.equals("true"))) {
+		if (isadmin != null && (isadmin.equals("on") || isadmin.equals("true"))) {
 			map.put("isadmin", 1);
 		}
 
@@ -360,69 +365,69 @@ public class CmsUserController {
 		for (int i = 0; i < pager.getPageList().size(); i++) {
 			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
 					.getPageList().get(i).getUid());
-			if(!cmsUserLoginInfo.getStatus().equals(1)) {
+			if (!cmsUserLoginInfo.getStatus().equals(1)) {
 				continue;
 			}
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			jsonMap.put("name", cmsUserLoginInfo.getUsername());
-			
-			if(pager.getPageList().get(i).getIssuperadmin().equals(1)) {
+
+			if (pager.getPageList().get(i).getIssuperadmin().equals(1)) {
 				jsonMap.put("superadmin", "是");
 			} else {
 				jsonMap.put("superadmin", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsadmin().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsadmin().equals(1)) {
 				jsonMap.put("admin", "是");
 			} else {
 				jsonMap.put("admin", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsorg().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsorg().equals(1)) {
 				jsonMap.put("personal", "是");
 			} else {
 				jsonMap.put("personal", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsexperter().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsexperter().equals(1)) {
 				jsonMap.put("expert", "是");
 			} else {
 				jsonMap.put("expert", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsengineer().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsengineer().equals(1)) {
 				jsonMap.put("tech", "是");
 			} else {
 				jsonMap.put("tech", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsmanager().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsmanager().equals(1)) {
 				jsonMap.put("leader", "是");
 			} else {
 				jsonMap.put("leader", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsent().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsent().equals(1)) {
 				jsonMap.put("firm", "是");
 			} else {
 				jsonMap.put("firm", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsgov().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsgov().equals(1)) {
 				jsonMap.put("region", "是");
 			} else {
 				jsonMap.put("region", "否");
 			}
-			
-			if(pager.getPageList().get(i).getIsleg().equals(1)) {
+
+			if (pager.getPageList().get(i).getIsleg().equals(1)) {
 				jsonMap.put("member", "是");
 			} else {
 				jsonMap.put("member", "否");
 			}
-			
-			String regis_time = DateFormatUtils
-					.format(cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
+
+			String regis_time = DateFormatUtils.format(
+					cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
 			jsonMap.put("time", regis_time);
 			jsonArray.put(jsonMap);
 		}
@@ -462,7 +467,7 @@ public class CmsUserController {
 		response.setCharacterEncoding("UTF-8");
 		return jsonObject2.toString();
 	}
-	
+
 	/**
 	 * 用户基本信息管理页
 	 * */
@@ -471,7 +476,7 @@ public class CmsUserController {
 			HttpServletResponse response, Model model) {
 		return "user/personal_user_list_show";
 	}
-	
+
 	/**
 	 * 获得用户的基本信息
 	 * */
@@ -517,61 +522,52 @@ public class CmsUserController {
 		}
 
 		String realname = request.getParameter("realname");
-		if (realname != null
-				&& !realname.equals("")) {
+		if (realname != null && !realname.equals("")) {
 			map.put("realname", realname);
 		}
-		
+
 		String idcard_number = request.getParameter("idcard_number");
-		if (idcard_number!= null
-				&& !idcard_number.equals("")) {
+		if (idcard_number != null && !idcard_number.equals("")) {
 			map.put("idcard_number", idcard_number);
 		}
-		
+
 		String sex = request.getParameter("gender");
-		if (sex!= null
-				&& !sex.equals("")) {
-			if(sex.equals("男")) {
+		if (sex != null && !sex.equals("")) {
+			if (sex.equals("男")) {
 				sex = "1";
-			} else  {
+			} else {
 				sex = "2";
 			}
 			map.put("sex", sex);
 		}
-		
+
 		String culture_degree = request.getParameter("degree");
-		if (culture_degree != null
-				&& !culture_degree.equals("")) {
+		if (culture_degree != null && !culture_degree.equals("")) {
 			map.put("culture_degree", culture_degree);
 		}
-		
+
 		String specialty = request.getParameter("major");
-		if (specialty != null
-				&& !specialty.equals("")) {
+		if (specialty != null && !specialty.equals("")) {
 			map.put("specialty", specialty);
 		}
-		
+
 		String work_unit = request.getParameter("workunit");
-		if (work_unit!= null
-				&& !work_unit.equals("")) {
+		if (work_unit != null && !work_unit.equals("")) {
 			map.put("work_unit", work_unit);
 		}
-		
+
 		String position_level = request.getParameter("position");
-		if (position_level!= null
-				&& !position_level.equals("")) {
+		if (position_level != null && !position_level.equals("")) {
 			map.put("position_level", position_level);
 		}
 
 		String phone = request.getParameter("phone");
-		if (phone != null
-				&& !phone.equals("")) {
+		if (phone != null && !phone.equals("")) {
 			map.put("phone", phone);
 		}
 
 		String email = request.getParameter("email");
-		if (email != null
-				&& !email.equals("")) {
+		if (email != null && !email.equals("")) {
 			map.put("email", email);
 		}
 
@@ -601,8 +597,8 @@ public class CmsUserController {
 
 		JSONObject jsonObject = new JSONObject();
 
-		Pager<CmsUserBasicInfo> pager = ubis.findUserBasicInfosByKey(map, showPages,
-				pageSize);
+		Pager<CmsUserBasicInfo> pager = ubis.findUserBasicInfosByKey(map,
+				showPages, pageSize);
 
 		jsonObject.put("total", pager.getTotal());
 		JSONArray jsonArray = new JSONArray();
@@ -610,21 +606,21 @@ public class CmsUserController {
 		for (int i = 0; i < pager.getPageList().size(); i++) {
 			CmsUserLoginInfo cmsUserLoginInfo = uls.findUserLoginInfoById(pager
 					.getPageList().get(i).getUid());
-			
-			if(!cmsUserLoginInfo.getStatus().equals(1)) {
+
+			if (!cmsUserLoginInfo.getStatus().equals(1)) {
 				continue;
 			}
 
 			CmsUserBasicInfo cmsUserBasicInfo = pager.getPageList().get(i);
-			
+
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("uid", pager.getPageList().get(i).getUid());
 			jsonMap.put("nickname", cmsUserLoginInfo.getUsername());
-			
-			String regis_time = DateFormatUtils
-					.format(cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
+
+			String regis_time = DateFormatUtils.format(
+					cmsUserLoginInfo.getCreate_time(), "yyyy-MM-dd");
 			jsonMap.put("time", regis_time);
-			
+
 			jsonMap.put("realname", cmsUserBasicInfo.getRealname());
 			jsonMap.put("id_number", cmsUserBasicInfo.getIdcard_number());
 			jsonMap.put("gender", cmsUserBasicInfo.getSex());
@@ -641,6 +637,7 @@ public class CmsUserController {
 		jsonObject.put("rows", jsonArray);
 		return jsonObject.toString();
 	}
+
 	/**
 	 * 组织角色信息管理页
 	 * */
@@ -678,6 +675,11 @@ public class CmsUserController {
 				e.printStackTrace();
 			}
 		}
+		
+		String username = request.getParameter("name");
+		if(username!= null && ! username.equals("")) {
+			map.put("username", username);
+		}
 
 		int showPages = 0;
 		String pageString = request.getParameter("page");
@@ -702,47 +704,32 @@ public class CmsUserController {
 		}
 
 		showPages = showPages * pageSize;
-		String keyword = request.getParameter("keyw");
-
-		List<String> keywords = new LinkedList<String>();
-		if (keyword != null) {
-			StringTokenizer stringTokenizer = new StringTokenizer(keyword,
-					" ,\t");
-			while (stringTokenizer.hasMoreTokens()) {
-				String tokenString = stringTokenizer.nextToken();
-				if (tokenString.trim().length() > 0) {
-					keywords.add(tokenString.trim());
-				}
-			}
-		}
-		if (keywords.size() > 0) {
-			map.put("keyw", keywords);
-		}
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("total", 10);
-		List<HashedMap> articles = new ArrayList<HashedMap>();
+		Pager<CmsOrgUser> pager = ous.findOrgUsersByKey(map, showPages,
+				pageSize);
+		if (pager != null) {
+			jsonObject.put("total", pager.getTotal());
+		} else {
+			jsonObject.put("total", 0);
+		}
 		JSONArray jsonArray = new JSONArray();
-
-		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
+		for (CmsOrgUser orgUser : pager.getPageList()) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("uid", random.nextLong());
-			jsonMap.put("name", "testname");
-			jsonMap.put("type", "普通");
-			String regis_time = DateFormatUtils
-					.format(new Date(), "yyyy-MM-dd");
-			jsonMap.put("regis_time", regis_time);
-			// jsonMap.put("update_time", article.getAid());
-			jsonMap.put("wechat_id", random.nextLong());
-			jsonMap.put("status", random.nextInt());
-			jsonMap.put("image_url", "null");
-
+			
+			jsonMap.put("uid", orgUser.getUid());
+			jsonMap.put("organizationname", orgUser.getEnterprise_name());
+			jsonMap.put("region", orgUser.getRegion());
+			jsonMap.put("name", orgUser.getContact_name());
+			jsonMap.put("position", orgUser.getContact_position());
+			jsonMap.put("phone", orgUser.getPhone());
+			jsonMap.put("address", orgUser.getAddress());
+			jsonMap.put("email", orgUser.getEmail());
 			jsonArray.put(jsonMap);
 		}
 
 		jsonObject.put("rows", jsonArray);
 		return jsonObject.toString();
 	}
-	
+
 }

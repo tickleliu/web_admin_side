@@ -22,12 +22,20 @@ public class CmsOrgUserTest {
 	
 	@Test 
 	public void test() {
-		Random random = new Random(System.currentTimeMillis());
-		Long longR = random.nextLong();
-		CmsOrgUser cmsOrgUser= us.findOrgUserById(longR);
+
+		Long longR = 123L;
+		CmsOrgUser cmsOrgUser= null;
 		if(cmsOrgUser == null) {
 			cmsOrgUser = new CmsOrgUser();
 			cmsOrgUser.setUid(longR);
+			cmsOrgUser.setAddress("北京市丰台区");
+			cmsOrgUser.setContact_name("王大力");
+			cmsOrgUser.setContact_position("经理");
+			cmsOrgUser.setEmail("wangdali@qq.com");
+			cmsOrgUser.setEnterprise_name("信息技术有限公司");
+			cmsOrgUser.setPhone("88108081");
+			cmsOrgUser.setZip_code("100010");
+			cmsOrgUser.setLicense_number("23090310031022");
 			us.save(cmsOrgUser);
 			cmsOrgUser = us.findOrgUserById(longR);
 		}
@@ -36,11 +44,11 @@ public class CmsOrgUserTest {
 		us.updateOrgUser(cmsOrgUser);
 		cmsOrgUser = us.findOrgUserById(longR);
 		System.out.println(cmsOrgUser.getAddress());
-		us.deleteOrgUserById(longR);
-		if(us.findOrgUserById(longR) == null) {
-			System.out.println("delete: success");
-		} else {
-			System.out.println("delete: failed");
-		}
+//		us.deleteOrgUserById(longR);
+//		if(us.findOrgUserById(longR) == null) {
+//			System.out.println("delete: success");
+//		} else {
+//			System.out.println("delete: failed");
+//		}
 	}
 }

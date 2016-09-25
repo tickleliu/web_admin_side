@@ -12,6 +12,7 @@
 	<resultMap type="orgUser" id="orgUserMap">
 	<id property="uid" column="uid" />
 	<result property="enterprise_name" column="enterprise_name" ></result>
+	<result property="username" column="username" ></result>
 	<result property="license_number" column="license_number" ></result>
 	<result property="registered_capital" column="registered_capital" ></result>
 	<result property="legal_representative" column="legal_representative" ></result>
@@ -32,9 +33,13 @@
 	
 	<select id="findById" resultMap="orgUserMap" parameterType="long">
 	  select 
-	  	*
-	  from 
+	`org_basic_info`.`uid`,
+	`enterprise_name`, `license_number`, `registered_capital`, `legal_representative`, `region`,
+ 	`address`, `zip_code`, `enterprise_type`, `enterprise_nature`, `industry_fields`, `web_site`, `contact_name`,
+ 	`contact_position`, `phone`, `main_business`, `resume`, `email`, `username` 	
+	 from 
 	  	org_basic_info
+	  left join user_login_info on org_basic_info.uid = user_login_info.uid 
 	  where 
 	  	uid=#{id}
 	</select>
@@ -44,10 +49,19 @@
 	</update>
 	
 	<select id="findByKey" resultType="orgUser" parameterType="map">
-	  select * from org_basic_info 
+	  select 
+		`org_basic_info`.`uid`,
+		`enterprise_name`, `license_number`, `registered_capital`, `legal_representative`, `region`,
+ 		`address`, `zip_code`, `enterprise_type`, `enterprise_nature`, `industry_fields`, `web_site`, `contact_name`,
+ 		`contact_position`, `phone`, `main_business`, `resume`, `email`, `username` 	
+	  from org_basic_info 
+	  left join user_login_info on org_basic_info.uid = user_login_info.uid 
 	  <where>	    
 	    <if test="uid !=null and uid != ''">
 	         uid = #{uid}
+	    </if>
+	    <if test="username !=null and username != ''">
+	         username = #{username}
 	    </if>
 	    <if test="enterprise_name !=null">
 	        <foreach collection="enterprise_name" item="key"
@@ -97,9 +111,13 @@
 
 	<select id="findByKeyTotal" resultType="int" parameterType="map">
 	  select count(*) from org_basic_info
+	  left join user_login_info on org_basic_info.uid = user_login_info.uid 
 	  <where>
 	    <if test="uid !=null and uid != ''">
 	         uid = #{uid}
+	    </if>
+	    <if test="username !=null and username != ''">
+	         username = #{username}
 	    </if>
 	    <if test="enterprise_name !=null and enterprise_name != ''">
 	         <foreach collection="enterprise_name" item="key"

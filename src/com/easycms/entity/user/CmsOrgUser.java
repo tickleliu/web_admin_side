@@ -29,10 +29,12 @@ public class CmsOrgUser implements Serializable {
 		this.email = "";
 		this.main_business = "";
 		this.resume = "";
+		this.username = "";
 	}
 	
 	private Long uid; 
 	private String enterprise_name; //企业名称
+	private String username;
 	private String license_number; //工商营业执照号
 	private Long registered_capital; //注册资金
 	private String legal_representative; //法人代表
@@ -45,6 +47,13 @@ public class CmsOrgUser implements Serializable {
 	private String web_site; //企业网址
 	private String contact_name; //联系人姓名
 	private String contact_position; //联系人职务
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	private String phone; //联系电话
 	private String email; //电子邮箱
 	private String main_business; //主营业务
